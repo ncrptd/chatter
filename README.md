@@ -47,7 +47,7 @@ This is a social media app that allows you to create, share, and engage with pos
 
 1. Clone this repository
    ````
-   git clone https://github.com/your-username/social-media-app.git
+   git clone [https://github.com/your-username/social-media-app.git](https://github.com/ncrptd/chatter)
    ```
 2. Navigate to the project directory
    ````
