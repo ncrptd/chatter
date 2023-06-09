@@ -1,11 +1,12 @@
 import './App.css';
-
+import { Routes, Route } from 'react-router-dom';
+import Mockman from 'mockman-js';
 function App() {
   return (
     <div className="App">
-      <h1 className="text-3xl font-bold underline bg-red-400">
-        Hello world! This is test
-      </h1>
+      <Routes>
+        <Route path="/mockman" element={<Mockman />} />
+      </Routes>
     </div>
   );
 }
