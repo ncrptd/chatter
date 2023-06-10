@@ -7,14 +7,13 @@ import Explore from './pages/Explore';
 import Bookmarks from './pages/Bookmarks';
 function App() {
   return (
-    <main className="App p-2">
+    <main className="App lg:px-6 h-screen">
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
         </Route>
-
         <Route path="/mockman" element={<Mockman />} />
       </Routes>
     </main>
