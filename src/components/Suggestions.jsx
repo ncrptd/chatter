@@ -1,12 +1,31 @@
 import React from 'react';
+import SuggestionCard from './SuggestionCard';
 
 export default function Suggestions() {
   return (
-    <aside className="col-span-2 hidden lg:block">
+    <aside className="col-span-3 hidden lg:block h-screen overflow-auto suggestions">
       <div className="container mx-auto py-2">
-        <h1>John doe</h1>
-        <h1>peter</h1>
-        <h1>Michael</h1>
+        <p className="font-bold mb-6 ">Suggestions for you</p>
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
+        <SuggestionCard />
       </div>
     </aside>
   );

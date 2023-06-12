@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
 export default function Navbar() {
   return (
-    <div className="fixed bottom-0 w-full container mx-auto p-2 text-4xl md:hidden">
+    <div className="fixed bottom-0 w-full container mx-auto p-4 text-4xl md:hidden bg-slate-900">
       <ul className="flex justify-between">
+        {/* home  */}
         <li>
           <Link to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
               viewBox="0 0 24 24"
             >
               <path
@@ -18,12 +19,13 @@ export default function Navbar() {
             </svg>
           </Link>
         </li>
+        {/* explore */}
         <li>
           <Link to="/explore">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
               viewBox="0 0 24 24"
             >
               <path
@@ -33,12 +35,13 @@ export default function Navbar() {
             </svg>
           </Link>
         </li>
+        {/* bookmarks  */}
         <li>
-          <Link to="/bookmark">
+          <Link to="/bookmarks">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
+              width="30"
+              height="30"
               viewBox="0 0 24 24"
             >
               <path

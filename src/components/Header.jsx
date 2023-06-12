@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
 export default function Header() {
   return (
-    <header className="col-span-2 hidden md:block">
+    <header className="col-span-2 hidden md:block text-2xl h-full">
       <div className="container-mx-auto py-2">
-        <ul className="flex flex-col gap-4 text-2xl font-semibold ">
-          <h1 className="text-uppercase font-bold text-pink-600">Chatter</h1>
-          <li className="flex gap-2  items-center ">
+        <h1 className="text-uppercase  text-pink-500 uppercase mb-4">
+          Chatter
+        </h1>
+        <ul className="flex flex-col gap-8 font-semibold  ">
+          <li className="flex gap-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="30"
+              height="30"
               viewBox="0 0 24 24"
             >
               <path
@@ -22,8 +24,8 @@ export default function Header() {
           <li className="flex gap-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="30"
+              height="30"
               viewBox="0 0 24 24"
             >
               <path
@@ -36,8 +38,8 @@ export default function Header() {
           <li className="flex gap-2  items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="30"
+              height="30"
               viewBox="0 0 24 24"
             >
               <path

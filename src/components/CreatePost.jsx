@@ -5,14 +5,11 @@ export default function CreatePost() {
     console.log('submitted');
   };
   return (
-    <form
-      className="flex flex-col w-full py-2 gap-2 bg-slate-900 "
-      onSubmit={handleSubmit}
-    >
+    <form className="flex flex-col w-full p-4 gap-2" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="What's happening ?"
-        className="border-0 outline-0 bg-inherit"
+        className="border-0 outline-0 bg-inherit  py-4 px-2"
       />
       <div className="flex items-center justify-end gap-4">
         <div>
