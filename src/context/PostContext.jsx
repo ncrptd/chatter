@@ -4,7 +4,7 @@ import {
   initialState,
   POST_ACTIONS,
   postReducer,
-} from '../reducer/PostReducer';
+} from '../reducer/postReducer';
 import { useEffect } from 'react';
 
 const PostContext = createContext();

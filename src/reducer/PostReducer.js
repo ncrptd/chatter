@@ -1,6 +1,7 @@
 const POST_ACTIONS = {
   GET_POSTS: 'get-posts',
   FILTER_POSTS: 'filter-posts',
+  ADD_POST: 'add-post',
 };
 const initialState = {
   posts: [],
@@ -15,6 +16,9 @@ function postReducer(state, action) {
     }
     case POST_ACTIONS.FILTER_POSTS: {
       return { ...state, postsFilterBy: payload.filterBy };
+    }
+    case POST_ACTIONS.ADD_POST: {
+      return { ...state, posts: [...state.posts, ...payload.posts] };
     }
     default: {
       return state;

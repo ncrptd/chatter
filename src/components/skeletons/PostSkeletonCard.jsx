@@ -2,8 +2,8 @@ import './styles.css';
 export default function PostSkeletonCard() {
   return Array(5)
     .fill(0)
-    .map((item) => (
-      <div className=" p-4 w-full  border-x border-b border-slate-500">
+    .map((item, i) => (
+      <div className=" p-4 w-full  border-x border-b border-slate-500" key={i}>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1 ">
             <div className="w-10 h-10 rounded-full skeleton round"></div>

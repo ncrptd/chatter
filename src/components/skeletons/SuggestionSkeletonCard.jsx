@@ -3,8 +3,8 @@ import React from 'react';
 export default function SuggestionSkeletonCard() {
   return Array(5)
     .fill(0)
-    .map((i) => (
-      <div className="flex justify-between items-center mb-4">
+    .map((item, i) => (
+      <div className="flex justify-between items-center mb-6" key={i}>
         <div className="flex gap-2 justify-center items-center">
           <div className="w-10 h-10 skeleton round"></div>
           <div>

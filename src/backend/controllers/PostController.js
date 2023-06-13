@@ -45,6 +45,7 @@ export const getAllUserPostsHandler = function (schema, request) {
   const { username } = request.params;
   try {
     const posts = schema.posts.where({ username })?.models;
+    console.log(posts)
     return new Response(200, {}, { posts });
   } catch (error) {
     return new Response(
