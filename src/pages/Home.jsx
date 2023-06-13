@@ -11,9 +11,7 @@ export default function Home() {
       <div className="container mx-auto  border border-slate-500 ">
         <CreatePost />
       </div>
-      <p className="text-center p-2 font-semibold bg-gray-800 border-x border-b border-slate-500">
-        Latest Posts
-      </p>
+
       <PostList />
     </section>
   );
