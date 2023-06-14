@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function SuggestionSkeletonCard() {
-  return Array(5)
+  return Array(10)
     .fill(0)
     .map((item, i) => (
       <div className="flex justify-between items-center mb-6" key={i}>

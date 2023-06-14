@@ -1,15 +1,29 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { usePost } from '../context/PostContext';
 export default function CreatePost() {
-  const handleSubmit = () => {
-    console.log('submitted');
+  const { addPostHandler } = usePost();
+
+  const [content, setContent] = useState('');
+
+  const handleContentData = (e) => {
+    const value = e.target.value;
+    setContent(value);
   };
+  const handleAddPost = async (e) => {
+    e.preventDefault();
+    if (content === '') return;
+    addPostHandler(content);
+    setContent('');
+  };
+
   return (
-    <form className="flex flex-col w-full p-4 gap-2" onSubmit={handleSubmit}>
+    <form className="flex flex-col w-full p-4 gap-2" onSubmit={handleAddPost}>
       <input
         type="text"
         placeholder="What's happening ?"
         className="border-0 outline-0 bg-inherit  py-4 px-2"
+        value={content}
+        onChange={handleContentData}
       />
       <div className="flex items-center justify-end gap-4">
         <div>
@@ -25,7 +39,10 @@ export default function CreatePost() {
             />
           </svg> */}
         </div>
-        <button className="bg-pink-600 rounded-full px-6 py-1 place-self-end tracking-widest ">
+        <button
+          className="bg-pink-600 rounded-full px-6 py-1 place-self-end tracking-widest"
+          type="submit"
+        >
           Post
         </button>
       </div>

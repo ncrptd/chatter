@@ -18,7 +18,7 @@ function postReducer(state, action) {
       return { ...state, postsFilterBy: payload.filterBy };
     }
     case POST_ACTIONS.ADD_POST: {
-      return { ...state, posts: [...state.posts, ...payload.posts] };
+      return { ...state, posts: payload.posts };
     }
     default: {
       return state;

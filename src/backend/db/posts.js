@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import { formatDate } from '../utils/authUtils';
 
 /**
@@ -8,195 +7,155 @@ import { formatDate } from '../utils/authUtils';
 
 export const posts = [
   {
-    id: 1,
-    _id: uuid(),
+    _id: '1',
     content:
-      "Just finished reading 'The Great Gatsby' and I'm in love with F. Scott Fitzgerald's writing style. What's your favorite book?",
+      'Must try of this week: Vada Pao from SK Vadewale in Pune. The taste is absolutely mind-boggling and fresh.',
     likes: {
-      likeCount: 10,
-      likedBy: [
-        'john_doe',
-        'jane_doe',
-        'alice',
-        'bob',
-        'emma',
-        'oliver',
-        'peter',
-        'lucy',
-        'mary',
-        'david',
-      ],
-      dislikedBy: ['sarah'],
-    },
-    username: 'jennifer',
-    createdAt: '2023-06-12T10:15:30Z',
-    updatedAt: formatDate(),
-  },
-  {
-    id: 2,
-    _id: uuid(),
-    content:
-      'I just tried the new sushi place in town and it was amazing! Highly recommend it to anyone who loves sushi 🍣',
-    likes: {
-      likeCount: 5,
-      likedBy: ['john_doe', 'jane_doe', 'alice', 'bob', 'emma'],
-      dislikedBy: ['sarah', 'oliver'],
-    },
-    username: 'chris',
-    createdAt: '2023-06-11T16:45:20Z',
-    updatedAt: formatDate(),
-  },
-  {
-    id: 3,
-    _id: uuid(),
-    content: "I can't believe it's already June! Time flies so fast ⏰",
-    likes: {
-      likeCount: 3,
-      likedBy: ['john_doe', 'jane_doe', 'alice'],
+      likeCount: 0,
+      likedBy: [],
       dislikedBy: [],
     },
-    username: 'daniel',
-    createdAt: '2023-06-10T08:30:15Z',
+    username: 'aditya_jadhav',
+    fullName: 'Aditya Jadhav',
+    postImage:
+      'https://res.cloudinary.com/dwebygldw/image/upload/v1653066367/frittr/vada-pav_g0u58t.webp',
+    createdAt: '2022-05-01',
     updatedAt: formatDate(),
   },
   {
-    id: 4,
-    _id: uuid(),
+    _id: '2',
     content:
-      'Just watched the latest episode of Game of Thrones and it was insane! What are your thoughts?',
+      "Went to this hangout place, Bob's in Marathalli yesterday. The ambience is real good and the mocktails are really fresh.",
     likes: {
-      likeCount: 12,
-      likedBy: [
-        'john_doe',
-        'jane_doe',
-        'alice',
-        'bob',
-        'emma',
-        'oliver',
-        'peter',
-        'lucy',
-        'mary',
-        'david',
-        'sarah',
-        'tom',
-      ],
+      likeCount: 0,
+      likedBy: [],
       dislikedBy: [],
     },
-    username: 'samantha',
-    createdAt: '2023-06-09T22:05:45Z',
+
+    username: 'singhMohit',
+    fullName: 'Mohit Singh',
+    createdAt: '2022-05-11',
+    postImage:
+      'https://res.cloudinary.com/dwebygldw/image/upload/v1652908952/frittr/zwpmppawiyxwthsmikyk.webp',
     updatedAt: formatDate(),
   },
   {
-    id: 5,
-    _id: uuid(),
+    _id: '3',
     content:
-      'I love hiking and exploring new trails! Just came back from a 10-mile hike and it was breathtaking 🌲',
-    likes: {
-      likeCount: 7,
-      likedBy: [
-        'john_doe',
-        'jane_doe',
-        'alice',
-        'bob',
-        'sarah',
-        'emma',
-        'oliver',
-      ],
-      dislikedBy: [],
-    },
-    username: 'kate',
-    createdAt: '2023-06-08T14:20:10Z',
-    updatedAt: formatDate(),
-  },
-  {
-    id: 6,
-    _id: uuid(),
-    content:
-      'Just started learning how to play the piano and it is so much fun! 🎹',
+      "Ordered Meghana's Special Chicken Biryani from Meghana's. Recommend 10/10. ✨  ",
     likes: {
       likeCount: 2,
-      likedBy: ['john_doe', 'jane_doe'],
-      dislikedBy: [],
-    },
-    username: 'michael',
-    createdAt: '2021-06-08T14:20:10Z',
-    updatedAt: formatDate(),
-  },
-  {
-    id: 7,
-    _id: uuid(),
-    content:
-      'I just got a new job offer and I am so excited to start my new journey! 🎉',
-    likes: {
-      likeCount: 6,
-      likedBy: ['john_doe', 'jane_doe', 'alice', 'bob', 'emma', 'oliver'],
-      dislikedBy: ['sarah'],
-    },
-    username: 'peter',
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
-    id: 8,
-    _id: uuid(),
-    content:
-      "I can't stop listening to this new album by Taylor Swift, it's amazing! 🎶",
-    likes: {
-      likeCount: 8,
       likedBy: [
-        'john_doe',
-        'jane_doe',
-        'alice',
-        'bob',
-        'emma',
-        'oliver',
-        'lucy',
-        'mary',
-      ],
-      dislikedBy: ['sarah'],
-    },
-    username: 'jessica',
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
-    id: 9,
-    _id: uuid(),
-    content:
-      'I just finished my first marathon and it was a life-changing experience! 🏃‍♂️',
-    likes: {
-      likeCount: 11,
-      likedBy: [
-        'john_doe',
-        'jane_doe',
-        'alice',
-        'bob',
-        'emma',
-        'oliver',
-        'peter',
-        'lucy',
-        'mary',
-        'david',
-        'tom',
+        {
+          _id: ' ',
+          fullName: 'Mohit Singh',
+          username: 'singhMohit',
+          profileAvatar: 'https://picsum.photos/id/1012/150',
+        },
+        {
+          _id: ' ',
+          fullName: 'John Doe',
+          username: 'johndoe',
+          profileAvatar: 'https://picsum.photos/id/1009/150',
+        },
       ],
       dislikedBy: [],
     },
-    username: 'ryan',
-    createdAt: formatDate(),
+    username: 'gill100',
+    fullName: 'Rakshit Gill',
+    postImage: null,
+
+    createdAt: '2022-04-20',
     updatedAt: formatDate(),
   },
   {
-    id: 10,
-    _id: uuid(),
+    _id: '4',
     content:
-      'I love cooking and trying out new recipes! Just made a delicious lasagna for dinner 🍝',
+      "Went out for dinner at Chili's Hyderabad. The taste reminds me of back home in Autralia.",
     likes: {
-      likeCount: 4,
-      likedBy: ['john_doe', 'jane_doe', 'alice', 'bob'],
-      dislikedBy: ['sarah'],
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
     },
-    username: 'hannah',
-    createdAt: formatDate(),
+    postImage: null,
+    username: 'gill100',
+    fullName: 'Rakshit Gill',
+    createdAt: '2022-05-05',
     updatedAt: formatDate(),
+  },
+  {
+    _id: '5',
+    content:
+      "Went out for dinner at Chili's Hyderabad. The taste reminds me of back home in Autralia.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    postImage: null,
+    username: 'johndoe',
+    fullName: 'John Doe',
+    createdAt: '2022-05-11',
+    updatedAt: formatDate(),
+  },
+  {
+    _id: '6',
+    content:
+      'Nairobi is such a great city with so many people going about their business. One thing that you need to know while there are the places where to find great food/meals. Best recommendation is @al_yusra Restaurant located along Banda Street just next to Nation Centre. #Kenya',
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: 'johndoe',
+    fullName: 'John Doe',
+    createdAt: '2022-05-09',
+    postImage:
+      'https://res.cloudinary.com/dwebygldw/image/upload/v1653066477/frittr/E-HqxXdWUAM0z-U_a44utb.jpg',
+    updatedAt: formatDate(),
+  },
+  {
+    _id: '7',
+    content:
+      'I met this street food seller in Gyeongju on a recommendation from a dating app. This man was adopted and grew up in US. He moved to Korea to find his birth mother. And he did! I often think back to our conversation #MondayMotivation',
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: 'johndoe',
+    fullName: 'John Doe',
+    postImage:
+      'https://res.cloudinary.com/dwebygldw/image/upload/v1653067279/frittr/E7OX3WgXoAEu0gR_z9x7zu.jpg',
+    createdAt: '2022-05-01',
+    updatedAt: formatDate(),
+    comments: [
+      {
+        _id: '8',
+        comment: 'Nice!',
+        fullName: 'Rakshit Gill',
+        username: 'gill100',
+        profileAvatar: 'https://picsum.photos/id/1005/150',
+        createdAt: formatDate(),
+        updatedAt: formatDate(),
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+      {
+        _id: '9',
+        comment: 'Wow!',
+        fullName: 'Mohit Singh',
+        username: 'singhMohit',
+        profileAvatar: 'https://picsum.photos/id/1012/150',
+        createdAt: formatDate(),
+        updatedAt: formatDate(),
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
   },
 ];

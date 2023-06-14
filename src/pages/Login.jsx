@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthDispatch } from '../context/AuthContext';
 import { AUTH_ACTIONS } from '../reducer/authReducer';
+import { useUserDispatch } from '../context/UserContext';
+import { USER_ACTIONS } from '../reducer/userReducer';
 
 const GUEST = {
   username: 'johndoe',
@@ -17,6 +19,8 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('');
   const [show, setShow] = useState(false);
   const authDispatch = useAuthDispatch();
+  const userDispatch = useUserDispatch();
+
   const location = useLocation();
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
@@ -38,9 +42,11 @@ export default function Login() {
         const { foundUser, encodedToken } = res.data;
         authDispatch({
           type: AUTH_ACTIONS.LOGIN_SUCCESS,
+        });
+        userDispatch({
+          type: USER_ACTIONS.SAVE_USER,
           payload: { userDetails: foundUser },
         });
-
         localStorage.setItem(
           'user',
           JSON.stringify({
@@ -81,7 +87,7 @@ export default function Login() {
             handleLogin(formDetails);
           }}
         >
-          <label htmlFor="email ">Username</label>
+          <label htmlFor="username ">Username</label>
           <input
             type="text"
             id="username"

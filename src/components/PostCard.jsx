@@ -1,9 +1,25 @@
 import * as dayjs from 'dayjs';
 import { formatDate } from '../utils/formatDate';
-var relativeTime = require('dayjs/plugin/relativeTime');
+import { likePostService } from '../services/postServices';
+import { useUser } from '../context/UserContext';
+import { usePost, usePostDispatch } from '../context/PostContext';
+import { POST_ACTIONS } from '../reducer/postReducer';
+let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 export default function PostCard({ post }) {
+  const { state: userState } = useUser();
+  const { userDetails } = userState;
+  const postDispatch = usePostDispatch();
+  const liked = post.likes.likedBy.includes(userDetails);
+  const likeHandler = async () => {
+    let res = await likePostService(post);
+    console.log(res.data.posts);
+    postDispatch({
+      type: POST_ACTIONS.ADD_POST,
+      payload: { posts: res.data.posts },
+    });
+  };
   return (
     <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500">
       <div className="flex justify-between items-center">
@@ -44,6 +60,27 @@ export default function PostCard({ post }) {
       </div>
       <p className="mt-4 text-sm">{post?.content}</p>
       <div className="flex gap-4 mt-4 font-thin text-slate-200 ">
+        {/* like  */}
+
+        <button className="flex gap-2" onClick={likeHandler}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            className={`text-gray-500 ${liked && 'text-red-500'}`}
+          >
+            <path
+              fill="currentColor"
+              d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35Z"
+            />
+          </svg>
+
+          <p className="text-white">
+            {post.likes.likeCount >= 1 ? post.likes.likeCount : null}
+          </p>
+        </button>
+
         {/* comment  */}
         <button>
           <svg
@@ -63,29 +100,7 @@ export default function PostCard({ post }) {
             />
           </svg>
         </button>
-        {/* like  */}
 
-        <button className="flex gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 48 48"
-            className="text-red-400 cursor-pointer"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8Z"
-            />
-          </svg>
-          <p className="text-white">
-            {post.likes.likeCount >= 1 ? post.likes.likeCount : null}
-          </p>
-        </button>
         {/* bookmark
          */}
         <button>
@@ -95,7 +110,7 @@ export default function PostCard({ post }) {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className="text-green-400 cursor-pointer"
+            className=" cursor-pointer"
           >
             <path
               fill="none"

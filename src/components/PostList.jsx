@@ -30,7 +30,7 @@ export default function PostList() {
   return (
     <div>
       {visiblePosts.length >= 1 ? (
-        visiblePosts.map((post) => <PostCard post={post} key={post?.id} />)
+        visiblePosts.map((post) => <PostCard post={post} key={post?._id} />)
       ) : (
         <PostSkeletonCard />
       )}
