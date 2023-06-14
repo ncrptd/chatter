@@ -53,7 +53,7 @@ export const posts = [
           profileAvatar: 'https://picsum.photos/id/1012/150',
         },
         {
-          _id: ' ',
+          _id: 'eyJhbGciOi4cj8hFuJfY',
           fullName: 'John Doe',
           username: 'johndoe',
           profileAvatar: 'https://picsum.photos/id/1009/150',
@@ -64,7 +64,6 @@ export const posts = [
     username: 'gill100',
     fullName: 'Rakshit Gill',
     postImage: null,
-
     createdAt: '2022-04-20',
     updatedAt: formatDate(),
   },
@@ -85,8 +84,7 @@ export const posts = [
   },
   {
     _id: '5',
-    content:
-      "Went out for dinner at Chili's Hyderabad. The taste reminds me of back home in Autralia.",
+    content: 'What a lovely evening.',
     likes: {
       likeCount: 0,
       likedBy: [],

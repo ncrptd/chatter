@@ -156,7 +156,6 @@ export const editPostHandler = function (schema, request) {
 
 export const likePostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
-  console.log(user);
   try {
     if (!user) {
       return new Response(
