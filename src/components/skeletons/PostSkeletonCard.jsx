@@ -10,7 +10,6 @@ export default function PostSkeletonCard() {
             <p className="py-2 px-8 skeleton">{/* username  */}</p>
             <p className="py-2 px-10 skeleton">{/* date? */}</p>
           </div>
-          <p className="py-1 px-3 skeleton">{/* date? */}</p>
         </div>
         <div className="mt-4 flex flex-col gap-2">
           <p className=" w-2/4 py-2 px-12 skeleton">{/* content  */}</p>

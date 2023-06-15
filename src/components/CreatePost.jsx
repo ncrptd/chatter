@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { usePost } from '../context/PostContext';
 export default function CreatePost() {
-  const { addPostHandler } = usePost();
-
   const [content, setContent] = useState('');
+
+  const { addPostHandler } = usePost();
 
   const handleContentData = (e) => {
     const value = e.target.value;

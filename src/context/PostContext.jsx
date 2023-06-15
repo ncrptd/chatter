@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import axios from 'axios';
+
 import { createContext, useReducer, useContext } from 'react';
 import { getAllPostService } from '../services/postServices';
 import {
@@ -6,14 +9,16 @@ import {
   postReducer,
 } from '../reducer/postReducer';
 import { getEncodedToken } from '../utils/encodedToken';
-import { useEffect } from 'react';
-import axios from 'axios';
+import { useUser } from './UserContext';
 
 const PostContext = createContext();
 const PostDispatchContext = createContext();
 
 export function PostProvider({ children }) {
   const [state, dispatch] = useReducer(postReducer, initialState);
+
+  const { state: userState } = useUser();
+  const { userDetails } = userState;
   const getAllPostHandler = async () => {
     const res = await getAllPostService();
     const { data } = res;
@@ -35,7 +40,7 @@ export function PostProvider({ children }) {
       headers: { authorization: encodedToken },
     };
     const body = {
-      postData: { content },
+      postData: { content, userId: userDetails._id },
     };
     const res = await axios.post('/api/posts', body, config);
     dispatch({

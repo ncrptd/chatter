@@ -2,17 +2,21 @@ import * as dayjs from 'dayjs';
 import { formatDate } from '../utils/formatDate';
 import { likePostService, dislikePostService } from '../services/postServices';
 import { useUser } from '../context/UserContext';
-import { usePostDispatch } from '../context/PostContext';
+import { usePost, usePostDispatch } from '../context/PostContext';
 import { POST_ACTIONS } from '../reducer/postReducer';
-
+import PostOptionsModal from './modals/PostOptionsModal';
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 export default function PostCard({ post }) {
   const { state: userState } = useUser();
   const { userDetails } = userState;
+  const { state: postState } = usePost();
+  const { showOptions } = postState;
   const postDispatch = usePostDispatch();
+
   const liked = post.likes.likedBy.find((user) => user._id === userDetails._id);
+  const isUserPost = post.userId === userDetails._id;
 
   const likeHandler = async () => {
     try {
@@ -33,9 +37,17 @@ export default function PostCard({ post }) {
       console.log(error);
     }
   };
+  const optionsHandler = (e) => {
+    e.preventDefault();
+    // handleOpenModal(post._id);
+    postDispatch({
+      type: POST_ACTIONS.SHOW_OPTIONS,
+      payload: { postId: post._id },
+    });
+  };
   return (
-    <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500">
-      <div className="flex justify-between items-center">
+    <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500 break-words">
+      <div className="flex justify-between items-center ">
         <div className="flex items-center gap-2 ">
           <div className="w-10 h-10 rounded-full bg-slate-100">
             {/* <img
@@ -52,36 +64,46 @@ export default function PostCard({ post }) {
             {formatDate(post?.createdAt)}
           </p>
         </div>
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            className="cursor-pointer"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0"
-            />
-          </svg>
-        </div>
+        {isUserPost && (
+          <div onClick={optionsHandler} className="relative cursor-pointer">
+            {/* options */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              className="hover:text-pink-500 transition duration-150 hover:ease-in-out"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0"
+              />
+            </svg>
+            {showOptions === post._id && (
+              <div className="absolute top-0 right-0 ">
+                <PostOptionsModal post={post} />
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      <p className="mt-4 text-sm">{post?.content}</p>
+      <p className="mt-4 text-sm ">{post?.content}</p>
       <div className="flex gap-4 mt-4 font-thin text-slate-200 ">
         {/* like  */}
 
-        <button className="flex gap-2" onClick={likeHandler}>
+        <button className="flex gap-2 " onClick={likeHandler}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
             height="28"
             viewBox="0 0 24 24"
-            className={`text-gray-500 ${liked && 'text-red-500'}`}
+            className={`text-gray-500 hover:text-red-500 transition duration-150 hover:ease-in-out ${
+              liked && 'text-red-500 '
+            }`}
           >
             <path
               fill="currentColor"
@@ -103,7 +125,7 @@ export default function PostCard({ post }) {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className=" cursor-pointer"
+            className={`hover:text-green-500  transition duration-150 hover:ease-in-out `}
           >
             <path
               fill="none"

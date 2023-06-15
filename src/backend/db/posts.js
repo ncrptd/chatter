@@ -32,12 +32,13 @@ export const posts = [
       dislikedBy: [],
     },
 
-    username: 'singhMohit',
-    fullName: 'Mohit Singh',
+    username: 'johndoe',
+    fullName: 'John Doe',
     createdAt: '2022-05-11',
     postImage:
       'https://res.cloudinary.com/dwebygldw/image/upload/v1652908952/frittr/zwpmppawiyxwthsmikyk.webp',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJfY',
   },
   {
     _id: '3',

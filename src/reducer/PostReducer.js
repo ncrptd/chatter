@@ -2,10 +2,14 @@ const POST_ACTIONS = {
   GET_POSTS: 'get-posts',
   FILTER_POSTS: 'filter-posts',
   ADD_POST: 'add-post',
+  SHOW_OPTIONS: 'show-options',
+  EDIT_POST: 'edit-post',
 };
 const initialState = {
   posts: [],
   postsFilterBy: 'latest',
+  showOptions: null,
+  editPost: null,
 };
 
 function postReducer(state, action) {
@@ -19,6 +23,13 @@ function postReducer(state, action) {
     }
     case POST_ACTIONS.ADD_POST: {
       return { ...state, posts: payload.posts };
+    }
+    case POST_ACTIONS.EDIT_POST: {
+      return { ...state, editPost: payload.post };
+    }
+    case POST_ACTIONS.SHOW_OPTIONS: {
+      console.log(payload.postId);
+      return { ...state, showOptions: payload.postId };
     }
     default: {
       return state;
