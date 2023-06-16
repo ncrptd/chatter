@@ -3,24 +3,31 @@ import { POST_ACTIONS } from '../../reducer/postReducer';
 import EditPostModal from './EditPostModal';
 import { forwardRef } from 'react';
 const PostOptionsModal = forwardRef(({ post }, ref) => {
-  const { state } = usePost();
+  const { state, deletePostHandler } = usePost();
   const { editPost } = state;
 
   const postDispatch = usePostDispatch();
 
-  const handleEdit = (e) => {
+  const handleEditModal = (e) => {
     e.stopPropagation();
     postDispatch({ type: POST_ACTIONS.EDIT_POST, payload: { post: post } });
   };
 
+  const handleDelete = () => {
+    postDispatch({
+      type: POST_ACTIONS.SHOW_OPTIONS,
+      payload: { showOptions: null },
+    });
+    deletePostHandler(post._id);
+  };
   return (
     <div
-      className="bg-slate-700 rounded-lg p-4 text-white text-sm shadow-2xl"
+      className="bg-slate-800 rounded-lg p-6 text-white text-lg shadow-md shadow-slate-600 md:p-4 md:text-sm"
       ref={ref}
     >
       <button
         className="flex gap-1 justify-center items-center hover:text-pink-500"
-        onClick={handleEdit}
+        onClick={handleEditModal}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +42,10 @@ const PostOptionsModal = forwardRef(({ post }, ref) => {
         </svg>
         <span>Edit</span>
       </button>
-      <button className="flex gap-1 justify-center items-center mt-3 hover:text-pink-500">
+      <button
+        className="flex gap-1 justify-center items-center mt-3 hover:text-pink-500"
+        onClick={handleDelete}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"

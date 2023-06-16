@@ -32,13 +32,12 @@ export const posts = [
       dislikedBy: [],
     },
 
-    username: 'johndoe',
-    fullName: 'John Doe',
+    username: 'rachit123',
+    fullName: 'Rachit Jha',
     createdAt: '2022-05-11',
     postImage:
       'https://res.cloudinary.com/dwebygldw/image/upload/v1652908952/frittr/zwpmppawiyxwthsmikyk.webp',
     updatedAt: formatDate(),
-    userId: 'eyJhbGciOi4cj8hFuJfY',
   },
   {
     _id: '3',
@@ -96,6 +95,7 @@ export const posts = [
     fullName: 'John Doe',
     createdAt: '2022-05-11',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJfY',
   },
   {
     _id: '6',
@@ -112,6 +112,7 @@ export const posts = [
     postImage:
       'https://res.cloudinary.com/dwebygldw/image/upload/v1653066477/frittr/E-HqxXdWUAM0z-U_a44utb.jpg',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJfY',
   },
   {
     _id: '7',
@@ -122,39 +123,11 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    username: 'johndoe',
-    fullName: 'John Doe',
+    username: 'peterevans',
+    fullName: 'Peter evans',
     postImage:
       'https://res.cloudinary.com/dwebygldw/image/upload/v1653067279/frittr/E7OX3WgXoAEu0gR_z9x7zu.jpg',
     createdAt: '2022-05-01',
     updatedAt: formatDate(),
-    comments: [
-      {
-        _id: '8',
-        comment: 'Nice!',
-        fullName: 'Rakshit Gill',
-        username: 'gill100',
-        profileAvatar: 'https://picsum.photos/id/1005/150',
-        createdAt: formatDate(),
-        updatedAt: formatDate(),
-        votes: {
-          upvotedBy: [],
-          downvotedBy: [],
-        },
-      },
-      {
-        _id: '9',
-        comment: 'Wow!',
-        fullName: 'Mohit Singh',
-        username: 'singhMohit',
-        profileAvatar: 'https://picsum.photos/id/1012/150',
-        createdAt: formatDate(),
-        updatedAt: formatDate(),
-        votes: {
-          upvotedBy: [],
-          downvotedBy: [],
-        },
-      },
-    ],
   },
 ];

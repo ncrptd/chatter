@@ -75,11 +75,11 @@ export default function Login() {
     handleLogin(guest);
   }
   return (
-    <main className="h-screen p-4 ">
+    <main className=" p-4 w-full ">
       <h1 className="text-uppercase text-pink-500 uppercase font-bold text-2xl text-center">
         Chatter
       </h1>
-      <div className="container h-5/6 flex justify-center items-center p-6">
+      <div className="container h-5/6 flex justify-center items-center p-6 w-full">
         <form
           className="container mx-auto flex flex-col justify-center item-center gap-4  p-12  md:w-2/5 rounded-2xl shadow-2xl text-base"
           onSubmit={(e) => {
@@ -95,7 +95,7 @@ export default function Login() {
             value={formDetails.username}
             placeholder="johndoe"
             onChange={handleFormDetails}
-            className="border border-slate-400 rounded-sm p-2 bg-slate-900 focus:outline-0 "
+            className=" rounded-sm p-2 bg-slate-900 focus:outline-0 "
           />
           <label htmlFor="password">Password</label>
           <div className="flex justify-between items-center">
@@ -106,10 +106,10 @@ export default function Login() {
               value={formDetails.password}
               placeholder="*******"
               onChange={handleFormDetails}
-              className="border border-r-0 border-slate-400 rounded-sm p-2 focus:outline-0  w-full bg-slate-900"
+              className=" rounded-sm p-2 focus:outline-0  w-full bg-slate-900"
             />
             <div
-              className="border border-l-0 border-slate-400 rounded-sm p-2  bg-slate-900"
+              className=" rounded-sm p-2  bg-slate-900"
               onClick={() => {
                 setShow((prev) => {
                   return !prev;

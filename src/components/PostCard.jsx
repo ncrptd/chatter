@@ -43,7 +43,6 @@ export default function PostCard({ post }) {
   };
   const optionsHandler = (e) => {
     e.preventDefault();
-    // handleOpenModal(post._id);
     postDispatch({
       type: POST_ACTIONS.SHOW_OPTIONS,
       payload: { postId: post._id },
@@ -109,7 +108,7 @@ export default function PostCard({ post }) {
             width="28"
             height="28"
             viewBox="0 0 24 24"
-            className={`text-gray-500 hover:text-red-500 transition duration-150 hover:ease-in-out ${
+            className={`text-gray-500 md:hover:text-red-500 transition duration-150 hover:ease-in-out ${
               liked && 'text-red-500 '
             }`}
           >
@@ -133,7 +132,7 @@ export default function PostCard({ post }) {
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className={`hover:text-green-500  transition duration-150 hover:ease-in-out `}
+            className={`md:hover:text-green-500  transition duration-150 hover:ease-in-out `}
           >
             <path
               fill="none"

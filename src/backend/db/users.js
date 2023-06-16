@@ -9,6 +9,7 @@ export const users = [
     _id: 'eyJhbGciOi4cj8hFuJfY',
     firstName: 'john',
     lastName: 'doe',
+    fullName: 'John Doe',
     username: 'johndoe',
     password: 'johndoe12345',
     createdAt: formatDate(),

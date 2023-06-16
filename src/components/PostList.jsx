@@ -2,7 +2,6 @@ import React from 'react';
 import PostCard from './PostCard';
 import { usePost } from '../context/PostContext';
 import PostSkeletonCard from './skeletons/PostSkeletonCard';
-import { useState } from 'react';
 
 export default function PostList() {
   const { state } = usePost();

@@ -35,21 +35,71 @@ export function PostProvider({ children }) {
   }, []);
 
   const addPostHandler = async (content) => {
-    const encodedToken = getEncodedToken();
-    const config = {
-      headers: { authorization: encodedToken },
-    };
-    const body = {
-      postData: { content, userId: userDetails._id },
-    };
-    const res = await axios.post('/api/posts', body, config);
-    dispatch({
-      type: POST_ACTIONS.ADD_POST,
-      payload: { posts: res.data.posts },
-    });
+    try {
+      const encodedToken = getEncodedToken();
+      const config = {
+        headers: { authorization: encodedToken },
+      };
+      console.log(userDetails.fullName);
+      const body = {
+        postData: {
+          content,
+          userId: userDetails._id,
+          fullName: userDetails?.fullName,
+        },
+      };
+      const res = await axios.post('/api/posts', body, config);
+      console.log(res.data);
+      dispatch({
+        type: POST_ACTIONS.ADD_POST,
+        payload: { posts: res.data.posts },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editPostHandler = async (content, postId) => {
+    try {
+      const encodedToken = getEncodedToken();
+      const config = {
+        headers: { authorization: encodedToken },
+      };
+      const body = {
+        postData: { content },
+      };
+
+      const res = await axios.post(`/api/posts/edit/${postId}`, body, config);
+      const updatedPosts = res.data.posts;
+      dispatch({
+        type: POST_ACTIONS.ADD_POST,
+        payload: { posts: updatedPosts },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePostHandler = async (postId) => {
+    try {
+      const encodedToken = getEncodedToken();
+      const config = {
+        headers: { authorization: encodedToken },
+      };
+      const res = await axios.delete(`/api/posts/${postId}`, config);
+      console.log(res.data.posts);
+      dispatch({
+        type: POST_ACTIONS.ADD_POST,
+        payload: { posts: res.data.posts },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
-    <PostContext.Provider value={{ state, addPostHandler }}>
+    <PostContext.Provider
+      value={{ state, addPostHandler, editPostHandler, deletePostHandler }}
+    >
       <PostDispatchContext.Provider value={dispatch}>
         {children}
       </PostDispatchContext.Provider>
