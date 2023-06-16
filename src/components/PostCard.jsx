@@ -5,6 +5,8 @@ import { useUser } from '../context/UserContext';
 import { usePost, usePostDispatch } from '../context/PostContext';
 import { POST_ACTIONS } from '../reducer/postReducer';
 import PostOptionsModal from './modals/PostOptionsModal';
+import { useRef } from 'react';
+import { useOutsideClick } from '../customHooks/useOutsideClick';
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
@@ -17,6 +19,8 @@ export default function PostCard({ post }) {
 
   const liked = post.likes.likedBy.find((user) => user._id === userDetails._id);
   const isUserPost = post.userId === userDetails._id;
+
+  const optionsRef = useRef();
 
   const likeHandler = async () => {
     try {
@@ -45,6 +49,10 @@ export default function PostCard({ post }) {
       payload: { postId: post._id },
     });
   };
+  useOutsideClick(optionsRef, postDispatch, {
+    type: POST_ACTIONS.SHOW_OPTIONS,
+    payload: { postId: null },
+  });
   return (
     <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500 break-words">
       <div className="flex justify-between items-center ">
@@ -85,7 +93,7 @@ export default function PostCard({ post }) {
             </svg>
             {showOptions === post._id && (
               <div className="absolute top-0 right-0 ">
-                <PostOptionsModal post={post} />
+                <PostOptionsModal post={post} ref={optionsRef} />
               </div>
             )}
           </div>

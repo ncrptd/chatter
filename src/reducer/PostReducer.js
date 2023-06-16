@@ -28,7 +28,6 @@ function postReducer(state, action) {
       return { ...state, editPost: payload.post };
     }
     case POST_ACTIONS.SHOW_OPTIONS: {
-      console.log(payload.postId);
       return { ...state, showOptions: payload.postId };
     }
     default: {

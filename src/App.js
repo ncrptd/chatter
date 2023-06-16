@@ -7,6 +7,7 @@ import Explore from './pages/Explore';
 import Bookmarks from './pages/Bookmarks';
 import { RequiresAuth } from '../src/components/RequiresAuth';
 import Login from './pages/Login';
+
 function App() {
   return (
     <main className="App lg:px-6 h-screen">

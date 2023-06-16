@@ -1,18 +1,23 @@
 import { usePost, usePostDispatch } from '../../context/PostContext';
 import { POST_ACTIONS } from '../../reducer/postReducer';
 import EditPostModal from './EditPostModal';
-
-export default function PostOptionsModal({ post }) {
+import { forwardRef } from 'react';
+const PostOptionsModal = forwardRef(({ post }, ref) => {
   const { state } = usePost();
   const { editPost } = state;
 
   const postDispatch = usePostDispatch();
 
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    e.stopPropagation();
     postDispatch({ type: POST_ACTIONS.EDIT_POST, payload: { post: post } });
   };
+
   return (
-    <div className="bg-slate-700 rounded-lg p-4 text-white text-sm shadow-2xl">
+    <div
+      className="bg-slate-700 rounded-lg p-4 text-white text-sm shadow-2xl"
+      ref={ref}
+    >
       <button
         className="flex gap-1 justify-center items-center hover:text-pink-500"
         onClick={handleEdit}
@@ -47,4 +52,6 @@ export default function PostOptionsModal({ post }) {
       {editPost && <EditPostModal post={post} />}
     </div>
   );
-}
+});
+
+export default PostOptionsModal;
