@@ -4,6 +4,7 @@ import userReducer, {
   initialState,
 } from '../reducer/userReducer';
 import { useEffect } from 'react';
+import { getAllUserService } from '../services/userServices';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
@@ -20,8 +21,20 @@ export default function UserProvider({ children }) {
       payload: { userDetails: userDetails },
     });
   };
+  const getAllUsers = async () => {
+    try {
+      let res = await getAllUserService();
+      dispatch({
+        type: USER_ACTIONS.GET_ALL_USERS,
+        payload: { users: res.data.users },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getUserDetails();
+    getAllUsers();
   }, []);
   return (
     <UserContext.Provider value={{ state }}>

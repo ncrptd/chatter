@@ -21,6 +21,7 @@ export const posts = [
       'https://res.cloudinary.com/dwebygldw/image/upload/v1653066367/frittr/vada-pav_g0u58t.webp',
     createdAt: '2022-05-01',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4k2j8hFuJfY',
   },
   {
     _id: '2',
@@ -38,6 +39,7 @@ export const posts = [
     postImage:
       'https://res.cloudinary.com/dwebygldw/image/upload/v1652908952/frittr/zwpmppawiyxwthsmikyk.webp',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4ssf442j8hF5sdffY',
   },
   {
     _id: '3',
@@ -66,6 +68,7 @@ export const posts = [
     postImage: null,
     createdAt: '2022-04-20',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJsdf',
   },
   {
     _id: '4',
@@ -81,6 +84,7 @@ export const posts = [
     fullName: 'Rakshit Gill',
     createdAt: '2022-05-05',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJsdf',
   },
   {
     _id: '5',
@@ -129,5 +133,6 @@ export const posts = [
       'https://res.cloudinary.com/dwebygldw/image/upload/v1653067279/frittr/E7OX3WgXoAEu0gR_z9x7zu.jpg',
     createdAt: '2022-05-01',
     updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4k2j8hF5sdffY',
   },
 ];

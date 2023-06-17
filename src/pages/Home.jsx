@@ -20,7 +20,7 @@ export default function Home() {
         Home
       </h1>
 
-      <div className="container mx-auto  border border-slate-500 ">
+      <div className="border border-slate-500 ">
         <CreatePost />
       </div>
       <div className="flex justify-around items-center bg-gray-800 border-x border-b border-slate-500 p-2 font-semibold text-center">
