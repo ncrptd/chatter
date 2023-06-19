@@ -7,6 +7,7 @@ import Explore from './pages/Explore';
 import Bookmarks from './pages/Bookmarks';
 import { RequiresAuth } from '../src/components/RequiresAuth';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
+          <Route path="/profile/:userId" element={<Profile />} />
         </Route>
         <Route path="/mockman" element={<Mockman />} />
         <Route path="/login" element={<Login />} />

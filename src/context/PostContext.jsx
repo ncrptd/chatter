@@ -19,6 +19,7 @@ export function PostProvider({ children }) {
 
   const { state: userState } = useUser();
   const { userDetails } = userState;
+
   const getAllPostHandler = async () => {
     const res = await getAllPostService();
     const { data } = res;
@@ -30,17 +31,12 @@ export function PostProvider({ children }) {
     }, 1000);
   };
 
-  useEffect(() => {
-    getAllPostHandler();
-  }, []);
-
   const addPostHandler = async (content) => {
     try {
       const encodedToken = getEncodedToken();
       const config = {
         headers: { authorization: encodedToken },
       };
-      console.log(userDetails.fullName);
       const body = {
         postData: {
           content,
@@ -49,7 +45,6 @@ export function PostProvider({ children }) {
         },
       };
       const res = await axios.post('/api/posts', body, config);
-      console.log(res.data);
       dispatch({
         type: POST_ACTIONS.ADD_POST,
         payload: { posts: res.data.posts },
@@ -96,6 +91,11 @@ export function PostProvider({ children }) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getAllPostHandler();
+  }, []);
+
   return (
     <PostContext.Provider
       value={{ state, addPostHandler, editPostHandler, deletePostHandler }}

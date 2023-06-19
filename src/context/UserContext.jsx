@@ -4,7 +4,11 @@ import userReducer, {
   initialState,
 } from '../reducer/userReducer';
 import { useEffect } from 'react';
-import { getAllUserService } from '../services/userServices';
+import {
+  getAllUserService,
+  getUserPostsService,
+  getUserService,
+} from '../services/userServices';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
@@ -23,21 +27,48 @@ export default function UserProvider({ children }) {
   };
   const getAllUsers = async () => {
     try {
-      let res = await getAllUserService();
+      const res = await getAllUserService();
       dispatch({
         type: USER_ACTIONS.GET_ALL_USERS,
         payload: { users: res.data.users },
       });
     } catch (error) {
-      console.log(error);
+      console.log(`all users api failed with error ${error}`);
     }
   };
+  const getProfileUserHandler = async (userId) => {
+    console.log(userId);
+    try {
+      const res = await getUserService(userId);
+      dispatch({
+        type: USER_ACTIONS.SAVE_PROFILE_USER,
+        payload: { userDetails: res.data.user },
+      });
+    } catch (error) {
+      console.log(`api for profile user failed with error ${error}`);
+    }
+  };
+
+  const getProfileUserPostsHandler = async (username) => {
+    try {
+      const res = await getUserPostsService(username);
+      dispatch({
+        type: USER_ACTIONS.ADD_PROFILE_USER_POSTS,
+        payload: { posts: res.data.posts },
+      });
+    } catch (error) {
+      console.log(`api for profile user posts failed with error ${error}`);
+    }
+  };
+
   useEffect(() => {
     getUserDetails();
     getAllUsers();
   }, []);
   return (
-    <UserContext.Provider value={{ state }}>
+    <UserContext.Provider
+      value={{ state, getProfileUserHandler, getProfileUserPostsHandler }}
+    >
       <UserDispatchContext.Provider value={dispatch}>
         {children}
       </UserDispatchContext.Provider>

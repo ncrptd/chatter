@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getEncodedToken } from '../utils/encodedToken';
 
 const getAllPostService = () => axios.get('/api/posts');
-
+const getUserPostService = (username) =>
+  axios.get(`/api/posts/user/${username}`);
 const likePostService = ({ _id }) => {
   const token = getEncodedToken();
   const body = {};
@@ -25,6 +26,7 @@ const dislikePostService = ({ _id }) => {
 
 export {
   getAllPostService,
+  getUserPostService,
   getEncodedToken,
   likePostService,
   dislikePostService,

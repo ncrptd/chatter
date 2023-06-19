@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 export default function Navbar() {
   return (
-    <div className=" p-4 text-4xl lg:hidden bg-slate-900">
+    <div className="fixed bottom-0 left-0 right-0 w-full p-4 text-4xl lg:hidden bg-slate-900">
       <ul className="flex justify-between">
         {/* home  */}
         <li>

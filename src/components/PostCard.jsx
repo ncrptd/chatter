@@ -7,22 +7,25 @@ import { POST_ACTIONS } from '../reducer/postReducer';
 import PostOptionsModal from './modals/PostOptionsModal';
 import { useRef } from 'react';
 import { useOutsideClick } from '../customHooks/useOutsideClick';
+import { useNavigate } from 'react-router-dom';
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 export default function PostCard({ post }) {
   const { state: userState } = useUser();
-  const { userDetails } = userState;
+
+  const { userDetails, allUsers } = userState;
+
   const { state: postState } = usePost();
   const { showOptions } = postState;
   const postDispatch = usePostDispatch();
 
   const liked = post.likes.likedBy.find((user) => user._id === userDetails._id);
   const isUserPost = post.userId === userDetails._id;
-  const { state } = useUser();
-  const { allUsers } = state;
-  const userProfilePic = allUsers.find(({ _id }) => _id === post.userId);
+  const user = allUsers.find(({ _id }) => _id === post.userId);
   const optionsRef = useRef();
+
+  const navigate = useNavigate();
 
   const likeHandler = async () => {
     try {
@@ -34,6 +37,8 @@ export default function PostCard({ post }) {
         });
       } else {
         let res = await likePostService(post);
+        console.log('like posts', res.data.posts);
+
         postDispatch({
           type: POST_ACTIONS.ADD_POST,
           payload: { posts: res.data.posts },
@@ -54,20 +59,28 @@ export default function PostCard({ post }) {
     type: POST_ACTIONS.SHOW_OPTIONS,
     payload: { postId: null },
   });
+
+  const handleProfileNavigation = () => {
+    navigate(`/profile/${post?.userId}`);
+  };
+
   return (
     <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500 break-words">
       <div className="flex justify-between items-center ">
-        <div className="flex items-center gap-2 ">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={handleProfileNavigation}
+        >
           <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden">
             <img
-              src={userProfilePic?.profilePic}
+              src={user?.profilePic}
               alt="user-profile"
               className="w-full h-full object-cover "
             />
           </div>
-          <p className="text-semibold">{post?.fullName}</p>
+          <p className="text-semibold">{user?.fullName}</p>
           <p className="font-thin  text-sm text-slate-400 ">
-            @{post?.username} ◦
+            @{user?.username} ◦
           </p>
           <p className="font-thin text-sm text-slate-400">
             {formatDate(post?.createdAt)}
