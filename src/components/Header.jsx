@@ -6,12 +6,12 @@ export default function Header() {
   const userId = userDetails?._id;
 
   return (
-    <header className="col-span-2 hidden md:block text-2xl h-full ">
+    <header className="col-span-2 hidden md:block text-2xl ">
       <div className="py-2">
-        <h1 className="text-uppercase  text-pink-500 uppercase mb-4">
+        <h1 className="text-uppercase text-pink-500 uppercase mb-4 font-bold">
           Chatter
         </h1>
-        <ul className="flex flex-col gap-8 font-semibold  ">
+        <ul className="flex flex-col gap-8 font-semibold justify-center">
           <li className="flex gap-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"

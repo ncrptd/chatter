@@ -18,6 +18,13 @@ export default function Suggestions() {
             <SuggestionCard />
             <SuggestionCard />
             <SuggestionCard />
+            <SuggestionCard />
+            <SuggestionCard />
+            <SuggestionCard />
+            <SuggestionCard />
+            <SuggestionCard />
+            <SuggestionCard />
+            <SuggestionCard />
           </>
         ) : (
           <SuggestionSkeletonCard />

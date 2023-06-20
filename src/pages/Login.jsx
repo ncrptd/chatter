@@ -7,8 +7,8 @@ import { useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
 
 const GUEST = {
-  username: 'johndoe',
-  password: 'johndoe12345',
+  username: 'rockeywithane',
+  password: 'rockeywithane',
 };
 
 export default function Login() {

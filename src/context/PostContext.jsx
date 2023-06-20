@@ -50,7 +50,7 @@ export function PostProvider({ children }) {
         payload: { posts: res.data.posts },
       });
     } catch (error) {
-      console.log(error);
+      console.log(`add post api failed with error`, error);
     }
   };
 
@@ -71,7 +71,7 @@ export function PostProvider({ children }) {
         payload: { posts: updatedPosts },
       });
     } catch (error) {
-      console.log(error);
+      console.log(`edit post api failed with error `, error);
     }
   };
 
@@ -82,13 +82,12 @@ export function PostProvider({ children }) {
         headers: { authorization: encodedToken },
       };
       const res = await axios.delete(`/api/posts/${postId}`, config);
-      console.log(res.data.posts);
       dispatch({
         type: POST_ACTIONS.ADD_POST,
         payload: { posts: res.data.posts },
       });
     } catch (error) {
-      console.log(error);
+      console.log(`delete post api failed with error `, error);
     }
   };
 

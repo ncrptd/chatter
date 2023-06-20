@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <section className=" bg-slate-900  overflow-auto home">
+    <section className=" bg-slate-900 overflow-auto home h-screen">
       <h1 className="text-center p-2 font-semibold bg-gray-800 border-x border-slate-500">
         Home
       </h1>

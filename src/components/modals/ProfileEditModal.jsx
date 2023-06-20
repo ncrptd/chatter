@@ -1,52 +1,117 @@
 import React from 'react';
-import { usePostDispatch } from '../../context/PostContext';
-import { POST_ACTIONS } from '../../reducer/postReducer';
 import { createPortal } from 'react-dom';
+import { useState } from 'react';
+import { useUserDispatch } from '../../context/UserContext';
+import { USER_ACTIONS } from '../../reducer/userReducer';
+import { useRef } from 'react';
 
-export default function ProfileEditModal({ profileDetails }) {
-  const postDispatch = usePostDispatch();
+export default function ProfileEditModal({ user }) {
+  const imgRef = useRef();
 
+  const details = {
+    bio: user?.bio,
+    website: user?.website,
+  };
+  const [profileDetails, setProfileDetails] = useState(details);
+
+  const [image, setImage] = useState(null);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setProfileDetails((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const userDispatch = useUserDispatch();
   const closeModal = (e) => {
     e.stopPropagation();
-    postDispatch({ type: POST_ACTIONS.EDIT_POST, payload: { post: null } });
+    userDispatch({
+      type: USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL,
+      payload: { payload: false },
+    });
   };
   const portalEl = document.querySelector('.portal');
 
+  const handleImageClick = () => {
+    imgRef.current.click();
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
   return createPortal(
     <>
-      {/* <div className=" modal-wrapper bg-slate-800" onClick={closeModal}></div> */}
-      <div className="bg-slate-800 flex flex-col gap-2 text-center ">
-        <h1 className=" p-2 font-semibold bg-gray-800 border-x border-slate-500">
-          Edit Profile
-        </h1>
+      <div className=" modal-wrapper bg-slate-800" onClick={closeModal}></div>
+      <div className="bg-slate-900 flex flex-col gap-2 text-center modal w-3/4 md:w-1/4 p-4 rounded-lg shadow-md shadow-slate-700">
+        <h1 className=" p-2 font-semibold ">Edit Profile</h1>
         {/* avatar section  */}
-        <div className="w-20 h-20 rounded-full bg-slate-300 mx-auto">
-          {/* <img src={profileDetails?.image} alt="profile" /> */}
+        <div
+          className="w-20 h-20 rounded-full bg-slate-300 mx-auto overflow-hidden relative cursor-pointer"
+          onClick={handleImageClick}
+        >
+          <input
+            type="file"
+            name=""
+            id=""
+            className="hidden"
+            ref={imgRef}
+            onChange={handleImageChange}
+          />
+
+          {image ? (
+            <img src={URL.createObjectURL(image)} alt="profile" />
+          ) : (
+            <img
+              src={
+                user?.profilePic ||
+                'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png'
+              }
+              alt="profile"
+              className="w-full h-full object-cover "
+            />
+          )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            className="absolute bottom-2 right-3 "
+            viewBox="0 0 256 256"
+          >
+            <path
+              fill="currentColor"
+              d="M208 56h-27.72l-13.63-20.44A8 8 0 0 0 160 32H96a8 8 0 0 0-6.65 3.56L75.71 56H48a24 24 0 0 0-24 24v112a24 24 0 0 0 24 24h160a24 24 0 0 0 24-24V80a24 24 0 0 0-24-24Zm-44 76a36 36 0 1 1-36-36a36 36 0 0 1 36 36Z"
+            />
+          </svg>
         </div>
         {/* bio section  */}
-        <label htmlFor="bio" className="text-2xl ">
+        <label htmlFor="bio" className=" ">
           Bio
         </label>
         <textarea
           type="text"
-          // onChange={handleInputChange}
-          // value={editValue}
+          onChange={handleInputChange}
+          value={profileDetails.bio}
           name="bio"
           id="bio"
           placeholder="Something about you..."
-          className="bg-inherit resize-none p-4 border border-slate-400 outline-none focus:outline-pink-500 focus:border-none"
+          className="bg-inherit resize-none p-4 border border-slate-400 outline-none h-28"
         />
-        {/* link section  */}
-        <label htmlFor="link" className="text-2xl ">
-          Link
+        {/* website section  */}
+        <label htmlFor="website" className=" ">
+          Website
         </label>
         <input
           type="text"
-          name="link"
-          id="link"
-          className="bg-inherit border border-slate-400 p-4 w-full rounded-md"
+          name="website"
+          id="website"
+          className="bg-inherit  border border-slate-400 outline-none p-4 w-full rounded-md"
+          onChange={handleInputChange}
+          value={profileDetails.website}
         />
-        <button className=" bg-pink-700 rounded-lg px-4 py-2  tracking-widest disabled:opacity-75 mx-auto">
+        <button className=" bg-pink-600 rounded-lg px-4 py-2  tracking-widest disabled:opacity-75 my-2 mx-auto">
           Update
         </button>
       </div>

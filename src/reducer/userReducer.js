@@ -4,12 +4,14 @@ const USER_ACTIONS = {
   GET_ALL_USERS: 'get-all-users',
   ADD_USER_POSTS: 'add-user-posts',
   ADD_PROFILE_USER_POSTS: 'add-profile-user-posts',
+  OPEN_PROFILE_EDIT_MODAL: 'open-profile-edit-modal',
 };
 const initialState = {
   userDetails: null,
   allUsers: [],
   profileUser: null,
   profileUserPosts: null,
+  openProfileEditModal: false,
 };
 export default function userReducer(state, action) {
   const { type, payload } = action;
@@ -26,6 +28,9 @@ export default function userReducer(state, action) {
     }
     case USER_ACTIONS.ADD_PROFILE_USER_POSTS: {
       return { ...state, profileUserPosts: payload.posts };
+    }
+    case USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL: {
+      return { ...state, openProfileEditModal: payload.open };
     }
     default: {
       return state;
