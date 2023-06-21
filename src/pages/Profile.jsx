@@ -4,7 +4,6 @@ import PostCard from '../components/PostCard';
 import { useParams } from 'react-router-dom';
 import { usePost } from '../context/PostContext';
 import PostSkeletonCard from '../components/skeletons/PostSkeletonCard';
-import ProfileEditModal from '../components/modals/ProfileEditModal';
 
 export default function Profile() {
   const { state: userState } = useUser();

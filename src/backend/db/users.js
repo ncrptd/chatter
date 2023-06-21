@@ -37,7 +37,7 @@ export const users = [
     following: [],
     followers: [],
     bio: 'Twitter Super Official CEO',
-    website: 'www.example.com',
+    website: 'https://www.example.com/',
   },
   {
     _id: 'eyJhbGciOi4k2j8hFuJfY',
@@ -54,7 +54,7 @@ export const users = [
     following: [],
     followers: [],
     bio: 'I had fun once—it was horrible!',
-    website: 'www.example.com',
+    website: 'https://www.example.com/',
   },
   {
     _id: 'eyJhbGciOi4k2j8hF5sdffY',
@@ -71,7 +71,7 @@ export const users = [
     following: [],
     followers: [],
     bio: 'I’m actually not funny. I’m just really mean, and people think I am joking.',
-    website: 'www.example.com',
+    website: 'https://www.example.com/',
   },
   {
     _id: 'eyJhbGciOi4ssf442j8hF5sdffY',
@@ -88,6 +88,6 @@ export const users = [
     following: [],
     followers: [],
     bio: 'Just another papercut survivor.',
-    website: 'www.example.com',
+    website: 'https://www.example.com/',
   },
 ];

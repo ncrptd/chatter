@@ -2,7 +2,6 @@ import React from 'react';
 import { useUser, useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
 import ProfileEditModal from './modals/ProfileEditModal';
-import { Link } from 'react-router-dom';
 
 export default function ProfileCard({ user }) {
   const { state: userState } = useUser();
@@ -40,7 +39,8 @@ export default function ProfileCard({ user }) {
         <div className="flex flex-col justify-around  w-2/4">
           <div>
             <p className="mb-2">{user?.bio} </p>
-            <a
+           <div>
+           <a
               href={user?.website}
               target="_blank"
               rel="noreferrer"
@@ -48,6 +48,7 @@ export default function ProfileCard({ user }) {
             >
               {user?.website}
             </a>
+           </div>
           </div>
           {loggedInUser ? (
             <>

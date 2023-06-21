@@ -6,8 +6,7 @@ import userReducer, {
 import { useEffect } from 'react';
 import {
   getAllUserService,
-  getUserPostsService,
-  getUserService,
+  userEditService,
 } from '../services/userServices';
 
 const UserContext = createContext();
@@ -36,38 +35,50 @@ export default function UserProvider({ children }) {
       console.log(`all users api failed with error ${error}`);
     }
   };
-  const getProfileUserHandler = async (userId) => {
-    console.log(userId);
-    try {
-      const res = await getUserService(userId);
-      dispatch({
-        type: USER_ACTIONS.SAVE_PROFILE_USER,
-        payload: { userDetails: res.data.user },
-      });
-    } catch (error) {
-      console.log(`api for profile user failed with error ${error}`);
-    }
-  };
+  // const getProfileUserHandler = async (userId) => {
+  //   console.log(userId);
+  //   try {
+  //     const res = await getUserService(userId);
+  //     dispatch({
+  //       type: USER_ACTIONS.SAVE_PROFILE_USER,
+  //       payload: { userDetails: res.data.user },
+  //     });
+  //   } catch (error) {
+  //     console.log(`api for profile user failed with error ${error}`);
+  //   }
+  // };
 
-  const getProfileUserPostsHandler = async (username) => {
-    try {
-      const res = await getUserPostsService(username);
-      dispatch({
-        type: USER_ACTIONS.ADD_PROFILE_USER_POSTS,
-        payload: { posts: res.data.posts },
-      });
-    } catch (error) {
-      console.log(`api for profile user posts failed with error ${error}`);
-    }
-  };
+  // const getProfileUserPostsHandler = async (username) => {
+  //   try {
+  //     const res = await getUserPostsService(username);
+  //     dispatch({
+  //       type: USER_ACTIONS.ADD_PROFILE_USER_POSTS,
+  //       payload: { posts: res.data.posts },
+  //     });
+  //   } catch (error) {
+  //     console.log(`api for profile user posts failed with error ${error}`);
+  //   }
+  // };
 
+  const editUserHandler = async (userData) => {
+    try {
+      const res = await userEditService(userData);
+      const user = res.data.user;
+
+      const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === user._id ? user : dbUser);
+      dispatch({type: USER_ACTIONS.GET_ALL_USERS, payload: {users: updatedAllUsers}})
+    } catch (error) {
+      console.log(`api for user edit failed with error ${error}`)
+      
+    }
+  }
   useEffect(() => {
     getUserDetails();
     getAllUsers();
   }, []);
   return (
     <UserContext.Provider
-      value={{ state, getProfileUserHandler, getProfileUserPostsHandler }}
+      value={{ state, editUserHandler }}
     >
       <UserDispatchContext.Provider value={dispatch}>
         {children}

@@ -1,20 +1,23 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
-import { useUserDispatch } from '../../context/UserContext';
+import { useUser, useUserDispatch } from '../../context/UserContext';
 import { USER_ACTIONS } from '../../reducer/userReducer';
 import { useRef } from 'react';
+import axios from 'axios';
 
 export default function ProfileEditModal({ user }) {
-  const imgRef = useRef();
-
-  const details = {
+  const [profileDetails, setProfileDetails] = useState({
     bio: user?.bio,
     website: user?.website,
-  };
-  const [profileDetails, setProfileDetails] = useState(details);
+  });
+  const { editUserHandler } = useUser();
+  const userDispatch = useUserDispatch();
 
   const [image, setImage] = useState(null);
+
+  const imgRef = useRef();
+
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -25,9 +28,9 @@ export default function ProfileEditModal({ user }) {
     });
   };
 
-  const userDispatch = useUserDispatch();
-  const closeModal = (e) => {
-    e.stopPropagation();
+
+  const closeModal = () => {
+    // e.stopPropagation();
     userDispatch({
       type: USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL,
       payload: { payload: false },
@@ -42,6 +45,23 @@ export default function ProfileEditModal({ user }) {
     const file = e.target.files[0];
     setImage(file);
   };
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = new FormData();
+      data.append('file', image);
+      data.append('upload_preset', 'rulhbxox');
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/dwghy6c1x/image/upload`, data);
+      console.log(res);
+      const userData = profileDetails;
+      editUserHandler(userData);
+      closeModal();
+    } catch (error) {
+      console.log(`cloudinary api failed with error`, error)
+    }
+  }
+
+
   return createPortal(
     <>
       <div className=" modal-wrapper bg-slate-800" onClick={closeModal}></div>
@@ -87,33 +107,35 @@ export default function ProfileEditModal({ user }) {
           </svg>
         </div>
         {/* bio section  */}
-        <label htmlFor="bio" className=" ">
-          Bio
-        </label>
-        <textarea
-          type="text"
-          onChange={handleInputChange}
-          value={profileDetails.bio}
-          name="bio"
-          id="bio"
-          placeholder="Something about you..."
-          className="bg-inherit resize-none p-4 border border-slate-400 outline-none h-28"
-        />
-        {/* website section  */}
-        <label htmlFor="website" className=" ">
-          Website
-        </label>
-        <input
-          type="text"
-          name="website"
-          id="website"
-          className="bg-inherit  border border-slate-400 outline-none p-4 w-full rounded-md"
-          onChange={handleInputChange}
-          value={profileDetails.website}
-        />
-        <button className=" bg-pink-600 rounded-lg px-4 py-2  tracking-widest disabled:opacity-75 my-2 mx-auto">
-          Update
-        </button>
+        <form onSubmit={handleEditSubmit}>
+          <label htmlFor="bio" className=" ">
+            Bio
+          </label>
+          <textarea
+            type="text"
+            onChange={handleInputChange}
+            value={profileDetails.bio}
+            name="bio"
+            id="bio"
+            placeholder="Something about you..."
+            className="bg-inherit resize-none p-4 border border-slate-400 outline-none h-28"
+          />
+          {/* website section  */}
+          <label htmlFor="website" className=" ">
+            Website
+          </label>
+          <input
+            type="url"
+            name="website"
+            id="website"
+            className="bg-inherit  border border-slate-400 outline-none p-4 w-full rounded-md"
+            onChange={handleInputChange}
+            value={profileDetails.website}
+          />
+          <button className=" bg-pink-600 rounded-lg px-4 py-2  tracking-widest disabled:opacity-75 my-2 mx-auto" type='submit'>
+            Update
+          </button>
+        </form>
       </div>
     </>,
     portalEl
