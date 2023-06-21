@@ -3,7 +3,6 @@ const USER_ACTIONS = {
   SAVE_PROFILE_USER: 'save-profile-user',
   GET_ALL_USERS: 'get-all-users',
   ADD_USER_POSTS: 'add-user-posts',
-  ADD_PROFILE_USER_POSTS: 'add-profile-user-posts',
   OPEN_PROFILE_EDIT_MODAL: 'open-profile-edit-modal',
 };
 const initialState = {
@@ -22,12 +21,8 @@ export default function userReducer(state, action) {
     case USER_ACTIONS.SAVE_PROFILE_USER: {
       return { ...state, profileUser: payload.userDetails };
     }
-
     case USER_ACTIONS.GET_ALL_USERS: {
       return { ...state, allUsers: payload.users };
-    }
-    case USER_ACTIONS.ADD_PROFILE_USER_POSTS: {
-      return { ...state, profileUserPosts: payload.posts };
     }
     case USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL: {
       return { ...state, openProfileEditModal: payload.open };
