@@ -6,6 +6,8 @@ import { USER_ACTIONS } from '../../reducer/userReducer';
 import { useRef } from 'react';
 import axios from 'axios';
 
+const UPLOAD_PRESET = 'chatter'
+
 export default function ProfileEditModal({ user }) {
   const [profileDetails, setProfileDetails] = useState({
     bio: user?.bio,
@@ -45,14 +47,20 @@ export default function ProfileEditModal({ user }) {
     const file = e.target.files[0];
     setImage(file);
   };
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const data = new FormData();
-      data.append('file', image);
-      data.append('upload_preset', 'rulhbxox');
-      const res = await axios.post(`https://api.cloudinary.com/v1_1/dwghy6c1x/image/upload`, data);
-      console.log(res);
+      if (image) {
+        console.log('called')
+        const data = new FormData();
+        data.append('file', image);
+        data.append("upload_preset", UPLOAD_PRESET);
+        const res = await axios.post(`https://api.cloudinary.com/v1_1/dazl0yblg/image/upload`, data);
+
+        console.log(res);
+      }
       const userData = profileDetails;
       editUserHandler(userData);
       closeModal();

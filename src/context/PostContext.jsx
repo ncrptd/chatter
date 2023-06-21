@@ -40,8 +40,7 @@ export function PostProvider({ children }) {
       const body = {
         postData: {
           content,
-          userId: userDetails._id,
-          fullName: userDetails?.fullName,
+          userId: userDetails?._id,
         },
       };
       const res = await axios.post('/api/posts', body, config);
