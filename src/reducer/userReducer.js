@@ -27,6 +27,7 @@ export default function userReducer(state, action) {
     case USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL: {
       return { ...state, openProfileEditModal: payload.open };
     }
+
     default: {
       return state;
     }

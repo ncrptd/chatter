@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 export default function Navbar() {
+  const { state } = useUser();
+  const { userDetails } = state;
+  const userId = userDetails?._id
   return (
-    <div className="fixed bottom-0 left-0 right-0 w-full p-4 text-4xl lg:hidden bg-slate-900">
+    <div className="fixed bottom-0 left-0 right-0 w-full p-4 text-4xl lg:hidden bg-slate-900 ">
       <ul className="flex justify-between">
         {/* home  */}
         <li>
@@ -52,7 +56,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Link to="/profile">
+          <Link to={`/profile/${userId}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"

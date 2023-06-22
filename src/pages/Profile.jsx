@@ -31,6 +31,7 @@ export default function Profile() {
       ) : (
         userPosts.map((post) => <PostCard post={post} key={post._id} />)
       )}
+
     </div>
   );
 }

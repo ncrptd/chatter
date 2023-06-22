@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useUser, useUserDispatch } from '../../context/UserContext';
 import { USER_ACTIONS } from '../../reducer/userReducer';
 import { useRef } from 'react';
-import axios from 'axios';
 
-const UPLOAD_PRESET = 'chatter'
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
+const CLOUDINARY_UPLOAD_PRESET = "chatter";
 
 export default function ProfileEditModal({ user }) {
   const [profileDetails, setProfileDetails] = useState({
@@ -51,24 +51,28 @@ export default function ProfileEditModal({ user }) {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      if (image) {
-        console.log('called')
-        const data = new FormData();
-        data.append('file', image);
-        data.append("upload_preset", UPLOAD_PRESET);
-        const res = await axios.post(`https://api.cloudinary.com/v1_1/dazl0yblg/image/upload`, data);
+    const file = image;
+    const formData = new FormData();
 
-        console.log(res);
-      }
-      const userData = profileDetails;
-      editUserHandler(userData);
+    try {
+      formData.append("file", file);
+      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
       closeModal();
+      let res = await fetch(CLOUDINARY_URL, {
+        method: "POST",
+        body: formData,
+      });
+      let data = await res.json();
+      const userData = {
+        ...profileDetails, profilePic: data.url
+      }
+      editUserHandler(userData)
+
     } catch (error) {
-      console.log(`cloudinary api failed with error`, error)
+      console.log('cloudinary api failledd with error', error)
+
     }
   }
-
 
   return createPortal(
     <>
@@ -145,6 +149,7 @@ export default function ProfileEditModal({ user }) {
           </button>
         </form>
       </div>
+
     </>,
     portalEl
   );

@@ -8,6 +8,7 @@ export default function ProfileCard({ user }) {
   const { openProfileEditModal, userDetails } = userState;
 
   const userDispatch = useUserDispatch();
+
   const handleProfileModal = () => {
     userDispatch({
       type: USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL,
@@ -16,58 +17,44 @@ export default function ProfileCard({ user }) {
   };
   const loggedInUser = user._id === userDetails._id;
   const isFollowing = userDetails.followers.find((i) => i._id === user._id);
+  const website = new URL(user.website).hostname;
+
   return (
-    <div className="text-center ">
-      <div className="flex justify-between px-10 pt-4 pb-2 border border-slate-500 bg-slate-900 ">
-        <div className="flex flex-col items-center  gap-2">
-          <div className="w-28 h-28 rounded-full bg-slate-100 overflow-hidden md:w-32 md:h-32">
-            <img
-              src={user?.profilePic}
-              alt="user-profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <p>{user?.fullName}</p>
-            <p className="font-thin text-slate-400">@{user?.username}</p>
-          </div>
-          <p>
-            <span className="mr-2">{user?.following.length} Following</span>
-            <span>{user?.followers.length} Followers</span>
-          </p>
+    <div className='flex items-start gap-4 border border-slate-500 bg-slate-900 px-10 py-4 flex-wrap md:flex-nowrap text-center md:justify-between w-full'>
+      {/* image container  */}
+
+      <div className='w-full '>
+        <div className="w-28 h-28 rounded-full bg-slate-100 overflow-hidden md:w-44 md:h-44 mx-auto">
+          <img
+            src={user?.profilePic}
+            alt="user-profile"
+            className="w-full h-full object-cover"
+          />
+
         </div>
-        <div className="flex flex-col justify-around  w-2/4">
-          <div>
-            <p className="mb-2">{user?.bio} </p>
-           <div>
-           <a
-              href={user?.website}
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-500 "
-            >
-              {user?.website}
-            </a>
-           </div>
-          </div>
-          {loggedInUser ? (
-            <>
-              <button
-                className="block border-2 border-pink-500  rounded-full hover:opacity-80 py-1 px-8  mx-auto"
-                onClick={handleProfileModal}
-              >
-                Edit Profile
-              </button>
-              <button className="block bg-red-500 text-white rounded-full hover:opacity-80  py-1 px-12  mx-auto">
-                Log Out
-              </button>
-            </>
-          ) : (
-            <button className="bg-white text-black rounded-full py-1 px-8 mt-6 mx-auto">
-              {isFollowing ? 'UnFollow' : 'Follow'}
-            </button>
-          )}
-        </div>
+      </div>
+      <div className='flex flex-col gap-1 font-semibold w-full '>
+        <p>{user?.fullName}</p>
+        <p className='text-sm text-slate-400 '>@{user?.username}</p>
+        <p className='font-thin word-breaks w-full overflow-clip'>{user?.bio}</p>
+        <p className='text-blue-500 font-thin '>
+          <a href={user?.website} target='_blank' rel="noreferrer" className='w-full '>{website}</a>
+        </p>
+        <p className='flex gap-2'>
+          <span>{user?.followers}</span>
+          <span>{user?.following}</span>
+        </p>
+        {loggedInUser ? <>
+          <button className='bg-green-500 text-white rounded-lg py-2 hover:opacity-80 mb-2' onClick={handleProfileModal}>
+            Edit
+          </button>
+          <button className='bg-red-500 text-white rounded-lg py-2 hover:opacity-80'>
+            Logout
+          </button>
+        </> : <button className="bg-white text-black rounded-lg py-2 hover:opacity-80">
+          {isFollowing ? 'UnFollow' : 'Follow'}
+        </button>}
+
       </div>
       {openProfileEditModal && <ProfileEditModal user={user} />}
     </div>

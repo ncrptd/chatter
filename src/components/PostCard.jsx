@@ -68,7 +68,7 @@ export default function PostCard({ post }) {
     <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500 break-words">
       <div className="flex justify-between items-center ">
         <div
-          className="flex items-center gap-2 cursor-pointer"
+          className="flex items-center gap-4 cursor-pointer"
           onClick={handleProfileNavigation}
         >
           <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden">
@@ -78,13 +78,13 @@ export default function PostCard({ post }) {
               className="w-full h-full object-cover "
             />
           </div>
-          <p className="text-semibold">{user?.fullName}</p>
-          <p className="font-thin  text-sm text-slate-400 ">
-            @{user?.username} ◦
-          </p>
-          <p className="font-thin text-sm text-slate-400">
-            {formatDate(post?.createdAt)}
-          </p>
+          <div className=''>
+            <p className="text-semibold mr-2">{user?.fullName} <span className="font-thin  text-sm text-slate-400 "> @{user?.username}</span></p>
+
+            <p className="font-thin text-sm text-slate-400">
+              {formatDate(post?.createdAt)}
+            </p>
+          </div>
         </div>
         {isUserPost && (
           <div onClick={optionsHandler} className="relative cursor-pointer">
@@ -123,9 +123,8 @@ export default function PostCard({ post }) {
             width="28"
             height="28"
             viewBox="0 0 24 24"
-            className={`text-gray-500 md:hover:text-red-500 transition duration-150 hover:ease-in-out ${
-              liked && 'text-red-500 '
-            }`}
+            className={`text-gray-500 md:hover:text-red-500 transition duration-150 hover:ease-in-out ${liked && 'text-red-500 '
+              }`}
           >
             <path
               fill="currentColor"
