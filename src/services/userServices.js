@@ -38,12 +38,16 @@ const followUserService = (followUserId) => {
 }
 const unFollowUserService = (followUserId) => {
   const encodedToken = getEncodedToken();
-  const config = {
+  const body = JSON.stringify({});
+
+  const response = fetch(`/api/users/unfollow/${followUserId}`, {
+    method: 'POST',
     headers: {
       authorization: encodedToken
-    }
-  };
-  return axios.post(`/api/users/unfollow/${followUserId}`, {}, config)
+    },
+    body: body
+  })
+  return response
 }
 
 

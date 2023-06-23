@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CreatePost from '../components/CreatePost';
 import PostList from '../components/PostList';
 import { usePost, usePostDispatch } from '../context/PostContext';

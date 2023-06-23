@@ -1,18 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AUTH_ACTIONS } from '../reducer/authReducer';
-import { useAuthDispatch } from '../context/AuthContext';
-import { useUser, useUserDispatch } from '../context/UserContext';
-import { USER_ACTIONS } from '../reducer/userReducer';
-import { usePost } from '../context/PostContext';
-// import { signedUp } from '../alerts/alerts';
 export default function Signup() {
-  const dispatch = useAuthDispatch();
-  const { getAllPostHandler } = usePost();
-  const { editUserHandler } = useUser();
 
-  const userDispatch = useUserDispatch();
   const navigate = useNavigate();
   const [formDetails, setFormDetails] = useState({
     firstName: '',
@@ -68,7 +58,7 @@ export default function Signup() {
     }
 
     try {
-      const body = formDetails;
+      const body = { ...formDetails, profilePic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png', fullName: `${formDetails.firstName} ${formDetails.lastName}` };
       const res = await axios.post('/api/auth/signup', body);
       const { createdUser, encodedToken } = res.data;
 
@@ -79,14 +69,6 @@ export default function Signup() {
           encodedToken: encodedToken,
         })
       );
-
-      // dispatch({
-      //   type: AUTH_ACTIONS.LOGIN_SUCCESS
-      // });
-      // userDispatch({
-      //   type: USER_ACTIONS.SAVE_USER,
-      //   payload: { userDetails: createdUser },
-      // });
       navigate('/login');
     } catch (error) {
       console.log('signup failed with error', error);

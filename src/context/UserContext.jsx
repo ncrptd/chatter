@@ -54,25 +54,31 @@ export default function UserProvider({ children }) {
     try {
       const res = await followUserService(followUserId);
       const data = await res.json();
-      const user = data.user;
-      const followUser = data.followUser;
+      const { user, followUser } = data;
+      let updatedUserList = state.allUsers.map((dbUser) =>
+        dbUser._id === user._id ? { ...dbUser, following: [...dbUser.following, followUser] } : dbUser
+      );
+      updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: [...dbUser.followers, user] } : dbUser);
 
-      const userData = { following: [data.followUser], };
-      editUserHandler(userData);
-      const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: [...dbUser.followers, user] } : dbUser);
-      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } })
+
+      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } })
 
     } catch (error) {
-      console.log('follow user api failed with error', error.response.data)
+      console.log('follow user api failed with error', error)
     }
   }
   const unFollowUserHandler = async (followUserId) => {
     try {
       const res = await unFollowUserService(followUserId);
       const data = await res.json();
-      console.log(data)
+      const { user, followUser } = data;
+      let updatedUserList = state.allUsers.map((dbUser) => {
+        return dbUser._id === user._id ? { ...dbUser, following: dbUser.following.filter((i) => i._id !== followUser) } : dbUser
+      })
+      updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: dbUser.followers.filter((i) => i._id !== user._id) } : dbUser)
+      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } })
     } catch (error) {
-      console.log('follow user api failed with error', error)
+      console.log('unfollow user api failed with error', error)
     }
   }
   useEffect(() => {

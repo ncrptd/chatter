@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthDispatch } from '../context/AuthContext';
 import { AUTH_ACTIONS } from '../reducer/authReducer';
-import { useUser, useUserDispatch } from '../context/UserContext';
+import { useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
-import { usePost } from '../context/PostContext';
 
 const GUEST = {
   username: 'rockeywithane',
@@ -20,8 +19,6 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('');
   const [show, setShow] = useState(false);
   const authDispatch = useAuthDispatch();
-  const { getAllPostHandler } = usePost();
-  const { editUserHandler } = useUser();
   const userDispatch = useUserDispatch();
 
   const location = useLocation();

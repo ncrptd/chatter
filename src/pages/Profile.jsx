@@ -9,6 +9,7 @@ export default function Profile() {
   const { state: userState } = useUser();
   const { allUsers } = userState;
   const { userId } = useParams();
+  console.log(allUsers)
   const user = allUsers.find((user) => user?._id === userId);
 
   const { state: postState } = usePost();
@@ -22,7 +23,7 @@ export default function Profile() {
     <div>
       <h1 className="p-2 font-semibold bg-gray-800 border-x border-slate-500 text-center">
         {user?.fullName}{' '}
-        <p className="font-thin text-slate-300">{noOfPosts.length} Posts</p>
+        <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
       </h1>
       {user && <ProfileCard user={user} />}
       {!userPosts ? (

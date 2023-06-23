@@ -21,7 +21,6 @@ export function PostProvider({ children }) {
   const { userDetails } = userState;
 
   const getAllPostHandler = async () => {
-    console.log('ran')
     const res = await getAllPostService();
     const { data } = res;
     setTimeout(() => {

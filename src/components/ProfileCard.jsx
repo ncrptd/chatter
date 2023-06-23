@@ -7,10 +7,16 @@ import { AUTH_ACTIONS } from '../reducer/authReducer';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProfileCard({ user }) {
-  const { state: userState, followUserHandler } = useUser();
+  const { state: userState, followUserHandler, unFollowUserHandler } = useUser();
   const { openProfileEditModal, userDetails } = userState;
   const userDispatch = useUserDispatch();
   const authDispatch = useAuthDispatch();
+
+  const loggedInUser = user?._id === userDetails?._id;
+  const isFollowing = user.followers.find((i) => i._id === userDetails?._id);
+
+  const website = user.website && new URL(user?.website).hostname;
+
   const navigate = useNavigate();
 
   const handleProfileModal = () => {
@@ -20,22 +26,16 @@ export default function ProfileCard({ user }) {
     });
   };
 
-  const loggedInUser = user?._id === userDetails?._id;
-  const isFollowing = user?.followers.find((i) => i._id === userDetails?._id);
-
-  const website = user.website && new URL(user?.website).hostname;
-
-
   const handleFollowUser = () => {
-    followUserHandler(user?._id, user?.username);
+    followUserHandler(user?._id);
   }
   const handleUnfollowUser = () => {
-    console.log('unfollow')
+    unFollowUserHandler(user?._id)
   };
 
   const handleLogout = () => {
-    // localStorage.clear();
-    // userDispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: null } });
+    localStorage.clear();
+    userDispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: null } });
     authDispatch({ type: AUTH_ACTIONS.LOGOUT })
     navigate('/')
   }
@@ -49,19 +49,18 @@ export default function ProfileCard({ user }) {
             alt="user-profile"
             className="w-full h-full object-cover"
           />
-
         </div>
       </div>
-      <div className='flex flex-col gap-1 w-full '>
-        <p className='font-bold text-lg'>{user?.fullName}</p>
-        <p className='text-sm text-slate-400 '>@{user?.username}</p>
+      <div className='flex flex-col gap-2 w-full '>
+        <p className='font-bold text-lg word-breaks w-full overflow-clip'>{user?.fullName}</p>
+        <p className='text-sm text-slate-400 word-breaks w-full overflow-clip text-ellipsis	'>@{user?.username}</p>
         <p className='font-thin word-breaks w-full overflow-clip'>{user?.bio}</p>
         <p className='text-blue-500 font-thin '>
           <a href={user?.website} target='_blank' rel="noreferrer" className='w-full '>{website}</a>
         </p>
-        <p className='flex gap-2'>
-          <span>{user?.followers}</span>
-          <span>{user?.following}</span>
+        <p className='flex gap-2 justify-center text-slate-400'>
+          <span>{user?.followers.length} followers</span>
+          <span>{user?.following.length} following</span>
         </p>
         {loggedInUser ? <>
           <button className='bg-green-500 text-white rounded-lg py-2 hover:opacity-80 mb-2 w-2/4 mx-auto' onClick={handleProfileModal}>
@@ -74,7 +73,7 @@ export default function ProfileCard({ user }) {
           <>
             {
               isFollowing ?
-                <button className="bg-red text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleUnfollowUser}>
+                <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleUnfollowUser}>
                   Unfollow
                 </button> : <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleFollowUser}>
                   Follow

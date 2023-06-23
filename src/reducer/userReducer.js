@@ -9,7 +9,6 @@ const initialState = {
   userDetails: null,
   allUsers: [],
   profileUser: null,
-  profileUserPosts: null,
   openProfileEditModal: false,
 };
 export default function userReducer(state, action) {
@@ -18,9 +17,7 @@ export default function userReducer(state, action) {
     case USER_ACTIONS.SAVE_USER: {
       return { ...state, userDetails: payload.userDetails };
     }
-    case USER_ACTIONS.SAVE_PROFILE_USER: {
-      return { ...state, profileUser: payload.userDetails };
-    }
+
     case USER_ACTIONS.GET_ALL_USERS: {
       return { ...state, allUsers: payload.users };
     }
