@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import CreatePost from '../components/CreatePost';
 import PostList from '../components/PostList';
 import { usePost, usePostDispatch } from '../context/PostContext';
 import { POST_ACTIONS } from '../reducer/postReducer';
+import { useUser } from '../context/UserContext';
 export default function Home() {
   const { state } = usePost();
   const { postsFilterBy } = state;
   const postDispatch = usePostDispatch();
+  const { getAllUsers } = useUser();
   const handlePostsFilter = (filterValue) => {
     postDispatch({
       type: POST_ACTIONS.FILTER_POSTS,
       payload: { filterBy: filterValue },
     });
   };
-
+  useEffect(() => {
+    getAllUsers();
+  })
   return (
     <section className=" bg-slate-900 overflow-auto home h-screen">
       <h1 className="text-center p-2 font-semibold bg-gray-800 border-x border-slate-500">
@@ -25,9 +29,8 @@ export default function Home() {
       </div>
       <div className="flex justify-around items-center bg-gray-800 border-x border-b border-slate-500 p-2 font-semibold text-center">
         <button
-          className={`flex gap-2 items-center  hover:text-red-400 ${
-            postsFilterBy === 'latest' ? 'text-red-400 ' : null
-          }`}
+          className={`flex gap-2 items-center  hover:text-red-400 ${postsFilterBy === 'latest' ? 'text-red-400 ' : null
+            }`}
           onClick={() => {
             handlePostsFilter('latest');
           }}
@@ -48,9 +51,8 @@ export default function Home() {
           </svg>
         </button>
         <button
-          className={`flex gap-2 items-center  hover:text-red-400 ${
-            postsFilterBy === 'trending' ? 'text-red-400 ' : null
-          }`}
+          className={`flex gap-2 items-center  hover:text-red-400 ${postsFilterBy === 'trending' ? 'text-red-400 ' : null
+            }`}
           onClick={() => {
             handlePostsFilter('trending');
           }}

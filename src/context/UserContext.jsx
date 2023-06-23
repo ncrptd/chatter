@@ -5,7 +5,9 @@ import userReducer, {
 } from '../reducer/userReducer';
 import { useEffect } from 'react';
 import {
+  followUserService,
   getAllUserService,
+  unFollowUserService,
   userEditService,
 } from '../services/userServices';
 
@@ -35,41 +37,42 @@ export default function UserProvider({ children }) {
       console.log(`all users api failed with error ${error}`);
     }
   };
-  // const getProfileUserHandler = async (userId) => {
-  //   console.log(userId);
-  //   try {
-  //     const res = await getUserService(userId);
-  //     dispatch({
-  //       type: USER_ACTIONS.SAVE_PROFILE_USER,
-  //       payload: { userDetails: res.data.user },
-  //     });
-  //   } catch (error) {
-  //     console.log(`api for profile user failed with error ${error}`);
-  //   }
-  // };
-
-  // const getProfileUserPostsHandler = async (username) => {
-  //   try {
-  //     const res = await getUserPostsService(username);
-  //     dispatch({
-  //       type: USER_ACTIONS.ADD_PROFILE_USER_POSTS,
-  //       payload: { posts: res.data.posts },
-  //     });
-  //   } catch (error) {
-  //     console.log(`api for profile user posts failed with error ${error}`);
-  //   }
-  // };
 
   const editUserHandler = async (userData) => {
     try {
       const res = await userEditService(userData);
       const user = res.data.user;
-
       const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === user._id ? user : dbUser);
-      return dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } })
+      return dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
     } catch (error) {
       console.log(`api for user edit failed with error ${error}`)
 
+    }
+  }
+
+  const followUserHandler = async (followUserId) => {
+    try {
+      const res = await followUserService(followUserId);
+      const data = await res.json();
+      const user = data.user;
+      const followUser = data.followUser;
+
+      const userData = { following: [data.followUser], };
+      editUserHandler(userData);
+      const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: [...dbUser.followers, user] } : dbUser);
+      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } })
+
+    } catch (error) {
+      console.log('follow user api failed with error', error.response.data)
+    }
+  }
+  const unFollowUserHandler = async (followUserId) => {
+    try {
+      const res = await unFollowUserService(followUserId);
+      const data = await res.json();
+      console.log(data)
+    } catch (error) {
+      console.log('follow user api failed with error', error)
     }
   }
   useEffect(() => {
@@ -78,7 +81,7 @@ export default function UserProvider({ children }) {
   }, []);
   return (
     <UserContext.Provider
-      value={{ state, editUserHandler }}
+      value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers }}
     >
       <UserDispatchContext.Provider value={dispatch}>
         {children}

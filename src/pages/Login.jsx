@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthDispatch } from '../context/AuthContext';
 import { AUTH_ACTIONS } from '../reducer/authReducer';
-import { useUserDispatch } from '../context/UserContext';
+import { useUser, useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
+import { usePost } from '../context/PostContext';
 
 const GUEST = {
   username: 'rockeywithane',
@@ -19,6 +20,8 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState('');
   const [show, setShow] = useState(false);
   const authDispatch = useAuthDispatch();
+  const { getAllPostHandler } = usePost();
+  const { editUserHandler } = useUser();
   const userDispatch = useUserDispatch();
 
   const location = useLocation();
@@ -41,7 +44,7 @@ export default function Login() {
         });
         const { foundUser, encodedToken } = res.data;
         authDispatch({
-          type: AUTH_ACTIONS.LOGIN_SUCCESS,
+          type: AUTH_ACTIONS.LOGIN_SUCCESS
         });
         userDispatch({
           type: USER_ACTIONS.SAVE_USER,
@@ -54,6 +57,7 @@ export default function Login() {
             encodedToken: encodedToken,
           })
         );
+
         if (location?.state?.from?.pathname === undefined) {
           navigate('/');
         } else {
@@ -75,13 +79,13 @@ export default function Login() {
     handleLogin(guest);
   }
   return (
-    <main className=" p-4 w-full ">
+    <main className="p-4 w-full ">
       <h1 className="text-uppercase text-pink-500 uppercase font-bold text-2xl text-center">
         Chatter
       </h1>
       <div className="container h-5/6 flex justify-center items-center p-6 w-full">
         <form
-          className="container mx-auto flex flex-col justify-center item-center gap-4  p-12  md:w-2/5 rounded-2xl shadow-2xl text-base"
+          className="container mx-auto flex flex-col justify-center item-center gap-4  p-4 md:w-2/5 rounded-2xl shadow-2xl text-base"
           onSubmit={(e) => {
             e.preventDefault();
             handleLogin(formDetails);
@@ -109,7 +113,7 @@ export default function Login() {
               className=" rounded-sm p-2 focus:outline-0  w-full bg-slate-900"
             />
             <div
-              className=" rounded-sm p-2  bg-slate-900"
+              className="rounded-sm p-2  bg-slate-900"
               onClick={() => {
                 setShow((prev) => {
                   return !prev;

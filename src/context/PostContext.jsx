@@ -21,6 +21,7 @@ export function PostProvider({ children }) {
   const { userDetails } = userState;
 
   const getAllPostHandler = async () => {
+    console.log('ran')
     const res = await getAllPostService();
     const { data } = res;
     setTimeout(() => {
@@ -96,7 +97,7 @@ export function PostProvider({ children }) {
 
   return (
     <PostContext.Provider
-      value={{ state, addPostHandler, editPostHandler, deletePostHandler }}
+      value={{ state, addPostHandler, editPostHandler, deletePostHandler, getAllPostHandler }}
     >
       <PostDispatchContext.Provider value={dispatch}>
         {children}

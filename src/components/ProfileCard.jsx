@@ -2,12 +2,16 @@ import React from 'react';
 import { useUser, useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
 import ProfileEditModal from './modals/ProfileEditModal';
+import { useAuthDispatch } from '../context/AuthContext';
+import { AUTH_ACTIONS } from '../reducer/authReducer';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileCard({ user }) {
-  const { state: userState } = useUser();
+  const { state: userState, followUserHandler } = useUser();
   const { openProfileEditModal, userDetails } = userState;
-
   const userDispatch = useUserDispatch();
+  const authDispatch = useAuthDispatch();
+  const navigate = useNavigate();
 
   const handleProfileModal = () => {
     userDispatch({
@@ -15,14 +19,29 @@ export default function ProfileCard({ user }) {
       payload: { open: true },
     });
   };
-  const loggedInUser = user._id === userDetails._id;
-  const isFollowing = userDetails.followers.find((i) => i._id === user._id);
-  const website = new URL(user.website).hostname;
 
+  const loggedInUser = user?._id === userDetails?._id;
+  const isFollowing = user?.followers.find((i) => i._id === userDetails?._id);
+
+  const website = user.website && new URL(user?.website).hostname;
+
+
+  const handleFollowUser = () => {
+    followUserHandler(user?._id, user?.username);
+  }
+  const handleUnfollowUser = () => {
+    console.log('unfollow')
+  };
+
+  const handleLogout = () => {
+    // localStorage.clear();
+    // userDispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: null } });
+    authDispatch({ type: AUTH_ACTIONS.LOGOUT })
+    navigate('/')
+  }
   return (
-    <div className='flex items-start gap-4 border border-slate-500 bg-slate-900 px-10 py-4 flex-wrap md:flex-nowrap text-center md:justify-between w-full'>
+    <div className='flex items-start gap-4 border border-slate-500 bg-slate-900 px-4 py-2 flex-wrap md:flex-nowrap text-center md:justify-between w-full'>
       {/* image container  */}
-
       <div className='w-full '>
         <div className="w-28 h-28 rounded-full bg-slate-100 overflow-hidden md:w-44 md:h-44 mx-auto">
           <img
@@ -33,8 +52,8 @@ export default function ProfileCard({ user }) {
 
         </div>
       </div>
-      <div className='flex flex-col gap-1 font-semibold w-full '>
-        <p>{user?.fullName}</p>
+      <div className='flex flex-col gap-1 w-full '>
+        <p className='font-bold text-lg'>{user?.fullName}</p>
         <p className='text-sm text-slate-400 '>@{user?.username}</p>
         <p className='font-thin word-breaks w-full overflow-clip'>{user?.bio}</p>
         <p className='text-blue-500 font-thin '>
@@ -45,16 +64,23 @@ export default function ProfileCard({ user }) {
           <span>{user?.following}</span>
         </p>
         {loggedInUser ? <>
-          <button className='bg-green-500 text-white rounded-lg py-2 hover:opacity-80 mb-2' onClick={handleProfileModal}>
+          <button className='bg-green-500 text-white rounded-lg py-2 hover:opacity-80 mb-2 w-2/4 mx-auto' onClick={handleProfileModal}>
             Edit
           </button>
-          <button className='bg-red-500 text-white rounded-lg py-2 hover:opacity-80'>
+          <button className='bg-red-500 text-white rounded-lg py-2 hover:opacity-80  w-2/4 mx-auto' onClick={handleLogout}>
             Logout
           </button>
-        </> : <button className="bg-white text-black rounded-lg py-2 hover:opacity-80">
-          {isFollowing ? 'UnFollow' : 'Follow'}
-        </button>}
-
+        </> :
+          <>
+            {
+              isFollowing ?
+                <button className="bg-red text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleUnfollowUser}>
+                  Unfollow
+                </button> : <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleFollowUser}>
+                  Follow
+                </button>}
+          </>
+        }
       </div>
       {openProfileEditModal && <ProfileEditModal user={user} />}
     </div>

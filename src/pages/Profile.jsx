@@ -9,7 +9,6 @@ export default function Profile() {
   const { state: userState } = useUser();
   const { allUsers } = userState;
   const { userId } = useParams();
-
   const user = allUsers.find((user) => user?._id === userId);
 
   const { state: postState } = usePost();
@@ -17,7 +16,7 @@ export default function Profile() {
   const userPosts = posts
     .filter((post) => post.userId === userId)
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-  const noOfPosts = posts.filter((post) => post.userId === user._id);
+  const noOfPosts = posts.filter((post) => post?.userId === user?._id);
 
   return (
     <div>
@@ -26,7 +25,7 @@ export default function Profile() {
         <p className="font-thin text-slate-300">{noOfPosts.length} Posts</p>
       </h1>
       {user && <ProfileCard user={user} />}
-      {userPosts.length < 1 ? (
+      {!userPosts ? (
         <PostSkeletonCard />
       ) : (
         userPosts.map((post) => <PostCard post={post} key={post._id} />)

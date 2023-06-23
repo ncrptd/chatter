@@ -8,6 +8,7 @@ import Bookmarks from './pages/Bookmarks';
 import { RequiresAuth } from '../src/components/RequiresAuth';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         </Route>
         <Route path="/mockman" element={<Mockman />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </main>
   );

@@ -1,5 +1,6 @@
 const AUTH_ACTIONS = {
   LOGIN_SUCCESS: 'login-success',
+  LOGOUT: 'logout'
 };
 
 const initialState = {
@@ -7,10 +8,13 @@ const initialState = {
 };
 
 function authReducer(state, action) {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
     case AUTH_ACTIONS.LOGIN_SUCCESS: {
       return { ...state, isLoggedIn: true };
+    }
+    case AUTH_ACTIONS.LOGOUT: {
+      return { ...state, isLoggedIn: false }
     }
     default: {
       return state;
