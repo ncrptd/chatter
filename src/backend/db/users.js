@@ -18,7 +18,9 @@ export const users = [
     profilePic:
       'https://images.pexels.com/photos/810775/pexels-photo-810775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     following: [],
-    followers: [],
+    followers: [
+
+    ],
     bio: 'Frontend Developer',
     website: 'https://rockeybiswasportfolio.netlify.app/',
   },
