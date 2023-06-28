@@ -7,7 +7,7 @@ export default function RootLayout() {
   return (
     <div className=" md:grid grid-cols-12 gap-4 overflow-auto ">
       <Header />
-      <div className="w-full md:col-span-7 bg-slate-800 pb-16">
+      <div className="w-full md:col-span-7 bg-slate-800 pb-16 md:pb-0">
         <Outlet />
       </div>
       <Suggestions />

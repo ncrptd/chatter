@@ -53,18 +53,30 @@ export default function UserProvider({ children }) {
   const followUserHandler = async (followUserId) => {
     try {
       const res = await followUserService(followUserId);
-      const data = await res.json();
-      const { user, followUser } = data;
-      let updatedUserList = state.allUsers.map((dbUser) =>
-        dbUser._id === user._id ? { ...dbUser, following: [...dbUser.following, followUser] } : dbUser
-      );
-      updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: [...dbUser.followers, user] } : dbUser);
+      if (res.status === 200) {
+        const data = await res.json();
+        const { user, followUser } = data;
 
+        let updatedUserList = state.allUsers.map((dbUser) =>
+          dbUser._id === user._id ? { ...dbUser, following: [...dbUser.following, followUser] } : dbUser
+        );
 
-      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } })
+        updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: [...dbUser.followers, user] } : dbUser);
 
+        const alreadyFollowing = state.userDetails?.following.some((user) => user._id === followUserId);
+
+        let updatedFollowing = state.userDetails?.following;
+
+        if (!alreadyFollowing) {
+          updatedFollowing = [...updatedFollowing, followUser]
+        }
+        const updatedUserDetails = { ...state?.userDetails, following: updatedFollowing }
+
+        dispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: updatedUserDetails } });
+        dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } })
+      }
     } catch (error) {
-      console.log('follow user api failed with error', error)
+      console.log(error)
     }
   }
   const unFollowUserHandler = async (followUserId) => {
@@ -75,7 +87,15 @@ export default function UserProvider({ children }) {
       let updatedUserList = state.allUsers.map((dbUser) => {
         return dbUser._id === user._id ? { ...dbUser, following: dbUser.following.filter((i) => i._id !== followUser) } : dbUser
       })
-      updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: dbUser.followers.filter((i) => i._id !== user._id) } : dbUser)
+      updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: dbUser.followers.filter((i) => i._id !== user._id) } : dbUser);
+
+
+      const updatedFollowing = state.userDetails?.following.filter((user) => user._id !== followUserId);
+
+      const updatedUserDetails = { ...state?.userDetails, following: updatedFollowing }
+
+      dispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: updatedUserDetails } });
+
       dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } })
     } catch (error) {
       console.log('unfollow user api failed with error', error)

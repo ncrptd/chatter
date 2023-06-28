@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CreatePost from '../components/CreatePost';
 import PostList from '../components/PostList';
 import { usePost, usePostDispatch } from '../context/PostContext';
 import { POST_ACTIONS } from '../reducer/postReducer';
-import { useUser } from '../context/UserContext';
 export default function Home() {
   const { state } = usePost();
   const { postsFilterBy } = state;
   const postDispatch = usePostDispatch();
-  const { getAllUsers } = useUser();
   const handlePostsFilter = (filterValue) => {
     postDispatch({
       type: POST_ACTIONS.FILTER_POSTS,
       payload: { filterBy: filterValue },
     });
   };
-  useEffect(() => {
-    getAllUsers();
-  })
+
   return (
     <section className=" bg-slate-900 overflow-auto home h-screen">
       <h1 className="text-center p-2 font-semibold bg-gray-800 border-x border-slate-500">

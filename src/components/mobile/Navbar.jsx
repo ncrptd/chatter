@@ -1,9 +1,22 @@
-import { Link } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser, useUserDispatch } from '../../context/UserContext';
+import { useAuthDispatch } from '../../context/AuthContext';
+import { USER_ACTIONS } from '../../reducer/userReducer';
+import { AUTH_ACTIONS } from '../../reducer/authReducer';
 export default function Navbar() {
   const { state } = useUser();
   const { userDetails } = state;
-  const userId = userDetails?._id
+  const userId = userDetails?._id;
+  const userDispatch = useUserDispatch();
+  const authDispatch = useAuthDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    userDispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: null } });
+    authDispatch({ type: AUTH_ACTIONS.LOGOUT });
+    navigate('/')
+  }
   return (
     <div className="fixed bottom-0 left-0 right-0 w-full p-4 text-4xl lg:hidden bg-slate-900 ">
       <ul className="flex justify-between">
@@ -69,6 +82,9 @@ export default function Navbar() {
               </g>
             </svg>
           </Link>
+        </li>
+        <li onClick={handleLogout} >
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h7v2H5v14h7v2H5Zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5l-5 5Z" /></svg>
         </li>
       </ul>
     </div>

@@ -65,7 +65,6 @@ export const getAllUserPostsHandler = function (schema, request) {
 
 export const createPostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
-  console.log(user)
   try {
     if (!user) {
       return new Response(

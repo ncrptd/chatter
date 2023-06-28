@@ -3,11 +3,12 @@ import { useUser } from '../context/UserContext';
 
 export default function SuggestionCard({ user }) {
   const { followUserHandler } = useUser();
-  const handleFollow = () => {
+  const handleFollow = (e) => {
+    e.stopPropagation();
     followUserHandler(user?._id)
   }
   return (
-    <div className="flex justify-between items-center mb-4">
+    <div className="flex justify-between items-center mb-4" onClick={handleFollow}>
       <div className="flex gap-2 justify-center items-center">
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <img src={user?.profilePic} alt={user?.fullName} className='w-full h-full object-cover ' />

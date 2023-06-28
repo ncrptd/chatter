@@ -1,14 +1,25 @@
-import { Link } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser, useUserDispatch } from '../context/UserContext';
+import { AUTH_ACTIONS } from '../reducer/authReducer';
+import { USER_ACTIONS } from '../reducer/userReducer';
+import { useAuthDispatch } from '../context/AuthContext';
 export default function Header() {
   const { state } = useUser();
   const { userDetails } = state;
   const userId = userDetails?._id;
-
+  const userDispatch = useUserDispatch();
+  const authDispatch = useAuthDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    userDispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: null } });
+    authDispatch({ type: AUTH_ACTIONS.LOGOUT });
+    navigate('/')
+  }
   return (
-    <header className="col-span-2 hidden md:block text-2xl ">
+    <header className="col-span-2 hidden md:block text-2xl header">
       <div className="py-2">
-        <h1 className="text-uppercase text-pink-500 uppercase mb-4 font-bold">
+        <h1 className="text-uppercase text-pink-500 uppercase mb-6 font-bold">
           Chatter
         </h1>
         <ul className="flex flex-col gap-8 font-semibold justify-center">
@@ -40,7 +51,7 @@ export default function Header() {
             </svg>
             <Link to="/explore">Explore</Link>
           </li>
-          <li className="flex gap-2  items-center">
+          <li className="flex gap-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -67,6 +78,10 @@ export default function Header() {
               </g>
             </svg>
             <Link to={`/profile/${userId}`}>Profile</Link>
+          </li>
+          <li onClick={handleLogout} className="flex gap-2 items-center cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h7v2H5v14h7v2H5Zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5l-5 5Z" /></svg>
+            Logout
           </li>
         </ul>
       </div>

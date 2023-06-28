@@ -3,14 +3,14 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth, useAuthDispatch } from '../context/AuthContext';
 import { AUTH_ACTIONS } from '../reducer/authReducer';
-import { useUserDispatch } from '../context/UserContext';
+import { useUser, useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
+import { useEffect } from 'react';
 
 const GUEST = {
   username: 'rockeywithane',
   password: 'rockeywithane',
 };
-
 export default function Login() {
   const [formDetails, setFormDetails] = useState({
     username: '',
@@ -18,12 +18,16 @@ export default function Login() {
   });
   const [errorMsg, setErrorMsg] = useState('');
   const [show, setShow] = useState(false);
+
+
   const authDispatch = useAuthDispatch();
   const userDispatch = useUserDispatch();
-
+  const { getAllUsers } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
+
   const { isLoggedIn } = useAuth();
+
   const handleFormDetails = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -54,7 +58,7 @@ export default function Login() {
             encodedToken: encodedToken,
           })
         );
-
+        getAllUsers();
         if (location?.state?.from?.pathname === undefined) {
           navigate('/');
         } else {
@@ -74,7 +78,15 @@ export default function Login() {
       return { ...prev, username, password };
     });
     handleLogin(guest);
+
+
   }
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      handleLogin({ username: user.userDetails.username, password: user.userDetails.password });
+    }
+  })
   return (
     <main className="p-4 w-full ">
       <h1 className="text-uppercase text-pink-500 uppercase font-bold text-2xl text-center">

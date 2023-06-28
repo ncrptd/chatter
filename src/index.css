@@ -36,3 +36,7 @@ body {
   background: #1e293b;
   color: #fff;
 }
+
+.header li:hover {
+  color: #ec4899;
+}

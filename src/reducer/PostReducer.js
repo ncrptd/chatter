@@ -6,7 +6,7 @@ const POST_ACTIONS = {
   EDIT_POST: 'edit-post',
 };
 const initialState = {
-  posts: [],
+  posts: null,
   postsFilterBy: 'latest',
   showOptions: null,
   editPost: null,

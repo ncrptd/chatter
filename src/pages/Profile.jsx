@@ -9,15 +9,21 @@ export default function Profile() {
   const { state: userState } = useUser();
   const { allUsers } = userState;
   const { userId } = useParams();
-  console.log(allUsers)
   const user = allUsers.find((user) => user?._id === userId);
 
   const { state: postState } = usePost();
   const { posts } = postState;
-  const userPosts = posts
-    .filter((post) => post.userId === userId)
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-  const noOfPosts = posts.filter((post) => post?.userId === user?._id);
+
+  const getProfileUserPost = (posts) => {
+    if (!posts) {
+      return posts
+    }
+    return posts.filter((post) => post.userId === userId)
+      .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  }
+  const userPosts = getProfileUserPost(posts);
+
+  const noOfPosts = userPosts ? posts.filter((post) => post?.userId === user?._id) : [];
 
   return (
     <div>
@@ -28,7 +34,7 @@ export default function Profile() {
       {user && <ProfileCard user={user} />}
       {!userPosts ? (
         <PostSkeletonCard />
-      ) : (
+      ) : userPosts.length <= 0 ? <p>No user Posts</p> : (
         userPosts.map((post) => <PostCard post={post} key={post._id} />)
       )}
 
