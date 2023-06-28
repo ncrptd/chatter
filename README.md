@@ -1,5 +1,5 @@
 # Chatter (Social Media App)
-
+## Under development
 This is a social media app that allows you to create, share, and engage with posts from other users. You can sort and filter posts by date or popularity, create your own posts, like and bookmark posts, edit or delete your own posts, follow or unfollow other users, and explore posts from users you don't follow.
 
 ## Features
