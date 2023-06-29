@@ -5,23 +5,23 @@ const getAllPostService = () => axios.get('/api/posts');
 
 const getUserPostService = (username) =>
   axios.get(`/api/posts/user/${username}`);
-  
+
 const likePostService = ({ _id }) => {
-  const token = getEncodedToken();
+  const encodedToken = getEncodedToken();
   const body = {};
   const config = {
-    headers: { authorization: token },
+    headers: { authorization: encodedToken },
   };
 
   return axios.post(`/api/posts/like/${_id}`, body, config);
 };
 
 const dislikePostService = ({ _id }) => {
-  const token = getEncodedToken();
+  const encodedToken = getEncodedToken();
 
   const body = {};
   const config = {
-    headers: { authorization: token },
+    headers: { authorization: encodedToken },
   };
   return axios.post(`/api/posts/dislike/${_id}`, body, config);
 };

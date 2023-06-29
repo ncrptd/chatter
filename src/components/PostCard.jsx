@@ -8,6 +8,7 @@ import PostOptionsModal from './modals/PostOptionsModal';
 import { useRef } from 'react';
 import { useOutsideClick } from '../customHooks/useOutsideClick';
 import { useNavigate } from 'react-router-dom';
+import { useBookmark } from '../context/BookmarkContext';
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
@@ -20,11 +21,13 @@ export default function PostCard({ post }) {
   const { showOptions } = postState;
   const postDispatch = usePostDispatch();
 
+  const { state: bookmarkState, addBookmarkHandler } = useBookmark();
+  const { bookmarks } = bookmarkState
   const liked = post?.likes.likedBy.find((user) => user?._id === userDetails?._id);
   const isUserPost = post?.userId === userDetails?._id;
   const user = allUsers.find(({ _id }) => _id === post.userId);
   const optionsRef = useRef();
-
+  const inBookmark = bookmarks.some((bookmark) => bookmark._id === post?._id)
   const navigate = useNavigate();
 
   const likeHandler = async () => {
@@ -37,7 +40,6 @@ export default function PostCard({ post }) {
         });
       } else {
         let res = await likePostService(post);
-        console.log('like posts', res.data.posts);
 
         postDispatch({
           type: POST_ACTIONS.ADD_POST,
@@ -64,6 +66,14 @@ export default function PostCard({ post }) {
     navigate(`/profile/${post?.userId}`);
   };
 
+
+  const handleBookmark = () => {
+    if (!inBookmark) {
+      addBookmarkHandler(post?._id);
+    } else {
+      console.log('logged out')
+    }
+  }
   return (
     <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500 break-words">
       <div className="flex justify-between items-center ">
@@ -139,14 +149,14 @@ export default function PostCard({ post }) {
 
         {/* bookmark
          */}
-        <button>
+        <button onClick={handleBookmark} >
           {' '}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className={`md:hover:text-green-500  transition duration-150 hover:ease-in-out `}
+            className={`${inBookmark ? 'text-green-400' : ''} md:hover:text-green-500  transition duration-150 hover:ease-in-out `}
           >
             <path
               fill="none"

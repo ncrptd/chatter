@@ -1,7 +1,7 @@
+import { forwardRef } from 'react';
 import { usePost, usePostDispatch } from '../../context/PostContext';
 import { POST_ACTIONS } from '../../reducer/postReducer';
 import EditPostModal from './EditPostModal';
-import { forwardRef } from 'react';
 const PostOptionsModal = forwardRef(({ post }, ref) => {
   const { state, deletePostHandler } = usePost();
   const { editPost } = state;

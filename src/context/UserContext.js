@@ -54,7 +54,7 @@ export default function UserProvider({ children }) {
     try {
       const res = await followUserService(followUserId);
       if (res.status === 200) {
-        const data = await res.json();
+        const data = await res.data;
         const { user, followUser } = data;
 
         let updatedUserList = state.allUsers.map((dbUser) =>
@@ -82,7 +82,7 @@ export default function UserProvider({ children }) {
   const unFollowUserHandler = async (followUserId) => {
     try {
       const res = await unFollowUserService(followUserId);
-      const data = await res.json();
+      const data = await res.data;
       const { user, followUser } = data;
       let updatedUserList = state.allUsers.map((dbUser) => {
         return dbUser._id === user._id ? { ...dbUser, following: dbUser.following.filter((i) => i._id !== followUser) } : dbUser
