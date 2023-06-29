@@ -3,6 +3,7 @@ import { useUser, useUserDispatch } from '../context/UserContext';
 import { AUTH_ACTIONS } from '../reducer/authReducer';
 import { USER_ACTIONS } from '../reducer/userReducer';
 import { useAuthDispatch } from '../context/AuthContext';
+
 export default function Header() {
   const { state } = useUser();
   const { userDetails } = state;
@@ -10,6 +11,7 @@ export default function Header() {
   const userDispatch = useUserDispatch();
   const authDispatch = useAuthDispatch();
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.clear();
     userDispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: null } });
