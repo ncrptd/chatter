@@ -1,5 +1,6 @@
 import React from 'react';
 import PostList from '../components/PostList';
+import ExploreList from '../components/ExploreList';
 
 export default function Explore() {
   return (
@@ -7,7 +8,7 @@ export default function Explore() {
       <h1 className="text-center p-2 font-semibold bg-gray-800 border-x border-slate-500">
         Explore
       </h1>
-      <PostList />
+      <ExploreList />
     </section>
   );
 }

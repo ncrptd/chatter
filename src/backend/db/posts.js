@@ -46,7 +46,7 @@ export const posts = [
     content:
       "Ordered Meghana's Special Chicken Biryani from Meghana's. Recommend 10/10. ✨  ",
     likes: {
-      likeCount: 2,
+      likeCount: 1,
       likedBy: [
         {
           _id: ' ',
@@ -54,12 +54,7 @@ export const posts = [
           username: 'singhMohit',
           profileAvatar: 'https://picsum.photos/id/1012/150',
         },
-        {
-          _id: 'eyJhbGciOi4cj8hFuJfY',
-          fullName: 'John Doe',
-          username: 'johndoe',
-          profileAvatar: 'https://picsum.photos/id/1009/150',
-        },
+
       ],
       dislikedBy: [],
     },

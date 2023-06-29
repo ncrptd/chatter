@@ -46,10 +46,9 @@ export default function PostList() {
 
   const visiblePosts = latestPostsData;
 
-  console.log(userDetails)
   return (
     <div>
-      {!visiblePosts ? <PostSkeletonCard /> : visiblePosts.length <= 0 ? <p>No Posts Found</p> : visiblePosts.map((post) => <PostCard post={post} key={post._id} />)}
+      {!visiblePosts ? <PostSkeletonCard /> : visiblePosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Posts Found</p> : visiblePosts.map((post) => <PostCard post={post} key={post._id} />)}
     </div>
   );
 }

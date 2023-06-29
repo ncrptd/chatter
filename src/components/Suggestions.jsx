@@ -20,7 +20,7 @@ export default function Suggestions() {
     <aside className="col-span-3 hidden md:block h-screen overflow-auto suggestions">
       <div className="container mx-auto py-2">
         <p className="font-bold mb-6 ">Suggestions for you</p>
-        {!visibleUsers ? <SuggestionSkeletonCard /> : visibleUsers.length <= 0 ? <p>No Suggestion</p> : visibleUsers.map((user) => <SuggestionCard user={user} key={user?._id} />)}
+        {!visibleUsers ? <SuggestionSkeletonCard /> : visibleUsers.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Suggestions</p> : visibleUsers.map((user) => <SuggestionCard user={user} key={user?._id} />)}
       </div>
     </aside>
   );
