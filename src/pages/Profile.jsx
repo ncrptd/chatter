@@ -32,13 +32,13 @@ export default function Profile() {
         <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
       </h1>
       {user && <ProfileCard user={user} />}
-      {!userPosts ? (
-        <PostSkeletonCard />
-      ) : userPosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No user Posts</p> : (
-        userPosts.map((post) => <PostCard post={post} key={post._id} />)
-      )
+      {
+        !userPosts ? (
+          <PostSkeletonCard />
+        ) : userPosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No user Posts</p> : (
+          userPosts.map((post) => <PostCard post={post} key={post._id} />)
+        )
       }
-
-    </div >
+    </div>
   );
 }
