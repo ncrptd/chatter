@@ -214,7 +214,6 @@ export const removePostFromBookmarkHandler = function (schema, request) {
 
 export const followUserHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
-  console.log(user)
   const { followUserId } = request.params;
   const followUser = schema.users.findBy({ _id: followUserId }).attrs;
   try {

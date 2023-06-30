@@ -7,8 +7,8 @@ import { useUser } from '../context/UserContext';
 export default function PostList() {
   const { state } = usePost();
   const { posts, postsFilterBy } = state;
-  const { state: { userDetails } } = useUser();
-
+  const { state: { userDetails, allUsers } } = useUser();
+  const loggedInUser = allUsers.find((user) => user._id === userDetails?._id);
   const getLatestPostsData = (posts, postsFilterBy) => {
     if (!posts) {
       return posts
@@ -34,7 +34,7 @@ export default function PostList() {
     if (!posts) {
       return posts
     }
-    return posts.filter((post) => post.userId === userDetails?._id || userDetails?.following.find((user) => user._id === post.userId))
+    return posts.filter((post) => post.userId === loggedInUser?._id || loggedInUser?.following.find((user) => user._id === post.userId))
   }
   const filteredPosts = getFilteredPosts(posts);
 

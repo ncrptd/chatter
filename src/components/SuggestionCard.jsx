@@ -2,14 +2,18 @@ import React from 'react';
 import { useUser } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-export default function SuggestionCard({ user }) {
+
+export default function SuggestionCard({ user, followClick, setFollowClick }) {
+
   const { followUserHandler } = useUser();
 
   const navigate = useNavigate();
 
-  const handleFollow = (e) => {
+  const handleFollow = async (e) => {
+    setFollowClick(true)
     e.stopPropagation();
-    followUserHandler(user?._id)
+    await followUserHandler(user?._id);
+    setFollowClick(false)
   }
   const handelProfileNavigation = () => {
     navigate(`/profile/${user?._id}`)
@@ -26,7 +30,7 @@ export default function SuggestionCard({ user }) {
         </div>
       </div>
       <div>
-        <button className="bg-white text-black rounded-full py-1 px-4" onClick={handleFollow}>
+        <button className="bg-white text-black rounded-full py-1 px-4" onClick={handleFollow} disabled={followClick}>
           Follow
         </button>
       </div>
