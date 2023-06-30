@@ -8,26 +8,22 @@ import PostOptionsModal from './modals/PostOptionsModal';
 import { useRef } from 'react';
 import { useOutsideClick } from '../customHooks/useOutsideClick';
 import { useNavigate } from 'react-router-dom';
-import { useBookmark } from '../context/BookmarkContext';
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
 export default function PostCard({ post }) {
-  const { state: userState } = useUser();
-
+  const { state: userState, addBookmarkHandler, removeBookmarkHandler } = useUser();
   const { userDetails, allUsers } = userState;
 
   const { state: postState } = usePost();
   const { showOptions } = postState;
   const postDispatch = usePostDispatch();
 
-  const { state: bookmarkState, addBookmarkHandler } = useBookmark();
-  const { bookmarks } = bookmarkState
   const liked = post?.likes.likedBy.find((user) => user?._id === userDetails?._id);
   const isUserPost = post?.userId === userDetails?._id;
   const user = allUsers.find(({ _id }) => _id === post.userId);
   const optionsRef = useRef();
-  const inBookmark = bookmarks.some((bookmark) => bookmark._id === post?._id)
+  const inBookmark = userDetails?.bookmarks.some((bookmark) => bookmark._id === post?._id)
   const navigate = useNavigate();
 
   const likeHandler = async () => {
@@ -71,7 +67,7 @@ export default function PostCard({ post }) {
     if (!inBookmark) {
       addBookmarkHandler(post?._id);
     } else {
-      console.log('logged out')
+      removeBookmarkHandler(post?.id)
     }
   }
   return (

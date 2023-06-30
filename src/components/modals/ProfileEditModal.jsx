@@ -8,6 +8,13 @@ import { useRef } from 'react';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
 
+const AVATARS = [
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileFemale.png',
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileMale.png',
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileFemale2.png',
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileMale2.png'
+
+]
 export default function ProfileEditModal({ user }) {
   const [profileDetails, setProfileDetails] = useState({
     bio: user?.bio,
@@ -73,7 +80,9 @@ export default function ProfileEditModal({ user }) {
 
     }
   }
-
+  const handleAvatar = (url) => {
+    setImage(url)
+  }
   return createPortal(
     <>
       <div className=" modal-wrapper bg-slate-800" onClick={closeModal}></div>
@@ -94,7 +103,8 @@ export default function ProfileEditModal({ user }) {
           />
 
           {image ? (
-            <img src={URL.createObjectURL(image)} alt="profile" />
+            <img src={typeof image === 'object' ? URL.createObjectURL(image) : image} alt="profile" />
+
           ) : (
             <img
               src={
@@ -118,6 +128,15 @@ export default function ProfileEditModal({ user }) {
             />
           </svg>
         </div>
+        {/* avatar options */}
+        <p>Choose Avatars</p>
+
+        <div className='flex gap-2  p-2'>
+          {AVATARS.map((url) => <div className='w-full h-full rounded-full overflow-hidden cursor-pointer' key={url} onClick={() => handleAvatar(url)}>
+            <img src={url} alt="avatar" className='w-full h-full' />
+          </div>)}
+        </div>
+
         {/* bio section  */}
         <form onSubmit={handleEditSubmit}>
           <label htmlFor="bio" className=" ">

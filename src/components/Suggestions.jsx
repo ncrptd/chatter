@@ -15,7 +15,7 @@ export default function Suggestions() {
     return users.filter((user) => user._id !== userDetails?.following.find((f) => f._id === user._id)?._id)
   }
 
-  const visibleUsers = removeAlreadyFollowing(suggestedUsers)
+  const visibleUsers = removeAlreadyFollowing(suggestedUsers);
   return (
     <aside className="col-span-3 hidden md:block h-screen overflow-auto suggestions">
       <div className="container mx-auto py-2">

@@ -3,6 +3,7 @@ import { getEncodedToken } from "./postServices"
 
 const getAllBookmarkService = () => {
     const encodedToken = getEncodedToken();
+
     return fetch(`/api/users/bookmark/`, {
         headers: {
             authorization: encodedToken
@@ -18,14 +19,17 @@ const addBookmarkService = (postId) => {
             authorization: encodedToken
         }
     }
-    // return fetch(`/api/users/bookmark/${postId}`, {}, {
-    //     method: 'POST',
-    //     headers: {
-    //         authorization: encodedToken
-    //     },
-    //     body: {}
-    // })
     return axios.post(`/api/users/bookmark/${postId}`, {}, config)
 }
 
-export { getAllBookmarkService, addBookmarkService }
+const removeBookMarkService = (postId) => {
+    const encodedToken = getEncodedToken();
+
+    const config = {
+        headers: {
+            authorization: encodedToken
+        }
+    }
+    return axios.post(`/api/users/remove-bookmark/${postId}`, {}, config)
+}
+export { getAllBookmarkService, addBookmarkService, removeBookMarkService }

@@ -10,6 +10,7 @@ import {
   unFollowUserService,
   userEditService,
 } from '../services/userServices';
+import { addBookmarkService, getAllBookmarkService, removeBookMarkService } from '../services/bookmarkServices';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
@@ -51,10 +52,13 @@ export default function UserProvider({ children }) {
   }
 
   const followUserHandler = async (followUserId) => {
+
     try {
       const res = await followUserService(followUserId);
       if (res.status === 200) {
+
         const data = await res.data;
+
         const { user, followUser } = data;
 
         let updatedUserList = state.allUsers.map((dbUser) =>
@@ -101,13 +105,59 @@ export default function UserProvider({ children }) {
       console.log('unfollow user api failed with error', error)
     }
   }
+
+  const getAllBookmark = async () => {
+    try {
+      const res = await getAllBookmarkService();
+      if (res.status === 200) {
+        let data = await res.json();
+        dispatch({ type: USER_ACTIONS.GET_ALL_BOOKMARKS, payload: { bookmarks: data.bookmarks } })
+      }
+    } catch (error) {
+      console.log('all bookmark api failed with error', error)
+    }
+  }
+
+  const addBookmarkHandler = async (postId) => {
+    try {
+      const res = await addBookmarkService(postId);
+
+      if (res.status === 200) {
+        const data = await res.data;
+        const updatedUserDetails = { ...state.userDetails, bookmarks: data.bookmarks }
+        dispatch({ type: USER_ACTIONS.ADD_BOOKMARK, payload: { userDetails: updatedUserDetails } })
+      }
+    } catch (error) {
+      console.log('add bookmark api failed with error', error)
+
+    }
+  }
+
+  const removeBookmarkHandler = async (postId) => {
+    console.log('rean')
+    try {
+      const res = await removeBookMarkService(postId);
+      if (res.status === 200) {
+        const data = await res.data;
+        const updatedUserDetails = { ...state.userDetails, bookmarks: data.bookmarks }
+        dispatch({ type: USER_ACTIONS.ADD_BOOKMARK, payload: { userDetails: updatedUserDetails } })
+      }
+    } catch (error) {
+      console.log('add bookmark api failed with error', error)
+
+    }
+  }
+
+
   useEffect(() => {
     getUserDetails();
     getAllUsers();
+    getAllBookmark();
+
   }, []);
   return (
     <UserContext.Provider
-      value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers }}
+      value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers, addBookmarkHandler, removeBookmarkHandler }}
     >
       <UserDispatchContext.Provider value={dispatch}>
         {children}

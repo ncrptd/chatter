@@ -1,5 +1,4 @@
 import React from 'react';
-import PostList from '../components/PostList';
 import ExploreList from '../components/ExploreList';
 
 export default function Explore() {

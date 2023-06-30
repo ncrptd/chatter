@@ -34,10 +34,11 @@ export default function Profile() {
       {user && <ProfileCard user={user} />}
       {!userPosts ? (
         <PostSkeletonCard />
-      ) : userPosts.length <= 0 ? <p>No user Posts</p> : (
+      ) : userPosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No user Posts</p> : (
         userPosts.map((post) => <PostCard post={post} key={post._id} />)
-      )}
+      )
+      }
 
-    </div>
+    </div >
   );
 }

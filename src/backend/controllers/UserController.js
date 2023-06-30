@@ -144,7 +144,7 @@ export const bookmarkPostHandler = function (schema, request) {
         { errors: ["This Post is already bookmarked"] }
       );
     }
-    user.bookmarks.push({ _id: post._id, username: post.username, content: post.content, createdAt: post.createdAt, updatedAt: post.updatedAt });
+    user.bookmarks.push({ _id: post._id, username: post.username, content: post.content, createdAt: post.createdAt, updatedAt: post.updatedAt, userId: post.userId });
     // this.db.users.update(
     //   { _id: user._id },
     //   { ...user, updatedAt: formatDate() }
@@ -214,6 +214,7 @@ export const removePostFromBookmarkHandler = function (schema, request) {
 
 export const followUserHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+  console.log(user)
   const { followUserId } = request.params;
   const followUser = schema.users.findBy({ _id: followUserId }).attrs;
   try {
