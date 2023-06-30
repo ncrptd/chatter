@@ -4,8 +4,13 @@ import PostCard from '../components/PostCard';
 import { useParams } from 'react-router-dom';
 import { usePost } from '../context/PostContext';
 import PostSkeletonCard from '../components/skeletons/PostSkeletonCard';
+import { useState } from 'react';
 
 export default function Profile() {
+  const [disableFollow, setDisableFollow] = useState(false);
+  const [disableLike, setDisableLike] = useState(false);
+  const [disableBookmark, setDisableBookmark] = useState(false);
+
   const { state: userState } = useUser();
   const { allUsers } = userState;
   const { userId } = useParams();
@@ -31,12 +36,12 @@ export default function Profile() {
         {user?.fullName}{' '}
         <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
       </h1>
-      {user && <ProfileCard user={user} />}
+      {user && <ProfileCard user={user} disableFollow={disableFollow} setDisableFollow={setDisableFollow} />}
       {
         !userPosts ? (
           <PostSkeletonCard />
         ) : userPosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No user Posts</p> : (
-          userPosts.map((post) => <PostCard post={post} key={post._id} />)
+          userPosts.map((post) => <PostCard post={post} key={post._id} disableLike={disableLike} setDisableLike={setDisableLike} disableBookmark={disableBookmark} setDisableBookmark={setDisableBookmark} />)
         )
       }
     </div>

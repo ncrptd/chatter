@@ -6,6 +6,7 @@ import { AUTH_ACTIONS } from '../reducer/authReducer';
 import { useUser, useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
 import { useEffect } from 'react';
+import { toastSuccess } from '../alerts/alerts';
 
 const GUEST = {
   username: 'rockeywithane',
@@ -22,11 +23,13 @@ export default function Login() {
 
   const authDispatch = useAuthDispatch();
   const userDispatch = useUserDispatch();
-  const { getAllUsers } = useUser();
+  const { getAllUsers, getUserDetails } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
 
   const { isLoggedIn } = useAuth();
+
+
 
   const handleFormDetails = (e) => {
     const value = e.target.value;
@@ -64,6 +67,8 @@ export default function Login() {
         } else {
           navigate(location?.state?.from?.pathname);
         }
+        getUserDetails();
+        toastSuccess(`Welcome ${foundUser.fullName}`)
       } catch (error) {
         console.log(error.message);
         setErrorMsg('No user found');
@@ -79,14 +84,18 @@ export default function Login() {
     });
     handleLogin(guest);
 
-
   }
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      handleLogin({ username: user.userDetails.username, password: user.userDetails.password });
+      let formDetails = {
+        username: user.userDetails.username,
+        password: user.userDetails.password,
+      }
+      setFormDetails(formDetails)
     }
-  })
+
+  }, [])
   return (
     <main className="p-4 w-full ">
       <h1 className="text-uppercase text-pink-500 uppercase font-bold text-2xl text-center">

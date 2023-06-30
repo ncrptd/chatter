@@ -6,7 +6,7 @@ import { useAuthDispatch } from '../context/AuthContext';
 import { AUTH_ACTIONS } from '../reducer/authReducer';
 import { useNavigate } from 'react-router-dom';
 
-export default function ProfileCard({ user }) {
+export default function ProfileCard({ user, disableFollow, setDisableFollow }) {
   const { state: userState, followUserHandler, unFollowUserHandler } = useUser();
   const { openProfileEditModal, userDetails } = userState;
   const userDispatch = useUserDispatch();
@@ -27,10 +27,10 @@ export default function ProfileCard({ user }) {
   };
 
   const handleFollowUser = () => {
-    followUserHandler(user?._id);
+    followUserHandler(user?._id, setDisableFollow);
   }
   const handleUnfollowUser = () => {
-    unFollowUserHandler(user?._id)
+    unFollowUserHandler(user?._id, setDisableFollow)
   };
 
   const handleLogout = () => {
@@ -73,9 +73,9 @@ export default function ProfileCard({ user }) {
           <>
             {
               isFollowing ?
-                <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleUnfollowUser}>
+                <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" disabled={disableFollow} onClick={handleUnfollowUser}>
                   Unfollow
-                </button> : <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" onClick={handleFollowUser}>
+                </button> : <button className="bg-white text-black rounded-lg py-2 hover:opacity-80 w-2/4 mx-auto font-semibold" disabled={disableFollow} onClick={handleFollowUser}>
                   Follow
                 </button>}
           </>

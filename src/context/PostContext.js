@@ -10,6 +10,7 @@ import {
 } from '../reducer/postReducer';
 import { getEncodedToken } from '../utils/encodedToken';
 import { useUser } from './UserContext';
+import { toastError, toastSuccess } from '../alerts/alerts';
 
 const PostContext = createContext();
 const PostDispatchContext = createContext();
@@ -48,8 +49,10 @@ export function PostProvider({ children }) {
         type: POST_ACTIONS.ADD_POST,
         payload: { posts: res.data.posts },
       });
+      toastSuccess('Post added');
     } catch (error) {
       console.log(`add post api failed with error`, error);
+      toastError('Post error')
     }
   };
 
@@ -64,13 +67,18 @@ export function PostProvider({ children }) {
       };
 
       const res = await axios.post(`/api/posts/edit/${postId}`, body, config);
-      const updatedPosts = res.data.posts;
-      dispatch({
-        type: POST_ACTIONS.ADD_POST,
-        payload: { posts: updatedPosts },
-      });
+      if (res.status === 201) {
+        const updatedPosts = res.data.posts;
+        dispatch({
+          type: POST_ACTIONS.ADD_POST,
+          payload: { posts: updatedPosts },
+        });
+        console.log(updatedPosts)
+        toastSuccess('Post Edited Successfully')
+      }
     } catch (error) {
       console.log(`edit post api failed with error `, error);
+      toastError('Post Edit Failed')
     }
   };
 
@@ -81,12 +89,16 @@ export function PostProvider({ children }) {
         headers: { authorization: encodedToken },
       };
       const res = await axios.delete(`/api/posts/${postId}`, config);
-      dispatch({
-        type: POST_ACTIONS.ADD_POST,
-        payload: { posts: res.data.posts },
-      });
+      if (res.status === 201) {
+        dispatch({
+          type: POST_ACTIONS.ADD_POST,
+          payload: { posts: res.data.posts },
+        });
+        toastSuccess('Post Deleted')
+      }
     } catch (error) {
       console.log(`delete post api failed with error `, error);
+      toastError('Post Delete failed')
     }
   };
 

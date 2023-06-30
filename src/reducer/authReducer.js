@@ -1,3 +1,4 @@
+
 const AUTH_ACTIONS = {
   LOGIN_SUCCESS: 'login-success',
   LOGOUT: 'logout'

@@ -25,20 +25,12 @@ const userEditService = (userData) => {
 
 const followUserService = (followUserId) => {
   const encodedToken = getEncodedToken();
-  // const body = JSON.stringify({});
   const config = {
     headers: {
       authorization: encodedToken
     }
   }
-  // const response = fetch(`/api/users/follow/${followUserId}`, {
-  //   method: 'POST',
-  //   headers: {
-  //     authorization: encodedToken
-  //   },
-  //   body: body
-  // })
-  // return response
+
   return axios.post(`/api/users/follow/${followUserId}`, {}, config)
 }
 const unFollowUserService = (followUserId) => {
@@ -50,14 +42,6 @@ const unFollowUserService = (followUserId) => {
     }
   }
 
-  // const response = fetch(`/api/users/unfollow/${followUserId}`, {
-  //   method: 'POST',
-  //   headers: {
-  //     authorization: encodedToken
-  //   },
-  //   body: {}
-  // })
-  // return response
   return axios.post(`/api/users/unfollow/${followUserId}`, {}, config)
 }
 

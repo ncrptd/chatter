@@ -5,12 +5,12 @@ import { useUser } from '../context/UserContext';
 import { useState } from 'react';
 
 export default function Suggestions() {
-  const [followClick, setFollowClick] = useState(false);
+  const [disableFollow, setDisableFollow] = useState(false);
 
   const { state } = useUser();
   const { allUsers, userDetails } = state;
-  const loggedInUser = allUsers.find((user) => user._id === userDetails._id)
-  const suggestedUsers = allUsers.filter((user) => user._id !== loggedInUser?._id);
+  const loggedInUser = allUsers?.find((user) => user._id === userDetails?._id)
+  const suggestedUsers = allUsers?.filter((user) => user._id !== loggedInUser?._id);
 
   function removeAlreadyFollowing(users) {
     if (suggestedUsers.length <= 0) {
@@ -24,7 +24,7 @@ export default function Suggestions() {
     <aside className="col-span-3 hidden md:block h-screen overflow-auto suggestions">
       <div className="container mx-auto py-2">
         <p className="font-bold mb-6 ">Suggestions for you</p>
-        {!visibleUsers ? <SuggestionSkeletonCard /> : visibleUsers.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Suggestions</p> : visibleUsers.map((user) => <SuggestionCard user={user} key={user?._id} followClick={followClick} setFollowClick={setFollowClick} />)}
+        {!visibleUsers ? <SuggestionSkeletonCard /> : visibleUsers.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Suggestions</p> : visibleUsers.map((user) => <SuggestionCard user={user} key={user?._id} disableFollow={disableFollow} setDisableFollow={setDisableFollow} />)}
       </div>
     </aside>
   );

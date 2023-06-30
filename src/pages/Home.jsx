@@ -3,16 +3,19 @@ import CreatePost from '../components/CreatePost';
 import PostList from '../components/PostList';
 import { usePost, usePostDispatch } from '../context/PostContext';
 import { POST_ACTIONS } from '../reducer/postReducer';
+
 export default function Home() {
   const { state } = usePost();
   const { postsFilterBy } = state;
   const postDispatch = usePostDispatch();
+
   const handlePostsFilter = (filterValue) => {
     postDispatch({
       type: POST_ACTIONS.FILTER_POSTS,
       payload: { filterBy: filterValue },
     });
   };
+
 
   return (
     <section className=" bg-slate-900 overflow-auto home h-screen">

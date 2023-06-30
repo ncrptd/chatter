@@ -3,12 +3,20 @@ import PostCard from './PostCard';
 import { usePost } from '../context/PostContext';
 import PostSkeletonCard from './skeletons/PostSkeletonCard';
 import { useUser } from '../context/UserContext';
+import { useState } from 'react';
 
 export default function PostList() {
+  const [disableLike, setDisableLike] = useState(false);
+  const [disableBookmark, setDisableBookmark] = useState(false);
+
   const { state } = usePost();
   const { posts, postsFilterBy } = state;
   const { state: { userDetails, allUsers } } = useUser();
-  const loggedInUser = allUsers.find((user) => user._id === userDetails?._id);
+
+
+
+
+  const loggedInUser = allUsers?.find((user) => user._id === userDetails?._id);
   const getLatestPostsData = (posts, postsFilterBy) => {
     if (!posts) {
       return posts
@@ -48,7 +56,7 @@ export default function PostList() {
 
   return (
     <div>
-      {!visiblePosts ? <PostSkeletonCard /> : visiblePosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Posts Found</p> : visiblePosts.map((post) => <PostCard post={post} key={post._id} />)}
+      {!visiblePosts ? <PostSkeletonCard /> : visiblePosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Posts Found</p> : visiblePosts.map((post) => <PostCard post={post} key={post._id} disableLike={disableLike} setDisableLike={setDisableLike} disableBookmark={disableBookmark} setDisableBookmark={setDisableBookmark} />)}
     </div>
   );
 }

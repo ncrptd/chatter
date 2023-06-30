@@ -9,11 +9,11 @@ export const useOutsideClick = (ref, dispatch, options) => {
     };
     document
       .getElementById('root')
-      .addEventListener('mousedown', closeOptionsModal);
+      .addEventListener('click', closeOptionsModal);
 
     return () =>
       document
         .getElementById('root')
-        .removeEventListener('mousedown', closeOptionsModal);
+        .removeEventListener('click', closeOptionsModal);
   });
 };

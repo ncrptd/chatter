@@ -7,10 +7,12 @@ import { useEffect } from 'react';
 import {
   followUserService,
   getAllUserService,
+  getUserService,
   unFollowUserService,
   userEditService,
 } from '../services/userServices';
-import { addBookmarkService, getAllBookmarkService, removeBookMarkService } from '../services/bookmarkServices';
+import { addBookmarkService, removeBookMarkService } from '../services/bookmarkServices';
+import { toastError, toastSuccess } from '../alerts/alerts';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
@@ -18,14 +20,18 @@ const UserDispatchContext = createContext();
 export default function UserProvider({ children }) {
   const [state, dispatch] = useReducer(userReducer, initialState);
 
-  const getUserDetails = () => {
-    const user = localStorage.getItem('user');
-    if (!user) return false;
-    const { userDetails } = JSON.parse(user);
-    dispatch({
-      type: USER_ACTIONS.SAVE_USER,
-      payload: { userDetails: userDetails },
-    });
+  const getUserDetails = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    try {
+      if (user) {
+        const res = await getUserService(user.userDetails._id);
+        if (res.status === 200) {
+          dispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: res.data.user } })
+        }
+      }
+    } catch (error) {
+      toastError('Something went wrong please login again')
+    }
   };
   const getAllUsers = async () => {
     try {
@@ -35,7 +41,8 @@ export default function UserProvider({ children }) {
         payload: { users: res.data.users },
       });
     } catch (error) {
-      console.log(`all users api failed with error ${error}`);
+      toastError('Something went wrong please login again')
+
     }
   };
 
@@ -46,13 +53,13 @@ export default function UserProvider({ children }) {
       const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === user._id ? user : dbUser);
       return dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
     } catch (error) {
-      console.log(`api for user edit failed with error ${error}`)
+      toastError('Profile Edit failed')
 
     }
   }
 
-  const followUserHandler = async (followUserId) => {
-
+  const followUserHandler = async (followUserId, setDisableFollow) => {
+    setDisableFollow(true);
     try {
       const res = await followUserService(followUserId);
       if (res.status === 200) {
@@ -67,66 +74,64 @@ export default function UserProvider({ children }) {
 
         updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: [...dbUser.followers, user] } : dbUser);
 
-        dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } })
+        dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } });
+        setDisableFollow(false)
+        toastSuccess(`Following ${followUser.fullName}`)
       }
     } catch (error) {
-      console.log(error)
+      toastError('Something went wrong')
     }
   }
-  const unFollowUserHandler = async (followUserId) => {
+  const unFollowUserHandler = async (followUserId, setDisableFollow) => {
+    setDisableFollow(true);
     try {
       const res = await unFollowUserService(followUserId);
-      const data = await res.data;
-      const { user, followUser } = data;
-      let updatedUserList = state.allUsers.map((dbUser) => {
-        return dbUser._id === user._id ? { ...dbUser, following: dbUser.following.filter((i) => i._id !== followUser._id) } : dbUser
-      })
-      updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: dbUser.followers.filter((i) => i._id !== user._id) } : dbUser);
-
-      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } });
-    } catch (error) {
-      console.log('unfollow user api failed with error', error)
-    }
-  }
-
-  const getAllBookmark = async () => {
-    try {
-      const res = await getAllBookmarkService();
-      if (res.status === 200) {
-        let data = await res.json();
-        dispatch({ type: USER_ACTIONS.GET_ALL_BOOKMARKS, payload: { bookmarks: data.bookmarks } })
-      }
-    } catch (error) {
-      console.log('all bookmark api failed with error', error)
-    }
-  }
-
-  const addBookmarkHandler = async (postId) => {
-    try {
-      const res = await addBookmarkService(postId);
-
       if (res.status === 200) {
         const data = await res.data;
-        const updatedUserDetails = { ...state.userDetails, bookmarks: data.bookmarks }
-        dispatch({ type: USER_ACTIONS.ADD_BOOKMARK, payload: { userDetails: updatedUserDetails } })
+        const { user, followUser } = data;
+        let updatedUserList = state.allUsers.map((dbUser) => {
+          return dbUser._id === user._id ? { ...dbUser, following: dbUser.following.filter((i) => i._id !== followUser._id) } : dbUser
+        })
+        updatedUserList = updatedUserList.map((dbUser) => dbUser._id === followUser._id ? { ...dbUser, followers: dbUser.followers.filter((i) => i._id !== user._id) } : dbUser);
+
+        dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedUserList } });
+        setDisableFollow(false)
+        toastSuccess(`UnFollowed ${followUser.fullName}`)
       }
     } catch (error) {
-      console.log('add bookmark api failed with error', error)
+      toastError('Something went wrong')
+    }
+  }
+
+
+  const addBookmarkHandler = async (postId, setDisableBookmark) => {
+    setDisableBookmark(true)
+    try {
+      const res = await addBookmarkService(postId);
+      if (res.status === 200) {
+        const data = await res.data;
+        dispatch({ type: USER_ACTIONS.ADD_BOOKMARK, payload: { bookmarks: data.bookmarks } });
+        setDisableBookmark(false)
+        toastSuccess(`Added To Bookmarks`)
+      }
+    } catch (error) {
+      toastError('Something went wrong')
 
     }
   }
 
-  const removeBookmarkHandler = async (postId) => {
+  const removeBookmarkHandler = async (postId, setDisableBookmark) => {
+    setDisableBookmark(true);
     try {
       const res = await removeBookMarkService(postId);
       if (res.status === 200) {
         const data = await res.data;
-        const updatedUserDetails = { ...state.userDetails, bookmarks: data.bookmarks }
-        dispatch({ type: USER_ACTIONS.ADD_BOOKMARK, payload: { userDetails: updatedUserDetails } })
+        dispatch({ type: USER_ACTIONS.REMOVE_BOOKMARK, payload: { bookmarks: data.bookmarks } });
+        setDisableBookmark(false)
+        toastSuccess('Removed From Bookmarks')
       }
     } catch (error) {
-      console.log('add bookmark api failed with error', error)
-
+      toastError('Something went wrong')
     }
   }
 
@@ -134,12 +139,11 @@ export default function UserProvider({ children }) {
   useEffect(() => {
     getUserDetails();
     getAllUsers();
-    getAllBookmark();
 
   }, []);
   return (
     <UserContext.Provider
-      value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers, addBookmarkHandler, removeBookmarkHandler }}
+      value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers, addBookmarkHandler, removeBookmarkHandler, getUserDetails }}
     >
       <UserDispatchContext.Provider value={dispatch}>
         {children}

@@ -8,42 +8,52 @@ import PostOptionsModal from './modals/PostOptionsModal';
 import { useRef } from 'react';
 import { useOutsideClick } from '../customHooks/useOutsideClick';
 import { useNavigate } from 'react-router-dom';
+import { toastError } from '../alerts/alerts';
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, disableLike, setDisableLike, disableBookmark, setDisableBookmark }) {
   const { state: userState, addBookmarkHandler, removeBookmarkHandler } = useUser();
   const { userDetails, allUsers } = userState;
 
   const { state: postState } = usePost();
   const { showOptions } = postState;
   const postDispatch = usePostDispatch();
-
   const liked = post?.likes.likedBy.find((user) => user?._id === userDetails?._id);
   const isUserPost = post?.userId === userDetails?._id;
   const user = allUsers.find(({ _id }) => _id === post.userId);
   const optionsRef = useRef();
-  const inBookmark = userDetails?.bookmarks.some((bookmark) => bookmark._id === post?._id)
+  const inBookmark = userDetails?.bookmarks?.some((bookmark) => bookmark._id === post?._id);
+
   const navigate = useNavigate();
 
   const likeHandler = async () => {
+    setDisableLike(true);
     try {
       if (liked) {
         let res = await dislikePostService(post);
-        postDispatch({
-          type: POST_ACTIONS.ADD_POST,
-          payload: { posts: res.data.posts },
-        });
+        if (res.status === 201) {
+          postDispatch({
+            type: POST_ACTIONS.ADD_POST,
+            payload: { posts: res.data.posts },
+          });
+          setDisableLike(false);
+        }
       } else {
         let res = await likePostService(post);
-
-        postDispatch({
-          type: POST_ACTIONS.ADD_POST,
-          payload: { posts: res.data.posts },
-        });
+        if (res.status === 201) {
+          postDispatch({
+            type: POST_ACTIONS.ADD_POST,
+            payload: { posts: res.data.posts },
+          });
+          setDisableLike(false)
+        }
       }
     } catch (error) {
-      console.log(error);
+      toastError('Something went wrong')
+      console.log('error', error)
+      setDisableLike(false)
+
     }
   };
   const optionsHandler = (e) => {
@@ -65,9 +75,9 @@ export default function PostCard({ post }) {
 
   const handleBookmark = () => {
     if (!inBookmark) {
-      addBookmarkHandler(post?._id);
+      addBookmarkHandler(post?._id, setDisableBookmark);
     } else {
-      removeBookmarkHandler(post?.id)
+      removeBookmarkHandler(post?.id, setDisableBookmark)
     }
   }
   return (
@@ -123,7 +133,7 @@ export default function PostCard({ post }) {
       <div className="flex gap-4 mt-4 font-thin text-slate-200 ">
         {/* like  */}
 
-        <button className="flex gap-2 " onClick={likeHandler}>
+        <button className="flex gap-2" disabled={disableLike} onClick={likeHandler}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -145,14 +155,14 @@ export default function PostCard({ post }) {
 
         {/* bookmark
          */}
-        <button onClick={handleBookmark} >
+        <button disabled={disableBookmark} onClick={handleBookmark} >
           {' '}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className={`${inBookmark ? 'text-green-400' : ''} md:hover:text-green-500  transition duration-150 hover:ease-in-out `}
+            className={`${inBookmark ? 'text-green-400 ' : 'hover:text-red-500'} transition duration-150 hover:ease-in-out `}
           >
             <path
               fill="none"
