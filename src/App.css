@@ -1,3 +1,6 @@
-button:disabled {
-  cursor: default;
+* {
+  transition: margin 0.2s ease-in-out;
+}
+html {
+  scroll-behavior: smooth;
 }
