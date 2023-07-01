@@ -8,11 +8,14 @@ import PostOptionsModal from './modals/PostOptionsModal';
 import { useRef } from 'react';
 import { useOutsideClick } from '../customHooks/useOutsideClick';
 import { useNavigate } from 'react-router-dom';
-import { toastError, toastSuccess } from '../alerts/alerts';
+import { toastError } from '../alerts/alerts';
+
+
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
+
+
 export default function PostCard({ post, disableLike, setDisableLike, disableBookmark, setDisableBookmark }) {
-  console.log(post?.createdAt)
 
   const { state: userState, addBookmarkHandler, removeBookmarkHandler } = useUser();
   const { userDetails, allUsers } = userState;
@@ -38,7 +41,6 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
             type: POST_ACTIONS.ADD_POST,
             payload: { posts: res.data.posts },
           });
-          toastSuccess('Removed From Likes')
           setDisableLike(false);
         }
       } else {
@@ -48,7 +50,6 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
             type: POST_ACTIONS.ADD_POST,
             payload: { posts: res.data.posts },
           });
-          toastSuccess('Added to Likes')
           setDisableLike(false)
         }
       }
@@ -80,7 +81,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
     if (!inBookmark) {
       addBookmarkHandler(post?._id, setDisableBookmark);
     } else {
-      removeBookmarkHandler(post?.id, setDisableBookmark)
+      removeBookmarkHandler(post?._id, setDisableBookmark)
     }
   }
   return (
@@ -132,8 +133,14 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
           </div>
         )}
       </div>
-      <p className="mt-4 text-sm ">{post?.content}</p>
-      <div className="flex gap-4 mt-4 font-thin text-slate-200 ">
+      <div className='p-4'>
+        <p className="text-sm">{post?.content}</p>
+        {post?.postPic && <div className='overflow-hidden mx-auto mt-4 h-80'>
+          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain overflow-hidden' />
+        </div>}
+
+      </div>
+      <div className="flex gap-4 font-thin text-slate-200 ">
         {/* like  */}
 
         <button className="flex gap-2" disabled={disableLike} onClick={likeHandler}>
@@ -161,22 +168,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
         <button disabled={disableBookmark} onClick={handleBookmark} >
           {' '}
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21V5q0-.825.588-1.413T7 3h10q.825 0 1.413.588T19 5v16l-7-3l-7 3Z" className={`text-gray-500 ${inBookmark ? 'text-green-400 ' : 'hover:text-red-500'}`} /></svg>
-          {/* <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            className={`${inBookmark ? 'text-green-400 ' : 'hover:text-red-500'} transition duration-150 hover:ease-in-out `}
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1"
-              d="M17 3H7a2 2 0 0 0-2 2v15.138a.5.5 0 0 0 .748.434l5.26-3.005a2 2 0 0 1 1.984 0l5.26 3.006a.5.5 0 0 0 .748-.435V5a2 2 0 0 0-2-2z"
-            />
-          </svg> */}
+
         </button>
       </div>
       {post.length < 1 && <p>No posts</p>}

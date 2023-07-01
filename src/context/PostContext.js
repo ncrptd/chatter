@@ -32,7 +32,7 @@ export function PostProvider({ children }) {
     }, 1000);
   };
 
-  const addPostHandler = async (content) => {
+  const addPostHandler = async (content, postPic) => {
     try {
       const encodedToken = getEncodedToken();
       const config = {
@@ -42,6 +42,7 @@ export function PostProvider({ children }) {
         postData: {
           content,
           userId: userDetails?._id,
+          postPic
         },
       };
       const res = await axios.post('/api/posts', body, config);
@@ -56,14 +57,14 @@ export function PostProvider({ children }) {
     }
   };
 
-  const editPostHandler = async (content, postId) => {
+  const editPostHandler = async (content, postPic, postId) => {
     try {
       const encodedToken = getEncodedToken();
       const config = {
         headers: { authorization: encodedToken },
       };
       const body = {
-        postData: { content },
+        postData: { content, postPic },
       };
 
       const res = await axios.post(`/api/posts/edit/${postId}`, body, config);

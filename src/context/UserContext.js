@@ -100,6 +100,7 @@ export default function UserProvider({ children }) {
       }
     } catch (error) {
       toastError('Something went wrong')
+      console.log(error)
     }
   }
 
@@ -112,7 +113,6 @@ export default function UserProvider({ children }) {
         const data = await res.data;
         dispatch({ type: USER_ACTIONS.ADD_BOOKMARK, payload: { bookmarks: data.bookmarks } });
         setDisableBookmark(false)
-        toastSuccess(`Added To Bookmarks`)
       }
     } catch (error) {
       toastError('Something went wrong')
@@ -132,6 +132,7 @@ export default function UserProvider({ children }) {
       }
     } catch (error) {
       toastError('Something went wrong')
+      console.log(error)
     }
   }
 

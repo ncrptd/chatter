@@ -31,8 +31,8 @@ export default function Profile() {
   const noOfPosts = userPosts ? posts.filter((post) => post?.userId === user?._id) : [];
 
   return (
-    <div>
-      <h1 className="p-2 font-semibold bg-gray-800 border-x border-slate-500 text-center">
+    <div className='bg-slate-900'>
+      <h1 className="p-2 font-semibold bg-gray-800 border-x border-slate-500 text-center ">
         {user?.fullName}{' '}
         <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
       </h1>

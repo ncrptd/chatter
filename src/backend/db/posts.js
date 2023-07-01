@@ -22,6 +22,7 @@ export const posts = [
     createdAt: '2022-05-01',
     updatedAt: formatDate(),
     userId: 'eyJhbGciOi4k2j8hFuJfY',
+
   },
   {
     _id: '2',
@@ -95,6 +96,7 @@ export const posts = [
     createdAt: '2022-05-11',
     updatedAt: formatDate(),
     userId: 'eyJhbGciOi4cj8hFuJfY',
+    postPic: 'https://images.unsplash.com/photo-1568051243851-f9b136146e97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80'
   },
   {
     _id: '6',

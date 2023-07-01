@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PostCard from './PostCard';
 import PostSkeletonCard from './skeletons/PostSkeletonCard';
 import { usePost } from '../context/PostContext';
 import { useUser } from '../context/UserContext';
 
 export default function BookmarkList() {
+    const [disableLike, setDisableLike] = useState(false);
+    const [disableBookmark, setDisableBookmark] = useState(false);
+
     const { state: userState } = useUser();
     const { userDetails } = userState;
     const { state: postState } = usePost();
@@ -13,7 +16,7 @@ export default function BookmarkList() {
 
     return (
         <div>
-            {!visiblePosts ? <PostSkeletonCard /> : visiblePosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Bookmarks Found</p> : visiblePosts.map((post) => <PostCard post={post} key={post._id} />)}
+            {!visiblePosts ? <PostSkeletonCard /> : visiblePosts.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Bookmarks Found</p> : visiblePosts.map((post) => <PostCard post={post} key={post._id} disableLike={disableLike} setDisableLike={setDisableLike} disableBookmark={disableBookmark} setDisableBookmark={setDisableBookmark} />)}
         </div>
     )
 }

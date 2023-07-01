@@ -76,7 +76,7 @@ export default function ProfileEditModal({ user }) {
       editUserHandler(userData)
 
     } catch (error) {
-      console.log('cloudinary api failledd with error', error)
+      console.log('cloudinary api failled with error', error)
 
     }
   }
@@ -95,8 +95,6 @@ export default function ProfileEditModal({ user }) {
         >
           <input
             type="file"
-            name=""
-            id=""
             className="hidden"
             ref={imgRef}
             onChange={handleImageChange}
@@ -133,7 +131,7 @@ export default function ProfileEditModal({ user }) {
 
         <div className='flex gap-2  p-2'>
           {AVATARS.map((url) => <div className='w-full h-full rounded-full overflow-hidden cursor-pointer' key={url} onClick={() => handleAvatar(url)}>
-            <img src={url} alt="avatar" className='w-full h-full' />
+            <img src={url} alt="avatar" className='w-full h-full object-cover' />
           </div>)}
         </div>
 
