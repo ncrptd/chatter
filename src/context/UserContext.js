@@ -12,7 +12,7 @@ import {
   userEditService,
 } from '../services/userServices';
 import { addBookmarkService, removeBookMarkService } from '../services/bookmarkServices';
-import { toastError, toastLoad, toastLoading, toastPromise, toastSuccess } from '../alerts/alerts';
+import { toastError, toastSuccess } from '../alerts/alerts';
 import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
