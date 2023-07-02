@@ -145,7 +145,7 @@ export default function ProfileEditModal({ user }) {
 
         {/* bio section  */}
         <form onSubmit={handleEditSubmit}>
-          <label htmlFor="bio" className=" ">
+          <label htmlFor="bio">
             Bio
           </label>
           <textarea
