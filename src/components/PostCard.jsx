@@ -85,7 +85,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
     }
   }
   return (
-    <div className="p-4 w-full min-h-max items-center border-x border-b border-slate-500 break-words">
+    <div className="p-4 w-full h-fit items-center border-x border-b border-slate-500 break-words">
       <div className="flex justify-between items-center ">
         <div
           className="flex items-center gap-4 cursor-pointer"
@@ -135,8 +135,8 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
       </div>
       <div className='p-4'>
         <p className="text-sm">{post?.content}</p>
-        {post?.postPic && <div className='overflow-hidden mx-auto mt-4 w-1/2 h-1/2   '>
-          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-cover overflow-hidden' />
+        {post?.postPic && <div className='overflow-hidden mx-auto mt-4 md:h-96 '>
+          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain overflow-hidden rounded-lg' />
         </div>}
 
       </div>
