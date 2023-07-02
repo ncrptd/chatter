@@ -135,8 +135,8 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
       </div>
       <div className='p-4'>
         <p className="text-sm">{post?.content}</p>
-        {post?.postPic && <div className='overflow-hidden mx-auto mt-4 h-80'>
-          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain overflow-hidden' />
+        {post?.postPic && <div className='overflow-hidden mx-auto mt-4 w-1/2 h-1/2   '>
+          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-cover overflow-hidden' />
         </div>}
 
       </div>

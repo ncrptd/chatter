@@ -74,7 +74,6 @@ export function PostProvider({ children }) {
           type: POST_ACTIONS.ADD_POST,
           payload: { posts: updatedPosts },
         });
-        console.log(updatedPosts)
         toastSuccess('Post Edited Successfully')
       }
     } catch (error) {

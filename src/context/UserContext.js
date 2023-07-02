@@ -13,12 +13,15 @@ import {
 } from '../services/userServices';
 import { addBookmarkService, removeBookMarkService } from '../services/bookmarkServices';
 import { toastError, toastSuccess } from '../alerts/alerts';
+import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
 
 export default function UserProvider({ children }) {
+
   const [state, dispatch] = useReducer(userReducer, initialState);
+  const navigate = useNavigate();
 
   const getUserDetails = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -30,7 +33,8 @@ export default function UserProvider({ children }) {
         }
       }
     } catch (error) {
-      toastError('Something went wrong please login again')
+      toastError('Something went wrong please login again');
+      navigate('/login')
     }
   };
   const getAllUsers = async () => {
@@ -41,8 +45,7 @@ export default function UserProvider({ children }) {
         payload: { users: res.data.users },
       });
     } catch (error) {
-      toastError('Something went wrong please login again')
-
+      toastError('Something went wrong please login again', error);
     }
   };
 
@@ -54,7 +57,6 @@ export default function UserProvider({ children }) {
       return dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
     } catch (error) {
       toastError('Profile Edit failed')
-
     }
   }
 
@@ -141,7 +143,7 @@ export default function UserProvider({ children }) {
     getUserDetails();
     getAllUsers();
 
-  }, []);
+  });
   return (
     <UserContext.Provider
       value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers, addBookmarkHandler, removeBookmarkHandler, getUserDetails }}

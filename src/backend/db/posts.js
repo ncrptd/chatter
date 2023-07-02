@@ -17,8 +17,8 @@ export const posts = [
     },
     username: 'aditya_jadhav',
     fullName: 'Aditya Jadhav',
-    postImage:
-      'https://res.cloudinary.com/dwebygldw/image/upload/v1653066367/frittr/vada-pav_g0u58t.webp',
+    postPic:
+      'https://images.pexels.com/photos/15017417/pexels-photo-15017417/free-photo-of-vada-pav.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     createdAt: '2022-05-01',
     updatedAt: formatDate(),
     userId: 'eyJhbGciOi4k2j8hFuJfY',
@@ -37,8 +37,8 @@ export const posts = [
     username: 'rachit123',
     fullName: 'Rachit Jha',
     createdAt: '2022-05-11',
-    postImage:
-      'https://res.cloudinary.com/dwebygldw/image/upload/v1652908952/frittr/zwpmppawiyxwthsmikyk.webp',
+    postPic:
+      'https://images.pexels.com/photos/16684654/pexels-photo-16684654/free-photo-of-tables-and-chairs-on-the-outside-of-a-cafe.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     updatedAt: formatDate(),
     userId: 'eyJhbGciOi4ssf442j8hF5sdffY',
   },
@@ -61,7 +61,7 @@ export const posts = [
     },
     username: 'gill100',
     fullName: 'Rakshit Gill',
-    postImage: null,
+    postPic: null,
     createdAt: '2022-04-20',
     updatedAt: formatDate(),
     userId: 'eyJhbGciOi4cj8hFuJsdf',
@@ -75,7 +75,7 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    postImage: null,
+    postPic: null,
     username: 'gill100',
     fullName: 'Rakshit Gill',
     createdAt: '2022-05-05',
@@ -84,39 +84,6 @@ export const posts = [
   },
   {
     _id: '5',
-    content: 'What a lovely evening.',
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    postImage: null,
-    username: 'rockeywithane',
-    fullName: 'Rockey Biswas',
-    createdAt: '2022-05-11',
-    updatedAt: formatDate(),
-    userId: 'eyJhbGciOi4cj8hFuJfY',
-    postPic: 'https://images.unsplash.com/photo-1568051243851-f9b136146e97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80'
-  },
-  {
-    _id: '6',
-    content:
-      'Nairobi is such a great city with so many people going about their business. One thing that you need to know while there are the places where to find great food/meals. Best recommendation is @al_yusra Restaurant located along Banda Street just next to Nation Centre. #Kenya',
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    username: 'rockeywithane',
-    fullName: 'Rockey Biswas',
-    createdAt: '2022-05-09',
-    postImage:
-      'https://res.cloudinary.com/dwebygldw/image/upload/v1653066477/frittr/E-HqxXdWUAM0z-U_a44utb.jpg',
-    updatedAt: formatDate(),
-    userId: 'eyJhbGciOi4cj8hFuJfY',
-  },
-  {
-    _id: '7',
     content:
       'I met this street food seller in Gyeongju on a recommendation from a dating app. This man was adopted and grew up in US. He moved to Korea to find his birth mother. And he did! I often think back to our conversation #MondayMotivation',
     likes: {
@@ -126,10 +93,71 @@ export const posts = [
     },
     username: 'peterevans',
     fullName: 'Peter evans',
-    postImage:
+    postPic:
       'https://res.cloudinary.com/dwebygldw/image/upload/v1653067279/frittr/E7OX3WgXoAEu0gR_z9x7zu.jpg',
     createdAt: '2022-05-01',
     updatedAt: formatDate(),
     userId: 'eyJhbGciOi4k2j8hF5sdffY',
   },
+  {
+    _id: '6',
+    content: 'What a lovely evening.',
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    postPic: null,
+    username: 'rockeywithane',
+    fullName: 'Rockey Biswas',
+    createdAt: '2022-05-11',
+    updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJfY',
+    postPic: 'https://images.pexels.com/photos/698907/pexels-photo-698907.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+  },
+  {
+    _id: '7',
+    content:
+      'Nairobi is such a great city with so many people going about their business. One thing that you need to know while there are the places where to find great food/meals. Best recommendation is @al_yusra Restaurant located along Banda Street just next to Nation Centre. #Kenya',
+    likes: {
+      likeCount: 1,
+      likedBy: [{
+        _id: ' ',
+        fullName: 'Mohit Singh',
+        username: 'singhMohit',
+        profileAvatar: 'https://picsum.photos/id/1012/150',
+      },],
+      dislikedBy: [],
+    },
+    username: 'rockeywithane',
+    fullName: 'Rockey Biswas',
+    createdAt: '2022-05-09',
+    postPic:
+      'https://images.pexels.com/photos/12851371/pexels-photo-12851371.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJfY',
+  },
+  {
+    _id: '8',
+    content:
+      "Visiting the Pyramids of Giza was a surreal experience! The ancient Egyptian history and architecture are truly mesmerizing. Don't miss the chance to explore this wonder of the world. #Egypt #Pyramids",
+    likes: {
+      likeCount: 1,
+      likedBy: [{
+        _id: ' ',
+        fullName: 'Mohit Singh',
+        username: 'singhMohit',
+        profileAvatar: 'https://picsum.photos/id/1012/150',
+      },],
+      dislikedBy: [],
+    },
+    username: 'rockeywithane',
+    fullName: 'Rockey Biswas',
+    createdAt: '2021-07-09',
+    postPic:
+      'https://images.pexels.com/photos/8863506/pexels-photo-8863506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    updatedAt: formatDate(),
+    userId: 'eyJhbGciOi4cj8hFuJfY',
+  },
+
 ];

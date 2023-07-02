@@ -20,11 +20,11 @@ export default function ProfileEditModal({ user }) {
     bio: user?.bio,
     website: user?.website,
   });
+
   const { editUserHandler } = useUser();
   const userDispatch = useUserDispatch();
 
   const [image, setImage] = useState(null);
-
   const imgRef = useRef();
 
 
@@ -39,13 +39,11 @@ export default function ProfileEditModal({ user }) {
 
 
   const closeModal = () => {
-    // e.stopPropagation();
     userDispatch({
       type: USER_ACTIONS.OPEN_PROFILE_EDIT_MODAL,
       payload: { payload: false },
     });
   };
-  const portalEl = document.querySelector('.portal');
 
   const handleImageClick = () => {
     imgRef.current.click();
@@ -83,6 +81,9 @@ export default function ProfileEditModal({ user }) {
   const handleAvatar = (url) => {
     setImage(url)
   }
+
+  const portalEl = document.querySelector('.portal');
+
   return createPortal(
     <>
       <div className=" modal-wrapper bg-slate-800" onClick={closeModal}></div>
