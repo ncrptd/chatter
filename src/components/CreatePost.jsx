@@ -46,7 +46,6 @@ export default function CreatePost() {
       try {
         formData.append("file", file);
         formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-        console.log(formData)
         let res = await fetch(CLOUDINARY_URL, {
           method: "POST",
           body: formData,

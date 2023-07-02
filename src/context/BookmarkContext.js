@@ -3,6 +3,7 @@ import { createContext } from "react";
 import { bookmarkReducer, initialState, BOOKMARK_ACTIONS } from "../reducer/bookmarkReducer";
 import { addBookmarkService, getAllBookmarkService, removeBookMarkService } from "../services/bookmarkServices";
 import { useEffect } from "react";
+import { toastError } from "../alerts/alerts";
 
 const BookmarkContext = createContext();
 const BookmarkDispatchContext = createContext();
@@ -27,7 +28,6 @@ export default function BookmarkProvider({ children }) {
             const res = await addBookmarkService(postId);
             if (res.status === 200) {
                 const data = await res.data;
-                console.log(data)
                 dispatch({ type: BOOKMARK_ACTIONS.ADD_BOOKMARK, payload: { bookmarks: data.bookmarks } })
             }
         } catch (error) {
@@ -44,6 +44,7 @@ export default function BookmarkProvider({ children }) {
                 dispatch({ type: BOOKMARK_ACTIONS.ADD_BOOKMARK, payload: { bookmarks: data.bookmarks } })
             }
         } catch (error) {
+            toastError('Bookmark error')
             console.log('add bookmark api failed with error', error)
 
         }
