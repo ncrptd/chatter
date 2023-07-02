@@ -67,7 +67,6 @@ export default function ProfileEditModal({ user }) {
       return closeModal();
     }
     const formData = new FormData();
-    console.log(file)
     try {
       formData.append("file", file);
       formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);

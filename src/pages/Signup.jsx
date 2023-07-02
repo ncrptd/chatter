@@ -1,3 +1,4 @@
+import { toHaveStyle } from '@testing-library/jest-dom/matchers';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -72,7 +73,7 @@ export default function Signup() {
       navigate('/login');
     } catch (error) {
       console.log('signup failed with error', error);
-
+      toHaveStyle('Signup failed please try later')
     }
   };
   return (
