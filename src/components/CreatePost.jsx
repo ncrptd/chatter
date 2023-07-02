@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { usePost } from '../context/PostContext';
 import { useUser } from '../context/UserContext';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
 
@@ -18,6 +19,8 @@ export default function CreatePost() {
   const { state: userState } = useUser();
 
   const { userDetails } = userState;
+
+  const navigate = useNavigate();
 
   const handleContentData = (e) => {
     const value = e.target.value;
@@ -63,10 +66,13 @@ export default function CreatePost() {
     return setContent('');
   }
 
-
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    navigate(`/profile/${userDetails?._id}`)
+  }
   return (
     <div className="flex px-4 pt-8 pb-4 gap-4">
-      <div className='w-10 h-10 rounded-full bg-slate-700 overflow-hidden '>
+      <div className='w-10 h-10 rounded-full bg-slate-700 overflow-hidden cursor-pointer' onClick={handleProfileClick}>
         {userDetails?.profilePic && <img src={userDetails?.profilePic} alt="logged in user profile" className='h-full w-full object-cover' />}
       </div>
       <form className="flex flex-col w-full gap-6 " onSubmit={handleAddPost}>

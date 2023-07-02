@@ -87,36 +87,34 @@ export default function EditPostModal({ post }) {
 
   return createPortal(
     <>
-      <div className=" modal-wrapper bg-slate-800" onClick={closeModal}></div>
+      <div className="modal-wrapper  bg-slate-800" onClick={closeModal}></div>
       <div className="bg-slate-900 flex flex-col gap-4 text-center modal w-3/4 md:w-2/6 px-2 py-4 rounded-lg shadow-md shadow-slate-600 ">
+        <div className="w-20 h-20 rounded-full bg-slate-100 overflow-hidden mx-auto">
+          {/* image  */}
+          <img
+            src={
+              user?.profilePic ||
+              'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png'
+            }
+            alt="profile"
+            className="w-full h-full object-cover "
+          />
+        </div>
         <div className="flex gap-2  w-full ">
-          <div>
-            <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden">
-              {/* image  */}
-              <img
-                src={
-                  user?.profilePic ||
-                  'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png'
-                }
-                alt="profile"
-                className="w-full h-full object-cover "
-              />
-            </div>
-          </div>
           <textarea
             type="text"
             onChange={handleInputChange}
             value={editValue}
             placeholder="Something's cooking..."
-            className="bg-inherit resize-none p-4 border-px border-slate-400 outline-px h-28 w-3/4 text-sm"
+            className="bg-inherit resize-none p-2 border-slate-400 outline-none h-28 w-3/4 text-sm mx-auto rounded-lg"
           />
         </div>
         {image &&
-          <div className='relative overflow-hidden rounded-2xl w-3/4 h-80 bg-gray-800 mx-auto '>
+          <div className='relative overflow-hidden rounded-lg w-3/4 h-80 bg-gray-800 mx-auto'>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='absolute top-3 right-3 cursor-pointer bg-gray-400 rounded-full p-1 hover:bg-slate-900 text-white' onClick={removeImageHandler}><path fill="currentColor" d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12Z" /></svg>
 
-            {typeof image === 'object' && <img src={URL.createObjectURL(image)} alt="" className='w-full h-full object-cover rounded-2xl' />}
-            {typeof image === 'string' && <img src={image} alt="" className='w-full h-full object-cover rounded-2xl' />}
+            {typeof image === 'object' && <img src={URL.createObjectURL(image)} alt="" className='w-full h-full object-cover rounded-lg' />}
+            {typeof image === 'string' && <img src={image} alt="" className='w-full h-full object-cover rounded-lg' />}
           </div>}
 
         <div className="flex w-3/4 mx-auto gap-2 items-center justify-between ">

@@ -59,8 +59,15 @@ export default function ProfileEditModal({ user }) {
     e.preventDefault();
 
     const file = image;
+    if (typeof file === 'string') {
+      const userData = {
+        ...profileDetails, profilePic: file
+      }
+      editUserHandler(userData)
+      return closeModal();
+    }
     const formData = new FormData();
-
+    console.log(file)
     try {
       formData.append("file", file);
       formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
@@ -74,7 +81,7 @@ export default function ProfileEditModal({ user }) {
         ...profileDetails, profilePic: data.url
       }
       editUserHandler(userData)
-      closeModal()
+      return closeModal();
     } catch (error) {
       console.log('cloudinary api failled with error', error)
     }
@@ -131,7 +138,7 @@ export default function ProfileEditModal({ user }) {
         {/* avatar options */}
         <p>Choose Avatars</p>
 
-        <div className='flex gap-2 p-2'>
+        <div className='flex gap-2 p-2 justify-center items-center'>
           {AVATARS.map((url) => <div className='w-12 h-12 rounded-full overflow-hidden cursor-pointer' key={url} onClick={() => handleAvatar(url)}>
             <img src={url} alt="avatar" className='w-full h-full object-cover' />
           </div>)}
