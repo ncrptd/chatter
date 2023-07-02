@@ -70,7 +70,7 @@ export default function Login() {
         getUserDetails();
         toastSuccess(`Welcome ${foundUser.fullName}`)
       } catch (error) {
-        console.log(error.message);
+        console.log(error);
         setErrorMsg('No user found');
         authDispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE, payload: error });
       }
