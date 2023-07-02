@@ -33,8 +33,8 @@ export default function UserProvider({ children }) {
         }
       }
     } catch (error) {
-      toastError('Something went wrong please login again');
-      navigate('/login')
+      toastError('User not found Please Signup');
+      navigate('/signup')
     }
   };
   const getAllUsers = async () => {
