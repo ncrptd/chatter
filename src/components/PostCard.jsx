@@ -10,7 +10,6 @@ import { useOutsideClick } from '../customHooks/useOutsideClick';
 import { useNavigate } from 'react-router-dom';
 import { toastError } from '../alerts/alerts';
 
-
 let relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 
@@ -133,10 +132,10 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
           </div>
         )}
       </div>
-      <div className='p-4'>
+      <div className='p-4 '>
         <p className="text-sm">{post?.content}</p>
         {post?.postPic && <div className='overflow-hidden mx-auto mt-4 md:h-96 '>
-          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain overflow-hidden rounded-lg' />
+          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain rounded-2xl' />
         </div>}
 
       </div>

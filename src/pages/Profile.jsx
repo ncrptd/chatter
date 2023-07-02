@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { usePost } from '../context/PostContext';
 import PostSkeletonCard from '../components/skeletons/PostSkeletonCard';
 import { useState } from 'react';
+import Goback from '../components/Goback';
 
 export default function Profile() {
   const [disableFollow, setDisableFollow] = useState(false);
@@ -32,10 +33,20 @@ export default function Profile() {
 
   return (
     <div className='bg-slate-900'>
-      <h1 className="p-2 font-semibold bg-gray-800 border-x border-slate-500 text-center ">
+
+      <div className="text-center p-2  bg-gray-800 border-x border-slate-500 flex justify-between items-center ">
+        <Goback />
+        <div>
+          <p>{user?.fullName}{' '}</p>
+          <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
+        </div>
+        <div></div>
+      </div>
+
+      {/* <h1 className="p-2 font-semibold bg-gray-800 border-x border-slate-500 text-center ">
         {user?.fullName}{' '}
         <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
-      </h1>
+      </h1> */}
       {user && <ProfileCard user={user} disableFollow={disableFollow} setDisableFollow={setDisableFollow} />}
       {
         !userPosts ? (

@@ -78,10 +78,10 @@ export default function CreatePost() {
           onChange={handleContentData}
         />
         {image && <div className='relative overflow-hidden rounded-2xl w-3/4 h-96 bg-gray-800 mx-auto '>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='absolute top-3 right-3 cursor-pointer bg-gray-400 rounded-full p-1 ' onClick={removeImageHandler}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='absolute top-3 right-3 cursor-pointer bg-gray-400 rounded-full p-1' onClick={removeImageHandler}>
             <path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M20 20L4 4m16 0L4 20" /></svg>
 
-          <img src={URL.createObjectURL(image)} alt="" className='w-full h-full object-cover  rounded-2xl' />
+          <img src={URL.createObjectURL(image)} alt="" className='w-full h-full object-cover rounded-2xl' />
         </div>}
         <div className="flex w-3/4 mx-auto gap-2 items-center justify-end">
           <div className='' onClick={handleImageClick}>
@@ -105,7 +105,7 @@ export default function CreatePost() {
             </svg>
           </div>
           <button
-            className="bg-pink-600 rounded-full px-6 py-1  place-self-end tracking-widest disabled:bg-gray-300 disabled:text-black"
+            className="bg-pink-600 rounded-full px-6 py-1  place-self-end tracking-widest disabled:bg-gray-300 disabled:text-black "
             type="submit" disabled={content === '' ? true : false}
           >
             Post

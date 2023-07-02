@@ -28,7 +28,7 @@ export default function SuggestionCard({ user, disableFollow, setDisableFollow }
         </div>
       </div>
       <div>
-        <button className="bg-white text-black rounded-full py-1 px-4" onClick={handleFollow} disabled={disableFollow}>
+        <button className="bg-white text-black rounded-full py-1 px-4 hover:opacity-80 " onClick={handleFollow} disabled={disableFollow}>
           Follow
         </button>
       </div>

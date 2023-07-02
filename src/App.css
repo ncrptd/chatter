@@ -1,6 +1,9 @@
 * {
   transition: margin 0.2s ease-in-out;
 }
+body {
+  font-family: sans-serif;
+}
 html {
   scroll-behavior: smooth;
 }
