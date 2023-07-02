@@ -12,7 +12,9 @@ const AVATARS = [
   'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileFemale.png',
   'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileMale.png',
   'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileFemale2.png',
-  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileMale2.png'
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688136169/avatars/profileMale2.png',
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688295683/avatars/coffee-female_m1lpcm.png',
+  'https://res.cloudinary.com/dazl0yblg/image/upload/v1688295618/avatars/coffee-male.png'
 
 ]
 export default function ProfileEditModal({ user }) {
@@ -72,10 +74,9 @@ export default function ProfileEditModal({ user }) {
         ...profileDetails, profilePic: data.url
       }
       editUserHandler(userData)
-
+      closeModal()
     } catch (error) {
       console.log('cloudinary api failled with error', error)
-
     }
   }
   const handleAvatar = (url) => {
@@ -91,7 +92,7 @@ export default function ProfileEditModal({ user }) {
         <h1 className=" p-2 font-semibold ">Edit Profile</h1>
         {/* avatar section  */}
         <div
-          className="w-20 h-20 rounded-full bg-slate-300 mx-auto overflow-hidden relative cursor-pointer"
+          className="w-20 h-20 rounded-full mx-auto overflow-hidden relative cursor-pointer"
           onClick={handleImageClick}
         >
           <input
@@ -102,7 +103,7 @@ export default function ProfileEditModal({ user }) {
           />
 
           {image ? (
-            <img src={typeof image === 'object' ? URL.createObjectURL(image) : image} alt="profile" />
+            <img src={typeof image === 'object' ? URL.createObjectURL(image) : image} alt="profile" className="w-full h-full object-cover " />
 
           ) : (
             <img
@@ -118,7 +119,7 @@ export default function ProfileEditModal({ user }) {
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            className="absolute bottom-2 right-3 "
+            className="absolute bottom-2 right-3 bg-gray-800 rounded-full p-1"
             viewBox="0 0 256 256"
           >
             <path
@@ -130,8 +131,8 @@ export default function ProfileEditModal({ user }) {
         {/* avatar options */}
         <p>Choose Avatars</p>
 
-        <div className='flex gap-2  p-2'>
-          {AVATARS.map((url) => <div className='w-full h-full rounded-full overflow-hidden cursor-pointer' key={url} onClick={() => handleAvatar(url)}>
+        <div className='flex gap-2 p-2'>
+          {AVATARS.map((url) => <div className='w-12 h-12 rounded-full overflow-hidden cursor-pointer' key={url} onClick={() => handleAvatar(url)}>
             <img src={url} alt="avatar" className='w-full h-full object-cover' />
           </div>)}
         </div>
