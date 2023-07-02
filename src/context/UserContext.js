@@ -33,7 +33,6 @@ export default function UserProvider({ children }) {
         }
       }
     } catch (error) {
-      toastError('User not found Please Signup');
       navigate('/signup')
     }
   };

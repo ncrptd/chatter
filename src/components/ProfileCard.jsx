@@ -51,8 +51,8 @@ export default function ProfileCard({ user, disableFollow, setDisableFollow }) {
           />
         </div>
       </div>
-      <div className='flex flex-col gap-2 w-full '>
-        <p className='font-bold text-lg word-breaks w-full overflow-clip'>{user?.fullName}</p>
+      <div className='flex flex-col gap-2 w-full overflow-clip '>
+        <p className='font-bold text-lg word-breaks w-full overflow-clip text-ellipsis'>{user?.fullName}</p>
         <p className='text-sm text-slate-400 word-breaks w-full overflow-clip text-ellipsis	'>@{user?.username}</p>
         <p className='font-thin word-breaks w-full overflow-clip'>{user?.bio}</p>
         <p className='text-blue-500 font-thin '>

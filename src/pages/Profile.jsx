@@ -34,7 +34,7 @@ export default function Profile() {
   return (
     <div className='bg-slate-900'>
 
-      <div className="text-center p-2  bg-gray-800 border-x border-slate-500 flex justify-between items-center ">
+      <div className="text-center p-2  bg-gray-800 border-x border-slate-500 flex justify-between items-center overflow-clip">
         <Goback />
         <div>
           <p>{user?.fullName}{' '}</p>
@@ -43,15 +43,11 @@ export default function Profile() {
         <div></div>
       </div>
 
-      {/* <h1 className="p-2 font-semibold bg-gray-800 border-x border-slate-500 text-center ">
-        {user?.fullName}{' '}
-        <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
-      </h1> */}
       {user && <ProfileCard user={user} disableFollow={disableFollow} setDisableFollow={setDisableFollow} />}
       {
         !userPosts ? (
           <PostSkeletonCard />
-        ) : userPosts.length <= 0 ? <p className='text-center font-bold uppercase p-6'>No Posts</p> : (
+        ) : userPosts.length <= 0 ? <p className='text-center font-bold uppercase p-6 '>No Posts</p> : (
           userPosts.map((post) => <PostCard post={post} key={post._id} disableLike={disableLike} setDisableLike={setDisableLike} disableBookmark={disableBookmark} setDisableBookmark={setDisableBookmark} />)
         )
       }

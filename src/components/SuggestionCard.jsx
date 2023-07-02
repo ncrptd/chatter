@@ -17,13 +17,13 @@ export default function SuggestionCard({ user, disableFollow, setDisableFollow }
     navigate(`/profile/${user?._id}`)
   }
   return (
-    <div className="flex justify-between items-center mb-4 hover:cursor-pointer" >
-      <div className="flex gap-2 justify-center items-center" onClick={handelProfileNavigation}>
+    <div className="flex justify-between items-center mb-4 hover:cursor-pointer " >
+      <div className="flex gap-2 justify-start items-center overflow-clip" onClick={handelProfileNavigation}>
         <div className="w-10 h-10 rounded-full overflow-hidden" >
-          <img src={user?.profilePic} alt={user?.fullName} className='w-full h-full object-cover ' />
+          <img src={user?.profilePic} alt={user?.fullName} className='w-full h-full object-cover' />
         </div>
-        <div>
-          <p className="text-semibold">{user?.fullName}</p>
+        <div className=' w-1/2'>
+          <p className="text-semibold text-ellipsis overflow-hidden">{user?.fullName}</p>
           {/* <p className="font-thin text-slate-400 ">@{user?.username}</p> */}
         </div>
       </div>
