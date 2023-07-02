@@ -78,14 +78,13 @@ export default function CreatePost() {
           value={content}
           onChange={handleContentData}
         />
-        {image && <div className='relative border overflow-hidden mx-auto h-80'>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='absolute top-3 right-3 text-black cursor-pointer hover:text-pink-500' onClick={removeImageHandler}>
-
+        {image && <div className='relative overflow-hidden rounded-2xl w-3/4 h-96 bg-gray-800 mx-auto '>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='absolute top-3 right-3 cursor-pointer bg-gray-400 rounded-full p-1 ' onClick={removeImageHandler}>
             <path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M20 20L4 4m16 0L4 20" /></svg>
 
-          <img src={URL.createObjectURL(image)} alt="" className='object-contain h-full w-full' />
+          <img src={URL.createObjectURL(image)} alt="" className='w-full h-full object-cover  rounded-2xl' />
         </div>}
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex w-3/4 mx-auto gap-2 items-center justify-end">
           <div className='' onClick={handleImageClick}>
             <input
               type="file"
