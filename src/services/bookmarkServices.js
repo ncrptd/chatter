@@ -1,6 +1,5 @@
 import axios from "axios";
-import { getEncodedToken } from "./postServices"
-
+import { getEncodedToken } from "../utils/encodedToken";
 const getAllBookmarkService = () => {
     const encodedToken = getEncodedToken();
 

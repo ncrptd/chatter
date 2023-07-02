@@ -1,4 +1,3 @@
-import React from 'react';
 import CreatePost from '../components/CreatePost';
 import PostList from '../components/PostList';
 import { usePost, usePostDispatch } from '../context/PostContext';
@@ -9,14 +8,13 @@ export default function Home() {
   const { postsFilterBy } = state;
   const postDispatch = usePostDispatch();
 
+
   const handlePostsFilter = (filterValue) => {
     postDispatch({
       type: POST_ACTIONS.FILTER_POSTS,
       payload: { filterBy: filterValue },
     });
   };
-
-
   return (
     <section className=" bg-slate-900 overflow-auto home h-screen">
       <h1 className="text-center p-2 font-semibold bg-gray-800 border-x border-slate-500">

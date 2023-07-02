@@ -3,8 +3,6 @@ import ExploreList from '../components/ExploreList';
 import Goback from '../components/Goback';
 
 export default function Explore() {
-
-
   return (
     <section className="bg-slate-900 h-screen overflow-auto ">
 

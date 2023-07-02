@@ -6,6 +6,20 @@ const getAllPostService = () => axios.get('/api/posts');
 const getUserPostService = (username) =>
   axios.get(`/api/posts/user/${username}`);
 
+const addPostService = (content, postPic, userDetails) => {
+  const encodedToken = getEncodedToken();
+  const config = {
+    headers: { authorization: encodedToken },
+  };
+  const body = {
+    postData: {
+      content,
+      userId: userDetails?._id,
+      postPic
+    },
+  };
+  return axios.post('/api/posts', body, config)
+}
 const likePostService = ({ _id }) => {
   const encodedToken = getEncodedToken();
   const body = {};
@@ -29,7 +43,7 @@ const dislikePostService = ({ _id }) => {
 export {
   getAllPostService,
   getUserPostService,
-  getEncodedToken,
+  addPostService,
   likePostService,
   dislikePostService,
 };

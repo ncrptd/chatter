@@ -42,7 +42,6 @@ export default function Profile() {
         </div>
         <div></div>
       </div>
-
       {user && <ProfileCard user={user} disableFollow={disableFollow} setDisableFollow={setDisableFollow} />}
       {
         !userPosts ? (

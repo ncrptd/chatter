@@ -3,6 +3,8 @@ import { usePost } from '../context/PostContext';
 import { useUser } from '../context/UserContext';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toastPromise } from '../alerts/alerts';
+
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
 
@@ -41,7 +43,6 @@ export default function CreatePost() {
   const handleAddPost = async (e) => {
     e.preventDefault();
     let postPic = null;
-
     const file = image;
     const formData = new FormData();
 
@@ -49,20 +50,24 @@ export default function CreatePost() {
       try {
         formData.append("file", file);
         formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-        let res = await fetch(CLOUDINARY_URL, {
+
+        let res = await toastPromise(fetch(CLOUDINARY_URL, {
           method: "POST",
           body: formData,
-        });
-        let data = await res.json();
-        postPic = data.url
-        addPostHandler(content, postPic);
-        setContent('');
-        return removeImageHandler()
+        }), 'Creating Post', 'Post created Successfully', 'Post failed');
+        if (res.status === 200) {
+          let data = await res.json();
+          postPic = data.url;
+          ;
+          addPostHandler(content, postPic);
+          removeImageHandler();
+          return setContent('');
+        }
       } catch (error) {
-        console.log('cloudinary api failled with error', error)
+        console.log('cloudinary api failed with error', error);
       }
     }
-    addPostHandler(content);
+    toastPromise(addPostHandler(content), 'loading', 'Post created Successfully', 'Post failed');
     return setContent('');
   }
 

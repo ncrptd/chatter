@@ -13,7 +13,6 @@ import {
 } from '../services/userServices';
 import { addBookmarkService, removeBookMarkService } from '../services/bookmarkServices';
 import { toastError, toastSuccess } from '../alerts/alerts';
-import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
 const UserDispatchContext = createContext();
@@ -21,7 +20,6 @@ const UserDispatchContext = createContext();
 export default function UserProvider({ children }) {
 
   const [state, dispatch] = useReducer(userReducer, initialState);
-  const navigate = useNavigate();
 
   const getUserDetails = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -29,17 +27,17 @@ export default function UserProvider({ children }) {
       if (user) {
         const res = await getUserService(user.userDetails._id);
         if (res.status === 200) {
-          dispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: res.data.user } })
+          return dispatch({ type: USER_ACTIONS.SAVE_USER, payload: { userDetails: res.data.user } })
         }
       }
     } catch (error) {
-      navigate('/signup')
+      toastError('No user found Signup again')
     }
   };
   const getAllUsers = async () => {
     try {
       const res = await getAllUserService();
-      dispatch({
+      return dispatch({
         type: USER_ACTIONS.GET_ALL_USERS,
         payload: { users: res.data.users },
       });
@@ -53,9 +51,7 @@ export default function UserProvider({ children }) {
       const res = await userEditService(userData)
       const user = res.data.user;
       const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === user._id ? user : dbUser);
-      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
-      return toastSuccess('Profile Updated')
-
+      return dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
     } catch (error) {
       toastError('Profile Edit failed')
     }
@@ -141,10 +137,15 @@ export default function UserProvider({ children }) {
 
 
   useEffect(() => {
-    getUserDetails();
-    getAllUsers();
-
-  });
+    let subscribed = true;
+    if (subscribed) {
+      getUserDetails();
+      getAllUsers();
+    }
+    return () => {
+      subscribed = false
+    }
+  }, []);
   return (
     <UserContext.Provider
       value={{ state, editUserHandler, followUserHandler, unFollowUserHandler, getAllUsers, addBookmarkHandler, removeBookmarkHandler, getUserDetails }}

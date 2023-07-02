@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 import { createContext, useReducer, useContext } from 'react';
-import { getAllPostService } from '../services/postServices';
+import { addPostService, getAllPostService } from '../services/postServices';
 import {
   initialState,
   POST_ACTIONS,
@@ -34,23 +34,15 @@ export function PostProvider({ children }) {
 
   const addPostHandler = async (content, postPic) => {
     try {
-      const encodedToken = getEncodedToken();
-      const config = {
-        headers: { authorization: encodedToken },
-      };
-      const body = {
-        postData: {
-          content,
-          userId: userDetails?._id,
-          postPic
-        },
-      };
-      const res = await axios.post('/api/posts', body, config);
-      dispatch({
-        type: POST_ACTIONS.ADD_POST,
-        payload: { posts: res.data.posts },
-      });
-      toastSuccess('Post added');
+
+      const res = await addPostService(content, postPic, userDetails);
+      if (res.status === 201) {
+        dispatch({
+          type: POST_ACTIONS.ADD_POST,
+          payload: { posts: res.data.posts },
+        })
+      }
+
     } catch (error) {
       console.log(`add post api failed with error`, error);
       toastError('Post error')
@@ -103,7 +95,13 @@ export function PostProvider({ children }) {
   };
 
   useEffect(() => {
-    getAllPostHandler();
+    let subscribed = true
+    if (subscribed) {
+      getAllPostHandler();
+    }
+    return () => {
+      subscribed = false
+    }
   }, []);
 
   return (

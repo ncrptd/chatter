@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useUser, useUserDispatch } from '../../context/UserContext';
 import { USER_ACTIONS } from '../../reducer/userReducer';
 import { useRef } from 'react';
+import { toastPromise } from '../../alerts/alerts';
 
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
@@ -57,32 +58,34 @@ export default function ProfileEditModal({ user }) {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    closeModal();
 
     const file = image;
     if (typeof file === 'string') {
       const userData = {
         ...profileDetails, profilePic: file
       }
-      editUserHandler(userData)
-      return closeModal();
+      return toastPromise(editUserHandler(userData), 'Updating Profile', 'Profile updated successfully', 'Profile update failed');
     }
     const formData = new FormData();
     try {
       formData.append("file", file);
       formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-      closeModal();
-      let res = await fetch(CLOUDINARY_URL, {
+
+
+
+      let res = await toastPromise(fetch(CLOUDINARY_URL, {
         method: "POST",
         body: formData,
-      });
+      }), 'Updating Profile', 'Profile updated successfully', 'Profile update failed');
+
       let data = await res.json();
       const userData = {
         ...profileDetails, profilePic: data.url
       }
-      editUserHandler(userData)
-      return closeModal();
+      return editUserHandler(userData);
     } catch (error) {
-      console.log('cloudinary api failled with error', error)
+      console.log('cloudinary api failed with error', error)
     }
   }
   const handleAvatar = (url) => {

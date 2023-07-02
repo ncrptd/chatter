@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { getEncodedToken } from './postServices';
-
+import { getEncodedToken } from '../utils/encodedToken';
 const getUserService = (userId) => axios.get(`/api/users/${userId}`);
 
 const getAllUserService = () => axios.get('/api/users');
