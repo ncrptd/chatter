@@ -107,7 +107,6 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    postPic: null,
     username: 'rockeywithane',
     fullName: 'Rockey Biswas',
     createdAt: '2022-07-11',
