@@ -36,8 +36,8 @@ export default function Profile() {
 
       <div className="text-center p-2  bg-gray-800 border-x border-slate-500 flex justify-between items-center overflow-clip">
         <Goback />
-        <div>
-          <p>{user?.fullName}{' '}</p>
+        <div className='clip'>
+          <p className=''>{user?.fullName}{' '}</p>
           <p className="font-thin text-slate-300 word-breaks w-full overflow-clip">{noOfPosts.length} Posts</p>
         </div>
         <div></div>

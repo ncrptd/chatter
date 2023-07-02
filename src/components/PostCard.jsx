@@ -84,7 +84,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
     }
   }
   return (
-    <div className="p-4 w-full h-fit items-center border-x border-b border-slate-500 break-words">
+    <div className="p-4 w-full h-fit items-center border-x border-b border-slate-500 break-words ">
       <div className="flex justify-between items-center ">
         <div
           className="flex items-center gap-4 cursor-pointer"
@@ -98,7 +98,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
             />
           </div>
           <div className=''>
-            <p className="text-semibold mr-2">{user?.fullName} <span className="font-thin  text-sm text-slate-400 "> @{user?.username}</span></p>
+            <p className="text-semibold mr-2 clip">{user?.fullName} <span className="font-thin  text-sm text-slate-400 clip"> @{user?.username}</span></p>
 
             <p className="font-thin text-sm text-slate-400">
               {formatDate(post?.createdAt)}
