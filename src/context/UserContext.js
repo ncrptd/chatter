@@ -54,9 +54,9 @@ export default function UserProvider({ children }) {
       const res = await userEditService(userData)
       const user = res.data.user;
       const updatedAllUsers = state.allUsers.map((dbUser) => dbUser._id === user._id ? user : dbUser);
-      toastSuccess('User details updated')
+      dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
+      return toastSuccess('Profile Updated')
 
-      return dispatch({ type: USER_ACTIONS.GET_ALL_USERS, payload: { users: updatedAllUsers } });
     } catch (error) {
       toastError('Profile Edit failed')
     }
