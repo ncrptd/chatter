@@ -6,7 +6,6 @@ import { AUTH_ACTIONS } from '../reducer/authReducer';
 import { useUser, useUserDispatch } from '../context/UserContext';
 import { USER_ACTIONS } from '../reducer/userReducer';
 import { useEffect } from 'react';
-import { toastSuccess } from '../alerts/alerts';
 
 const GUEST = {
   username: 'rockeywithane',
@@ -61,14 +60,14 @@ export default function Login() {
             encodedToken: encodedToken,
           })
         );
+        getUserDetails().then((res) => console.log(res))
         getAllUsers();
+
         if (location?.state?.from?.pathname === undefined) {
           navigate('/');
         } else {
           navigate(location?.state?.from?.pathname);
         }
-        getUserDetails();
-        toastSuccess(`Welcome ${foundUser.fullName}`)
       } catch (error) {
         console.log(error);
         setErrorMsg('No user found');

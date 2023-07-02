@@ -31,7 +31,7 @@ export default function UserProvider({ children }) {
         }
       }
     } catch (error) {
-      toastError('No user found Signup again')
+      toastError('No user found Signup again');
     }
   };
   const getAllUsers = async () => {
