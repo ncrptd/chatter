@@ -24,7 +24,6 @@ export default function SuggestionCard({ user, disableFollow, setDisableFollow }
         </div>
         <div className=' w-1/2'>
           <p className="text-semibold text-ellipsis overflow-hidden">{user?.fullName}</p>
-          {/* <p className="font-thin text-slate-400 ">@{user?.username}</p> */}
         </div>
       </div>
       <div>

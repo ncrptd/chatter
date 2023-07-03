@@ -60,7 +60,7 @@ export default function Login() {
             encodedToken: encodedToken,
           })
         );
-        getUserDetails().then((res) => console.log(res))
+        getUserDetails();
         getAllUsers();
 
         if (location?.state?.from?.pathname === undefined) {

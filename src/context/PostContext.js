@@ -66,7 +66,6 @@ export function PostProvider({ children }) {
           type: POST_ACTIONS.ADD_POST,
           payload: { posts: updatedPosts },
         });
-        toastSuccess('Post Edited Successfully')
       }
     } catch (error) {
       console.log(`edit post api failed with error `, error);

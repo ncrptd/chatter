@@ -5,6 +5,7 @@ import './modal.css';
 import { useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { useRef } from 'react';
+import { toastPromise } from '../../alerts/alerts';
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
 
@@ -36,37 +37,35 @@ export default function EditPostModal({ post }) {
 
   const handleEditedPost = async (e) => {
     e.preventDefault();
-
+    closeModal(e);
+    postDispatch({
+      type: POST_ACTIONS.SHOW_OPTIONS,
+      payload: { showOPtions: null },
+    });
     const file = image;
     const formData = new FormData();
 
-    if (file) {
+    if (typeof file === 'object') {
       try {
         formData.append("file", file);
         formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-        let res = await fetch(CLOUDINARY_URL, {
+        let res = await toastPromise(fetch(CLOUDINARY_URL, {
           method: "POST",
           body: formData,
-        });
+        }), 'Updating post', 'Successfully updated post', 'Error Cannot update post');
         let data = await res.json();
-        editPostHandler(editValue, data.url, post._id,);
-        postDispatch({
-          type: POST_ACTIONS.SHOW_OPTIONS,
-          payload: { showOPtions: null },
-        });
+        return editPostHandler(editValue, data.url, post._id,);
       } catch (error) {
-        console.log('cloudinary api failled with error', error)
+        console.log('cloudinary api failed with error', error)
 
       }
-    } else {
-      editPostHandler(editValue, null, post._id,);
-      postDispatch({
-        type: POST_ACTIONS.SHOW_OPTIONS,
-        payload: { showOPtions: null },
-      });
-    }
+    } else if (typeof file === 'string') {
+      return toastPromise(editPostHandler(editValue, file, post._id,), 'Updating post', 'Successfully updated post', 'Error Cannot update post');
+      ;
 
-    closeModal(e);
+    } else {
+      return toastPromise(editPostHandler(editValue, null, post._id,), 'Updating post', 'Successfully updated post', 'Error Cannot update post');
+    }
   };
 
 
