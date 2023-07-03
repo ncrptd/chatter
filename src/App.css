@@ -17,9 +17,3 @@ body {
 .header .active {
   color: #ec4899;
 }
-.header .active:hover {
-  opacity: none;
-}
-.header .active:last-of-type {
-  color: inherit;
-}
