@@ -4,10 +4,22 @@
 body {
   font-family: sans-serif;
 }
-html {
-  scroll-behavior: smooth;
-}
+
 .clip {
   width: 20ch;
   text-overflow: ellipsis;
+}
+
+.header li:hover {
+  opacity: 0.8;
+}
+
+.header .active {
+  color: #ec4899;
+}
+.header .active:hover {
+  opacity: none;
+}
+.header .active:last-of-type {
+  color: inherit;
 }

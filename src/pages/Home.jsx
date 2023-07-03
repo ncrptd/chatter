@@ -26,7 +26,7 @@ export default function Home() {
       </div>
       <div className="flex justify-around items-center bg-gray-800 border-x border-b border-slate-500 p-2 font-semibold text-center">
         <button
-          className={`flex gap-2 items-center  hover:text-red-400 ${postsFilterBy === 'latest' ? 'text-red-400 ' : null
+          className={`flex gap-2 items-center hover:opacity-75 ${postsFilterBy === 'latest' ? 'text-pink-500' : null
             }`}
           onClick={() => {
             handlePostsFilter('latest');
@@ -48,7 +48,7 @@ export default function Home() {
           </svg>
         </button>
         <button
-          className={`flex gap-2 items-center  hover:text-red-400 ${postsFilterBy === 'trending' ? 'text-red-400 ' : null
+          className={`flex gap-2 items-center  hover:opacity-75 ${postsFilterBy === 'trending' ? 'text-pink-500 ' : null
             }`}
           onClick={() => {
             handlePostsFilter('trending');
