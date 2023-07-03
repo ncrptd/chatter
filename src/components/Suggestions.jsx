@@ -22,7 +22,7 @@ export default function Suggestions() {
   const visibleUsers = removeAlreadyFollowing(suggestedUsers);
   return (
     <aside className="col-span-3 hidden md:block h-screen overflow-auto suggestions">
-      <div className="container mx-auto py-2">
+      <div className="container mx-auto p-2">
         <p className="font-bold mb-6 ">Suggestions for you</p>
         {!visibleUsers ? <div className='flex flex-col gap-2'><SuggestionSkeletonCard num={10} /></div> : visibleUsers.length <= 0 ? <p className='text-center text-2xl font-bold uppercase mt-6'>No Suggestions</p> : visibleUsers.map((user) => <SuggestionCard user={user} key={user?._id} disableFollow={disableFollow} setDisableFollow={setDisableFollow} />)}
       </div>

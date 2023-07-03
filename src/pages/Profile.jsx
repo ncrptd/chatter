@@ -32,7 +32,7 @@ export default function Profile() {
   const noOfPosts = userPosts ? posts.filter((post) => post?.userId === user?._id) : [];
 
   return (
-    <div className='bg-slate-900'>
+    <div className='bg-slate-900 overflow-auto  h-screen'>
 
       <div className="text-center p-2  bg-gray-800 border-x border-slate-500 flex justify-between items-center overflow-clip">
         <Goback />
