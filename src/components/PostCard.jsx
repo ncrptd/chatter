@@ -84,7 +84,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
     }
   }
   return (
-    <div className="p-4 w-full h-fit items-center border-x border-b border-slate-500 break-words ">
+    <div className="p-4 w-full h-fit border-x border-b border-slate-500 break-words border">
       <div className="flex justify-between items-center ">
         <div
           className="flex items-center gap-4 cursor-pointer"
@@ -97,7 +97,7 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
               className="w-full h-full object-cover "
             />
           </div>
-          <div className=''>
+          <div>
             <p className="text-semibold mr-2 clip">{user?.fullName} <span className="font-thin  text-sm text-slate-400 clip"> @{user?.username}</span></p>
 
             <p className="font-thin text-sm text-slate-400">
@@ -132,14 +132,12 @@ export default function PostCard({ post, disableLike, setDisableLike, disableBoo
           </div>
         )}
       </div>
-      <div className='p-4 '>
-        <p className="text-sm">{post?.content}</p>
-        {post?.postPic && <div className='overflow-hidden mx-auto mt-4 md:h-96 '>
-          <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain rounded-2xl' />
-        </div>}
+      <p className="text-sm mt-2">{post?.content}</p>
+      {post?.postPic && <div className='overflow-hidden mx-auto mt-4 md:h-96 '>
+        <img src={post?.postPic} alt="post-pic" className='w-full h-full object-contain rounded-2xl' />
+      </div>}
 
-      </div>
-      <div className="flex gap-4 font-thin text-slate-200 ">
+      <div className="flex gap-4 font-thin text-slate-200 mt-4">
         {/* like  */}
 
         <button className="flex gap-2" disabled={disableLike} onClick={likeHandler}>
