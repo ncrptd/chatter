@@ -59,7 +59,7 @@ This is a social media app that allows you to create, share, and engage with pos
    ```
 2. Navigate to the project directory
    ````
-   cd social-media-app
+   cd chatter
    ```
 3. Install dependencies
    ````
