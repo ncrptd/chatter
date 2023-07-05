@@ -1,5 +1,13 @@
-# Chatter (Social Media App)
-## Under development
+# SmartKart Ecommerce 
+
+![Version](https://img.shields.io/badge/version-0.0.1--beta-orange)  
+ ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white).
+
+
 This is a social media app that allows you to create, share, and engage with posts from other users. You can sort and filter posts by date or popularity, create your own posts, like and bookmark posts, edit or delete your own posts, follow or unfollow other users, and explore posts from users you don't follow.
 
 ## Features
