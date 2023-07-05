@@ -34,12 +34,12 @@ This is a social media app that allows you to create, share, and engage with pos
 
 ### Sign-up Page
 
-- Sign-up using your email, first name, last name, password & confirm password
+- Sign-up using your username, first name, last name, password & confirm password
 - Hide/show password feature
 
 ### Login Page
 
-- Log in using your email & password
+- Log in using your username & password
 
 ### Logout
 
