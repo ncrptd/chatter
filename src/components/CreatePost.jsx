@@ -33,12 +33,14 @@ export default function CreatePost() {
     imgRef.current.click();
   };
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
 
-    if (Math.round(file.size / 1024000) > 1) {
-      return alert('File size cannot be more than 1 mb')
+    const file = e.target.files[0];
+    if (file) {
+      if (Math.round(file?.size / 1024000) > 1) {
+        return alert('File size cannot be more than 1 mb')
+      }
+      setImage(file);
     }
-    setImage(file);
   };
   const removeImageHandler = () => {
     setImage(null)
