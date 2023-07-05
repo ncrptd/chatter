@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useUser, useUserDispatch } from '../../context/UserContext';
 import { USER_ACTIONS } from '../../reducer/userReducer';
 import { useRef } from 'react';
-import { toastPromise } from '../../alerts/alerts';
+import { toastError, toastPromise } from '../../alerts/alerts';
+import { readMedia } from '../../utils/readmedia';
 
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
@@ -51,14 +52,17 @@ export default function ProfileEditModal({ user }) {
   const handleImageClick = () => {
     imgRef.current.click();
   };
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (Math.round(file?.size / 1024000) > 1) {
-        return alert('File size cannot be more than 1 mb')
+      if (Math.round(file?.size / 1024000) > 4) {
+        return toastError('Image size cannot be more than 4 mb')
+      } else {
+        const url = await readMedia(file);
+        setImage(url)
       }
-      setImage(file);
     }
+
   };
 
   const handleEditSubmit = async (e) => {

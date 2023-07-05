@@ -3,7 +3,8 @@ import { usePost } from '../context/PostContext';
 import { useUser } from '../context/UserContext';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toastPromise } from '../alerts/alerts';
+import { toastError, toastPromise } from '../alerts/alerts';
+import { readMedia } from '../utils/readmedia';
 
 const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dazl0yblg/image/upload";
 const CLOUDINARY_UPLOAD_PRESET = "chatter";
@@ -32,16 +33,19 @@ export default function CreatePost() {
   const handleImageClick = () => {
     imgRef.current.click();
   };
-  const handleImageChange = (e) => {
-
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (Math.round(file?.size / 1024000) > 1) {
-        return alert('File size cannot be more than 1 mb')
+      if (Math.round(file?.size / 1024000) > 4) {
+        return toastError('Image size cannot be more than 4 mb')
+      } else {
+        const url = await readMedia(file);
+        setImage(url)
       }
-      setImage(file);
     }
-  };
+
+  }
+
   const removeImageHandler = () => {
     setImage(null)
   }
@@ -97,7 +101,7 @@ export default function CreatePost() {
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className='absolute top-3 right-3 cursor-pointer bg-gray-400 rounded-full p-1' onClick={removeImageHandler}>
             <path fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M20 20L4 4m16 0L4 20" /></svg>
 
-          <img src={URL.createObjectURL(image)} alt="" className='w-full h-full object-cover rounded-2xl' />
+          <img src={image} alt="" className='w-full h-full object-cover rounded-2xl' />
         </div>}
         <div className="flex w-3/4 mx-auto gap-2 items-center justify-end">
           <div className='' onClick={handleImageClick}>
